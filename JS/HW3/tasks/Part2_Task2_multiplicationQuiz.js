@@ -4,6 +4,11 @@ function multiplicationQuiz() {
   let number1 = Math.floor(Math.random() * 10) + 1;
   let number2 = Math.floor(Math.random() * 10) + 1;
   let correctAnswer = number1 * number2;
+  return { number1, number2, correctAnswer };
+}
+
+function promptMultiplicationQuiz() {
+  const { number1, number2, correctAnswer } = multiplicationQuiz();
 
   let userAnswer = validateNumberInput(
     `Сколько будет ${number1} * ${number2}?`
@@ -17,4 +22,4 @@ function multiplicationQuiz() {
   }
 }
 
-export default multiplicationQuiz;
+export default promptMultiplicationQuiz;

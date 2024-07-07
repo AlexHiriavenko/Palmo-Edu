@@ -1,12 +1,14 @@
 import { validateNumberInput } from "./HELPERS.js";
 
-function calculateSalaryTaxes() {
+function calculateSalaryTaxes(salary, taxRate) {
+  return salary * taxRate;
+}
+
+function promptCalculateSalaryTaxes() {
   let salary = validateNumberInput("Введите вашу зарплату:");
   if (salary === null) return;
 
-  const taxRate = 0.05;
-  let taxAmount = salary * taxRate;
-
+  let taxAmount = calculateSalaryTaxes(salary, 0.05);
   alert(
     `При зарплате ${salary.toFixed(
       2
@@ -14,4 +16,4 @@ function calculateSalaryTaxes() {
   );
 }
 
-export default calculateSalaryTaxes;
+export default promptCalculateSalaryTaxes;

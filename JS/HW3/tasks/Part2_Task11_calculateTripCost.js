@@ -1,6 +1,10 @@
 import { validateNumberInput } from "./HELPERS.js";
 
-function calculateTripCost() {
+function calculateTripCost(distance, fuelConsumption, fuelPrice) {
+  return (distance / 100) * fuelConsumption * fuelPrice;
+}
+
+function promptCalculateTripCost() {
   let distance = validateNumberInput("Введите расстояние поездки (в км):");
   if (distance === null) return;
 
@@ -14,9 +18,8 @@ function calculateTripCost() {
   );
   if (fuelPrice === null) return;
 
-  let cost = (distance / 100) * fuelConsumption * fuelPrice;
-
+  let cost = calculateTripCost(distance, fuelConsumption, fuelPrice);
   alert(`Стоимость поездки: ${cost.toFixed(2)} тугриков`);
 }
 
-export default calculateTripCost;
+export default promptCalculateTripCost;

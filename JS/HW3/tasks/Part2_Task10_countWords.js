@@ -14,26 +14,26 @@ function validateTextInput(message) {
   }
 }
 
-// апостроф потому что "I'm" или "don't" - считаю это как за букву, а слово "I'm" одним словом
 function isLetter(char) {
   return char.toLowerCase() !== char.toUpperCase() || char === "'";
 }
 
-function countWords() {
-  let text = validateTextInput("Введите текст:");
-  if (text === null) return;
-
-  // Удаление всех небуквенных символов, заменяя их пробелами
+function countWords(text) {
   let cleanedTextArray = text
     .split("")
     .map((char) => (isLetter(char) || char === " " ? char : " "));
   let cleanedText = cleanedTextArray.join("");
 
-  // тут регулярное выражение будет более эффективно чем .split(" ")
   let words = cleanedText.split(/\s+/).filter((word) => word.length > 0);
-  let wordCount = words.length;
+  return words.length;
+}
 
+function promptCountWords() {
+  let text = validateTextInput("Введите текст:");
+  if (text === null) return;
+
+  let wordCount = countWords(text);
   alert(`Количество слов в введенном тексте: ${wordCount}`);
 }
 
-export default countWords;
+export default promptCountWords;

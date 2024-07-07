@@ -6,8 +6,8 @@ function sumOfDigits(num) {
 }
 
 function findNumbers() {
-  const result = [1];
-  for (let i = 2; i <= 10000; i += 2) {
+  const result = [];
+  for (let i = 2; i <= 10000; i += 1) {
     if (i % sumOfDigits(i) === 0) {
       result.push(i);
     }
