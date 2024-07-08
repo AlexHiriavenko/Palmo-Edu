@@ -2,6 +2,8 @@
 
 ## Deploy:
 
+[tasks 1-9](https://alexhiriavenko.github.io/Palmo-Edu/JS/HW5/tasks1-9/)
+
 ## Task:
 
 1. Создайте кнопку на странице. При клике на нее выведите в alert сообщение Hello, Palmo.
