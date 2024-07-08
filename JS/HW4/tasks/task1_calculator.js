@@ -34,17 +34,21 @@ const calculator = {
 };
 
 function runCalculator() {
-  const MESSAGE_OPERAND1 = "Введите первый операнд:";
-  const MESSAGE_OPERAND2 = "Введите второй операнд:";
+  const MESSAGE_FIRST_OPERAND = "Введите первый операнд:";
+  const MESSAGE_SECOND_OPERAND = "Введите второй операнд:";
   const MESSAGE_CANCEL =
     "Вы прервали калькулятор, обновите страницу и попробуйте снова.";
 
   try {
-    const num1 = validateNumberInput(MESSAGE_OPERAND1);
-    if (num1 === null) throw new Error(MESSAGE_CANCEL);
+    const num1 = validateNumberInput(MESSAGE_FIRST_OPERAND);
+    if (num1 === null) {
+      throw new Error(MESSAGE_CANCEL);
+    }
 
-    const num2 = validateNumberInput(MESSAGE_OPERAND2);
-    if (num2 === null) throw new Error(MESSAGE_CANCEL);
+    const num2 = validateNumberInput(MESSAGE_SECOND_OPERAND);
+    if (num2 === null) {
+      throw new Error(MESSAGE_CANCEL);
+    }
 
     const results = `
       Результат сложения: ${calculator.add(num1, num2)}

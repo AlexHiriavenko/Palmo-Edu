@@ -1,11 +1,10 @@
 function isPalindrome(str) {
-  // регулярное выражение убирает все не алфавитные символы
-  const cleanedStr = str.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const lowerStr = str.toLowerCase();
 
-  const reversedStr = cleanedStr.split("").reverse().join("");
+  const reversedStr = lowerStr.split("").reverse().join("");
 
-  console.log(cleanedStr === reversedStr);
-  return cleanedStr === reversedStr;
+  console.log(lowerStr === reversedStr);
+  return lowerStr === reversedStr;
 }
 
 export { isPalindrome };

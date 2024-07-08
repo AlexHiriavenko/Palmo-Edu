@@ -23,7 +23,7 @@ import {
   array1,
   array2,
   array3,
-} from "./tasks/task7_MergeArrays.js";
+} from "./tasks/task7_mergeArrays.js";
 import { temperatureConverter } from "./tasks/task8_temperatureConverter.js";
 import { findMinMax } from "./tasks/task9_findMinMax.js";
 import {
@@ -37,7 +37,12 @@ import { toCamelCase } from "./tasks/task11_toCamelCase.js";
 import { flattenArray, nestedArray } from "./tasks/task12_flattenArray.js";
 import { reverseArray } from "./tasks/task13_reverseArray.js";
 import { isAnagram } from "./tasks/task14_isAnagram.js";
-import { objecToNestedArray } from "./tasks/task15_ObjecToNestedArray.js";
+import {
+  simpleObjectToNestedArray,
+  nestedObjectToNestedArray,
+  simpleObject,
+  nestedObject,
+} from "./tasks/task15_ObjecToNestedArray.js";
 
 //task 1
 // runCalculator();
@@ -71,9 +76,13 @@ import { objecToNestedArray } from "./tasks/task15_ObjecToNestedArray.js";
 //task 8
 // console.log(temperatureConverter.celsiusToFahrenheit(24));
 // console.log(temperatureConverter.kelvinToFahrenheit(300));
+// console.log(
+//   temperatureConverter.celsiusToFahrenheit({ param: "invalid value" })
+// );
 
 //task 9
 // findMinMax(numbers);
+// findMinMax(1, 2, 3);
 
 //task 10
 // findCommonElements(arrExample1, arrExample2);
@@ -93,4 +102,5 @@ import { objecToNestedArray } from "./tasks/task15_ObjecToNestedArray.js";
 // isAnagram("just", "test");
 
 //task 15
-// objecToNestedArray({ a: 1, b: 2 });
+// simpleObjectToNestedArray(simpleObject);
+// console.log(nestedObjectToNestedArray(nestedObject));

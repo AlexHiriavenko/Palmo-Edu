@@ -8,9 +8,9 @@ function mergeTwoArrays(arr1, arr2) {
 function mergeArrays(...arrays) {
   let res = [];
 
-  while (arrays.length) {
-    res = [...arrays.pop(), ...res];
-  }
+  arrays.forEach((array) => {
+    res = [...res, ...array];
+  });
 
   console.log(res);
   return res;
