@@ -3,6 +3,7 @@
 ## Deploy:
 
 [tasks 1-9](https://alexhiriavenko.github.io/Palmo-Edu/JS/HW5/tasks1-9/)
+[task11. Calculator](https://alexhiriavenko.github.io/Palmo-Edu/JS/HW5/Calculator/)
 
 ## Task:
 

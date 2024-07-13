@@ -42,7 +42,6 @@ class Calculator {
       ".grid-item.operation-mark button"
     );
     this.reset();
-    this.updateDisplay(this.currentInput);
   }
 
   init() {
