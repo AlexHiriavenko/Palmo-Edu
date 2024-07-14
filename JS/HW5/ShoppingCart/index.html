@@ -30,6 +30,32 @@
         </template>
       </section>
     </main>
+
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <table>
+          <thead>
+            <tr>
+              <th>articul</th>
+              <th>product</th>
+              <th>img</th>
+              <th>price</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"> </tbody>
+        </table>
+        <button class="close-modal-btn">OK</button>
+      </div>
+    </div>
+
+    <template id="table-template">
+      <tr>
+        <td class="td-articul"></td>
+        <td class="td-product"></td>
+        <td class="td-image"><img src="" alt="product image" /></td>
+        <td class="td-price"></td>
+      </tr>
+    </template>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

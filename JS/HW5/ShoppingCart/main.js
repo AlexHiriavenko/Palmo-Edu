@@ -38,3 +38,33 @@ async function renderCards() {
 }
 
 renderCards();
+
+const tableBody = document.getElementById("table-body");
+const template = document.getElementById("table-template").content;
+const modal = document.getElementById("modal");
+const openCartBtn = document.querySelector(".shopping-cart-btn");
+
+openCartBtn.addEventListener("click", openCart);
+
+function openCart() {
+  const cart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+  tableBody.innerHTML = "";
+  if (!cart.length) {
+    alert("пока что Корзина пуста");
+  } else {
+    cart.forEach((card) => {
+      const clone = document.importNode(template, true);
+      clone.querySelector(".td-articul").textContent = card.articul;
+      clone.querySelector(".td-product").textContent = card.name;
+      clone.querySelector(".td-image img").src = card.img;
+      clone.querySelector(".td-price").textContent = card.price;
+      tableBody.appendChild(clone);
+    });
+
+    modal.style.display = "flex";
+  }
+}
+
+const closeModalBtn = document.querySelector(".close-modal-btn");
+
+closeModalBtn.addEventListener("click", () => (modal.style.display = "none"));

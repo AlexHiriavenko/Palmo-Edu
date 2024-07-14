@@ -2,7 +2,6 @@ import { cartCountElement } from "../main.js";
 
 function addToCart(event) {
   const target = event.target.closest("button");
-  console.log(target.id);
 
   if (target) {
     const allCards = JSON.parse(localStorage.getItem("allCards")) || [];
