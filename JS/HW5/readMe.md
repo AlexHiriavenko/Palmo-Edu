@@ -3,7 +3,7 @@
 ## Deploy:
 
 - [tasks 1-9](https://alexhiriavenko.github.io/Palmo-Edu/JS/HW5/tasks1-9/)
-- [task10. Form](https://alexhiriavenko.github.io/Palmo-Edu/JS/HW5/Form//)
+- [task10. Form](https://alexhiriavenko.github.io/Palmo-Edu/JS/HW5/Form/)
 - [task11. Calculator](https://alexhiriavenko.github.io/Palmo-Edu/JS/HW5/Calculator/)
 - [task12. Shopping Cart](https://alexhiriavenko.github.io/Palmo-Edu/JS/HW5/ShoppingCart/)
 
