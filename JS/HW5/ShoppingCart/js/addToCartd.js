@@ -1,6 +1,6 @@
-import { cartCountElement } from "../main.js";
+import { cartCountElement } from "./elementsDOM.js";
 
-function addToCart(event) {
+function addToCart() {
   const target = event.target.closest("button");
 
   if (target) {
@@ -30,8 +30,6 @@ function addToCart(event) {
   }
 }
 
-export default addToCart;
-
 function isObj(obj) {
   return (
     typeof obj === "object" &&
@@ -39,3 +37,5 @@ function isObj(obj) {
     Object.getPrototypeOf(obj) === Object.prototype
   );
 }
+
+export default addToCart;

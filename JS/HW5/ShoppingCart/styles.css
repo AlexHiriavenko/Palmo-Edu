@@ -120,8 +120,10 @@ th {
   width: 80px;
 }
 
-.close-modal-btn {
+.modal-btn-group {
   margin-top: 12px;
-  display: block;
+  display: flex;
   margin-inline: auto;
+  justify-content: center;
+  column-gap: 12px;
 }
