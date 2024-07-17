@@ -3,7 +3,7 @@ import injectHTML from "vite-plugin-html-inject";
 import { resolve } from "path";
 
 export default defineConfig({
-  base: "/AlexHiriavenko/Palmo-Edu/",
+  base: "/Palmo-Edu/nonograms/",
   plugins: [
     injectHTML({
       debug: {
@@ -16,7 +16,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
-        menu: resolve(__dirname, "photo-gallery/index.html"),
+        menu: resolve(__dirname, "Photo-Gallery-Page/index.html"),
       },
     },
   },
