@@ -16,7 +16,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
-        menu: resolve(__dirname, "Photo-Gallery-Page/index.html"),
+        menu: resolve(__dirname, "Photo-Gallery/index.html"),
       },
     },
   },

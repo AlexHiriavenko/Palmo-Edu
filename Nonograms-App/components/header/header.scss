@@ -11,6 +11,19 @@ header {
   color: var(--secondary-text-color);
 }
 
+.header__link {
+  font-size: 16px;
+  text-shadow: 1px 1px 1px var(--modal-cross-side2);
+  letter-spacing: 2px;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.header__link.accent {
+  font-size: 24px;
+}
+
 .header__btn-group {
   display: flex;
   align-items: center;
