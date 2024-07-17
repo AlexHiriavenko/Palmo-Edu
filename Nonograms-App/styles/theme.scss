@@ -1,0 +1,15 @@
+html.light {
+  --main-bg-color: bisque;
+  --bg-img: none;
+  --secondary-text-color: white;
+  --secondary-bg-color: brown;
+  --addition-text-color: brown;
+}
+
+html.dark {
+  --main-bg-color: rgb(41, 40, 40);
+  --bg-img: url("../app-files/imgs/bg/bg-dark.jpg");
+  --secondary-text-color: #1814d6;
+  --secondary-bg-color: rgb(155, 155, 155);
+  --addition-text-color: rgb(41, 40, 40);
+}
