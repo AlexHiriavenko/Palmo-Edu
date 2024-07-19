@@ -4,6 +4,12 @@ html.light {
   --secondary-text-color: white;
   --secondary-bg-color: brown;
   --addition-text-color: brown;
+  --modal-bg-color: bisque;
+  --modal-cross-main: #474a51;
+  --modal-cross-ends: rgb(112, 112, 112);
+  --modal-cross-side1: black;
+  --modal-cross-side2: rgb(46, 21, 21);
+  --modal-btn-bg-color: brown;
 }
 
 html.dark {
@@ -12,4 +18,10 @@ html.dark {
   --secondary-text-color: #1814d6;
   --secondary-bg-color: rgb(155, 155, 155);
   --addition-text-color: rgb(41, 40, 40);
+  --modal-bg-color: rgb(114, 114, 114);
+  --modal-cross-main: white;
+  --modal-cross-ends: rgb(179, 179, 179);
+  --modal-cross-side1: rgb(211, 211, 211);
+  --modal-cross-side2: rgb(184, 184, 184);
+  --modal-btn-bg-color: rgb(18, 105, 158);
 }

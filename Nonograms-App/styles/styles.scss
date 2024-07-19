@@ -10,6 +10,10 @@ body {
   background-size: 100% 100%;
 }
 
+#app {
+  min-height: 100vh;
+}
+
 .app-container {
   max-width: 1440px;
   margin-inline: auto;
@@ -18,3 +22,4 @@ body {
 
 @import "../components/header/header";
 @import "../components/gameButtons/gameButtons";
+@import "../components/modal/modal";
