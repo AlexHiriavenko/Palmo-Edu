@@ -1,0 +1,31 @@
+.gameBtnGroup {
+  margin-top: 20px;
+  @include flex-center;
+  gap: 12px;
+  flex-wrap: wrap;
+  @media (max-width: 810px) {
+    max-width: 530px;
+  }
+  @include mobile {
+    gap: 6px;
+    margin-top: 12px;
+    max-width: 400px;
+  }
+}
+
+.control-btn {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  height: 46px;
+  width: 124px;
+  padding: 6px;
+  color: var(--secondary-text-color);
+  background-color: var(--secondary-bg-color);
+  border-radius: 24px;
+  transition-duration: 0.5s;
+  &:hover {
+    filter: brightness(1.2);
+    box-shadow: 2px -2px 6px rgb(255, 255, 255);
+  }
+}
