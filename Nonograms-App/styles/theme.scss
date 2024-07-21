@@ -1,6 +1,6 @@
 html.light {
+  --main-text-color: brown;
   --main-bg-color: bisque;
-  --bg-img: none;
   --secondary-text-color: white;
   --secondary-bg-color: brown;
   --addition-text-color: brown;
@@ -9,12 +9,19 @@ html.light {
   --modal-cross-ends: rgb(112, 112, 112);
   --modal-cross-side1: black;
   --modal-cross-side2: rgb(46, 21, 21);
-  --modal-btn-bg-color: brown;
+  --btn-bg-color: brown;
+  --td-bg-falsy: white;
+  --td-bg-truthy: #1d1a1a;
+  --td-border: gray;
+  --th-bg: brown;
+  --border-fat: #808080;
+  --bg-img: none;
+  --bg-cell: url("../app-files/imgs/table/cell-cross-light.svg");
 }
 
 html.dark {
+  --main-text-color: white;
   --main-bg-color: rgb(41, 40, 40);
-  --bg-img: url("../app-files/imgs/bg-dark.jpg");
   --secondary-text-color: #1814d6;
   --secondary-bg-color: rgb(155, 155, 155);
   --addition-text-color: rgb(41, 40, 40);
@@ -23,5 +30,12 @@ html.dark {
   --modal-cross-ends: rgb(179, 179, 179);
   --modal-cross-side1: rgb(211, 211, 211);
   --modal-cross-side2: rgb(184, 184, 184);
-  --modal-btn-bg-color: rgb(18, 105, 158);
+  --btn-bg-color: rgb(18, 105, 158);
+  --td-bg-truthy: rgb(190, 188, 188);
+  --td-bg-falsy: #1d1a1a;
+  --td-border: white;
+  --th-bg: rgb(18, 105, 158);
+  --border-fat: rgb(148, 154, 189);
+  --bg-img: url("../app-files/imgs/bg/bg-dark.jpg");
+  --bg-cell: url("../app-files/imgs/table/cell-cross-dark.svg");
 }

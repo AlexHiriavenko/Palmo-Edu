@@ -1,4 +1,4 @@
-import { setAccentLink } from "./js/setAccentLink";
+import { setAccentLink } from "./functions/setAccentLink";
 
 const themeSwitcher = document.querySelector(".switch-theme__input");
 

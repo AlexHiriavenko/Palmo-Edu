@@ -1,8 +1,15 @@
-import { openModal } from "../modal/js/openModal";
+import { openModal } from "../modal/functions/openModal";
+import { appendModalContent } from "../modal/functions/appendModalContent";
+import { createNewGameDialog } from "../newGameDialog/newGameDialog";
+
 const startGameButton = document.querySelector(".control-btn.new-game");
 
-function initGameInterface() {
-  startGameButton.addEventListener("click", openModal);
+function initializeGameControls() {
+  startGameButton?.addEventListener("click", () => {
+    const newGameDialog = createNewGameDialog();
+    appendModalContent(newGameDialog);
+    openModal("confirm");
+  });
 }
 
-export { initGameInterface };
+export { initializeGameControls };
