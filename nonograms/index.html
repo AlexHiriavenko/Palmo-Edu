@@ -5,18 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-    <link
-      rel="icon"
-      type="image/png"
-      href="./app-files/imgs/nonogram.png"
-      sizes="32x32" />
+    <link rel="icon" type="image/png" href="/Palmo-Edu/nonograms/assets/nonogram-rZXRcbe1.png" sizes="32x32" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Rubik+Maps&display=swap"
       rel="stylesheet" />
-    <script type="module" crossorigin src="/Palmo-Edu/nonograms/assets/main-COO3MfJ8.js"></script>
-    <link rel="stylesheet" crossorigin href="/Palmo-Edu/nonograms/assets/main-Td2iTJyh.css">
+    <script type="module" crossorigin src="/Palmo-Edu/nonograms/assets/main-B18RomEB.js"></script>
+    <link rel="stylesheet" crossorigin href="/Palmo-Edu/nonograms/assets/main-a8WFOvRh.css">
   </head>
 
   <body>
@@ -46,6 +42,144 @@
   </div>
 </header>
 
-    </div>
+      <div class="gameBtnGroup app-container">
+  <button class="control-btn new-game">New Game</button>
+  <button class="control-btn reset-game">Reset Game</button>
+  <button class="control-btn show-solution">Show Solution</button>
+  <button class="control-btn records">Records</button>
+</div>
+      <div class="app-container game-container">
+  <p class="timer-section">TIMER: <span>00:00</span></p>
+  <div class="table-container">
+    <table id="table"></table>
+  </div>
+  <div class="bg-manicin-container">
+    <img class="bg-manicin" src="/Palmo-Edu/nonograms/assets/thinking-manikin-DiIS43kJ.png" />
+  </div>
+</div>
+
+      <div class="modal__container">
+  <div class="modal">
+    <button class="close">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px"
+  viewBox="0 0 360 400" style="enable-background: new 0 0 600 400" xml:space="preserve" width="60" height="60">
+  <rect x="0" y="0" width="360" height="400" fill="#00000000"></rect>
+  <g>
+    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="55.6843" y1="272.2681" x2="81.8983" y2="303.4572">
+      <stop offset="0" style="stop-color: #781225"></stop>
+      <stop offset="1" style="stop-color: #63002b"></stop>
+    </linearGradient>
+    <polygon points="90.431,291.121 85.715,320.331 49.124,286.951 49.124,262.913    " class="cross__ends">
+    </polygon>
+
+    <linearGradient id="SVGID_00000081635386874611523420000016052004106882284697_" gradientUnits="userSpaceOnUse"
+      x1="252.6782" y1="280.6353" x2="264.1503" y2="294.2846">
+      <stop offset="0" style="stop-color: #8f152c"></stop>
+      <stop offset="1" style="stop-color: #85003a"></stop>
+    </linearGradient>
+    <polygon points="280.208,262.913      280.208,286.951 243.617,320.331 238.274,286.235    " class="cross__ends">
+    </polygon>
+
+    <linearGradient id="SVGID_00000143600874539951070620000017229379300649786241_" gradientUnits="userSpaceOnUse"
+      x1="171.9412" y1="230.476" x2="225.6181" y2="294.3397">
+      <stop offset="0" style="stop-color: #781225"></stop>
+      <stop offset="1" style="stop-color: #63002b"></stop>
+    </linearGradient>
+    <polygon class="cross__other-side" points="243.617,291.622      243.617,320.331 164.66,245.945 157.676,212.019    ">
+    </polygon>
+
+    <linearGradient id="SVGID_00000048484805168219528800000015982560253309629857_" gradientUnits="userSpaceOnUse"
+      x1="118.3391" y1="258.0271" x2="130.8138" y2="272.8692">
+      <stop offset="0" style="stop-color: #8f152c"></stop>
+      <stop offset="1" style="stop-color: #85003a"></stop>
+    </linearGradient>
+    <polygon class="cross__side" points="164.66,212.019 164.66,245.945      85.715,320.331 85.715,286.404    ">
+    </polygon>
+
+    <linearGradient id="SVGID_00000103958545999469788170000018208435770977116311_" gradientUnits="userSpaceOnUse"
+      x1="233.7694" y1="154.5968" x2="244.3566" y2="167.1932">
+      <stop offset="0" style="stop-color: #8f152c"></stop>
+      <stop offset="1" style="stop-color: #85003a"></stop>
+    </linearGradient>
+    <polygon class="cross__side" points="280.208,113.049      280.208,137.087 200.673,212.019 196.339,180.051    ">
+    </polygon>
+
+    <linearGradient id="SVGID_00000161594844254558416520000013133147012284712087_" gradientUnits="userSpaceOnUse"
+      x1="65.5661" y1="127.193" x2="114.8645" y2="185.8472">
+      <stop offset="0" style="stop-color: #781225"></stop>
+      <stop offset="1" style="stop-color: #63002b"></stop>
+    </linearGradient>
+    <polygon class="cross__other-side" points="133.796,178.914      128.658,212.019 49.124,137.087 49.124,113.049    ">
+    </polygon>
+
+    <linearGradient id="SVGID_00000172407432893381253790000002209924468377785243_" gradientUnits="userSpaceOnUse"
+      x1="107.65" y1="120.145" x2="211.5105" y2="243.7162">
+      <stop offset="0" style="stop-color: #c41d3c"></stop>
+      <stop offset="1" style="stop-color: #a30047"></stop>
+    </linearGradient>
+    <polygon class="cross__main"
+      points="243.617,79.669      280.208,113.049 200.673,187.981 280.208,262.913 243.617,296.293 164.66,221.908 85.715,296.293 49.124,262.913      128.658,187.981 49.124,113.049 85.715,79.669 164.66,154.055    ">
+    </polygon>
+  </g>
+</svg>
+    </button>
+  </div>
+</div>
+      <template id="newGameDialog">
+  <form class="settings-container start-game-form">
+    <h3 class="difficulty-label form-title">Game Settings</h3
+    ><label class="difficulty-label"
+      ><span class="label-title">Player Name:</span
+      ><input
+        placeholder="unknown player"
+        maxlength="12"
+        id="playerName" /></label
+    ><label class="difficulty-label" for="difficulty-select"
+      ><span class="label-title">Choose Difficulty:</span
+      ><select id="difficulty-select" name="difficulty">
+        <option value="easy" class="difficulty-option">Easy (5x5)</option>
+        <option value="medium" class="difficulty-option">Medium (10x10)</option>
+        <option value="hard" class="difficulty-option">Hard (15x15)</option>
+      </select></label
+    ><label class="nonogram-names-label" for="nonogram-names-select"
+      ><span class="label-title">Choose a Nonogram:</span
+      ><select id="nonogram-names-select" name="nonogram-names">
+        <option value="Dinosaur" class="nonogram-names-option">Dinosaur</option>
+        <option value="Fortress" class="nonogram-names-option">Fortress</option>
+        <option value="Plane" class="nonogram-names-option">Plane</option>
+        <option value="Goblet" class="nonogram-names-option">Goblet</option>
+        <option value="Skull" class="nonogram-names-option">Skull</option>
+      </select></label
+    ><input
+      type="submit"
+      class="control-btn start-game-btn"
+      value="Start Game" />
+  </form>
+</template>
+
+      <template id="helpDialog">
+  <div class="help-info">
+    <h3 class="help-info-title">How to play</h3>
+    <p class="help-text">First left-click: to paint over the cell</p>
+    <p class="help-text">Second left-click: to cleare the cell</p>
+    <p class="help-text"
+      >Right-Click or long touch on mobile: to exclude the cell (x)</p
+    >
+    <p class="help-text"
+      >Victory Condition: All necessary cells are filled in, The remaining cells
+      are either empty or excluded (x)
+    </p>
+    <button class="control-btn ok">OK</button>
+  </div>
+</template>
+
+      <template id="victoryDialog">
+  <div class="container-victory-message alert-container">
+    <p class="help-text alert-text2">Congratulations! You solved the nonogram!</p>
+    <button class="control-btn start-game-btn ok">HOORAY!</button>
+  </div>
+</template>
+    </div>
+
   </body>
 </html>
