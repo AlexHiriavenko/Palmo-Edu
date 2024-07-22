@@ -11,7 +11,7 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Rubik+Maps&display=swap"
       rel="stylesheet" />
-    <script type="module" crossorigin src="/Palmo-Edu/nonograms/assets/main-CcR_3w47.js"></script>
+    <script type="module" crossorigin src="/Palmo-Edu/nonograms/assets/main-DFha6Rbd.js"></script>
     <link rel="stylesheet" crossorigin href="/Palmo-Edu/nonograms/assets/main-Dkq3hSC3.css">
   </head>
 
@@ -177,6 +177,23 @@
   <div class="container-victory-message alert-container">
     <p class="help-text alert-text2">Congratulations! You solved the nonogram!</p>
     <button class="control-btn start-game-btn ok">HOORAY!</button>
+  </div>
+</template>
+      <template id="resetGameDialog">
+  <div class="alert-container">
+    <p class="help-text alert-text2">No nonogram selected</p>
+    <button class="control-btn start-game-btn ok">OK</button>
+  </div>
+</template>
+      <template id="showSolutionDialog">
+  <div class="alert-container">
+    <p class="help-text alert-text">Are you sure you want to see the solution? 
+      In this case, you will lose your current progress. The solution will not be counted.
+    </p>
+    <div class="two-btns-group">
+      <button class="control-btn start-game-btn submit">OK</button>
+      <button class="control-btn start-game-btn cancel">Cancel</button>
+    </div>
   </div>
 </template>
     </div>
