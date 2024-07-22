@@ -1,6 +1,10 @@
 import AudioPlayer from "./AudioPlayer";
 
-const musicPath = "./app-files/music/";
+// path deploy version
+const musicPath = "/Palmo-Edu/nonograms/music/";
+
+// path dev version
+// const musicPath = "./app-files/music/";
 
 const musicPlaylist = [
   `${musicPath}alexander-nakarada-emotional-piano-improvisation.mp3`,

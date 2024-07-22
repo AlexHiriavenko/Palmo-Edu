@@ -8,6 +8,7 @@ import {
   closeModalButton,
   closeModal,
 } from "./components/modal/functions/closeModal";
+import appState from "./AppState";
 
 // при загрузке страницы установить тему (светлая / темная)
 document.addEventListener("DOMContentLoaded", function () {

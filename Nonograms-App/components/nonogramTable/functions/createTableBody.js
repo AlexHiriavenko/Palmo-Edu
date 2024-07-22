@@ -2,6 +2,7 @@ import appState from "../../../AppState";
 import { calcShadedCells } from "./calcShadedCells";
 import { tableBodyLeftClick } from "./tableBodyLeftClick";
 // import { tableBodyRightClick } from "./tableBodyRightClick";
+import { timer } from "../../../js-utilits/timer/timerInstance";
 
 export function createTableBody() {
   const cells = [];
@@ -53,12 +54,25 @@ export function createTableBody() {
   // tbody.addEventListener("contextmenu", (event) =>
   //   tableBodyRightClick(event, cells)
   // );
-  // let timerValue = Number(localStorage.getItem("timer")) || 0;
-  // tbody.addEventListener("click", () => startTimer(timerValue), { once: true });
+
+  function startTimer(event) {
+    if (!timer.isRunning && event.target.nodeName === "TD") {
+      timer.start();
+    }
+  }
+
+  tbody.addEventListener("click", startTimer, { once: true });
+  tbody.addEventListener(
+    "contextmenu",
+    (event) => {
+      event.preventDefault();
+      startTimer(event);
+    },
+    { once: true }
+  );
 
   appState.nonogram.truthyCells = truthyCells;
   appState.nonogram.falsyCells = falsyCells;
 
-  console.log(appState);
   return tbody;
 }
