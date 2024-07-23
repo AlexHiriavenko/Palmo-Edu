@@ -1,7 +1,7 @@
 import appState from "../../../AppState";
 import { calcShadedCells } from "./calcShadedCells";
 import { tableBodyLeftClick } from "./tableBodyLeftClick";
-// import { tableBodyRightClick } from "./tableBodyRightClick";
+import { tableBodyRightClick } from "./tableBodyRightClick";
 import { timer } from "../../../js-utilits/timer/timerInstance";
 
 export function createTableBody() {
@@ -51,9 +51,9 @@ export function createTableBody() {
   }
 
   tbody.addEventListener("click", (event) => tableBodyLeftClick(event, cells));
-  // tbody.addEventListener("contextmenu", (event) =>
-  //   tableBodyRightClick(event, cells)
-  // );
+  tbody.addEventListener("contextmenu", (event) =>
+    tableBodyRightClick(event, cells)
+  );
 
   function startTimer(event) {
     if (!timer.isRunning && event.target.nodeName === "TD") {

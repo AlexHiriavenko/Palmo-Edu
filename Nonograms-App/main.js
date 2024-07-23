@@ -9,6 +9,9 @@ import {
   closeModal,
 } from "./components/modal/functions/closeModal";
 import appState from "./AppState";
+import { gameNotFinished } from "./js-utilits/nonograms/gameNotFinished";
+import { timer } from "./js-utilits/timer/timerInstance";
+import { continueGame } from "./js-utilits/nonograms/continueGame";
 
 // при загрузке страницы установить тему (светлая / темная)
 document.addEventListener("DOMContentLoaded", function () {
@@ -30,3 +33,12 @@ initializeGameControls();
 
 // интерфейс закрытия модального окна
 closeModalButton?.addEventListener("click", closeModal);
+
+if (gameNotFinished) {
+  continueGame();
+} else {
+  timer.setTime(0);
+  timer.update();
+}
+
+console.log(appState);

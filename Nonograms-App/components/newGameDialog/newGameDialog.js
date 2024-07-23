@@ -43,7 +43,6 @@ export function createNewGameDialog() {
 
     resetNonogramState();
     setNonogramState(gameSettings);
-    console.log(appState);
     localStorage.setItem("currentNonogram", JSON.stringify(gameSettings));
 
     closeModal();

@@ -38,6 +38,8 @@ class Timer {
 
   update() {
     if (this.container instanceof Element) {
+      // console.log(this.container);
+      // console.log(this.time);
       this.container.textContent = this.formatTime(this.time);
       this.setLocalStorage();
     }
@@ -45,6 +47,11 @@ class Timer {
 
   getTime() {
     return this.time;
+  }
+
+  setTime(value) {
+    console.log(this.time);
+    this.time = value;
   }
 
   setLocalStorage() {

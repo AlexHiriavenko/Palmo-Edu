@@ -16,7 +16,7 @@ html.light {
   --th-bg: brown;
   --border-fat: #808080;
   --bg-img: none;
-  --bg-cell: url("../app-files/imgs/table/cell-cross-light.svg");
+  --bg-cell: url("../app-files/imgs/cell-cross-light.svg");
 }
 
 html.dark {
@@ -37,5 +37,5 @@ html.dark {
   --th-bg: rgb(18, 105, 158);
   --border-fat: rgb(148, 154, 189);
   --bg-img: url("../app-files/imgs/bg-dark.jpg");
-  --bg-cell: url("../app-files/imgs/table/cell-cross-dark.svg");
+  --bg-cell: url("../app-files/imgs/cell-cross-dark.svg");
 }
