@@ -8,7 +8,6 @@ import {
   closeModalButton,
   closeModal,
 } from "./components/modal/functions/closeModal";
-import appState from "./AppState";
 import { gameNotFinished } from "./js-utilits/nonograms/gameNotFinished";
 import { timer } from "./js-utilits/timer/timerInstance";
 import { continueGame } from "./js-utilits/nonograms/continueGame";
@@ -28,17 +27,20 @@ musicSwitcher.addEventListener("click", switchMusic);
 // установить акцент на ссылку, которая соответствует текущей странице.
 setAccentLink();
 
-// инициализация интерфейса игровых кнопок (слушатели на кнопки)
-initializeGameControls();
+const path = window.location.pathname;
+const isMainPage = path.endsWith("/nonograms/");
 
-// интерфейс закрытия модального окна
-closeModalButton?.addEventListener("click", closeModal);
+if (isMainPage) {
+  // инициализация интерфейса игровых кнопок (слушатели на кнопки)
+  initializeGameControls();
 
-if (gameNotFinished) {
-  continueGame();
-} else {
-  timer.setTime(0);
-  timer.update();
+  // интерфейс закрытия модального окна
+  closeModalButton?.addEventListener("click", closeModal);
+
+  //
+  if (gameNotFinished) {
+    continueGame();
+  } else {
+    timer.reset();
+  }
 }
-
-console.log(appState);
