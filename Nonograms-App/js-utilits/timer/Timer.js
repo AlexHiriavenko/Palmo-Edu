@@ -39,8 +39,16 @@ class Timer {
   update() {
     if (this.container instanceof Element) {
       this.container.textContent = this.formatTime(this.time);
-      localStorage.setItem("timer", this.time);
+      this.setLocalStorage();
     }
+  }
+
+  getTime() {
+    return this.time;
+  }
+
+  setLocalStorage() {
+    localStorage.setItem("timer", this.time);
   }
 
   formatTime(seconds) {

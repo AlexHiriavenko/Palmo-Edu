@@ -1,5 +1,6 @@
 import appState from "../../../AppState";
 import { resetNonogramState } from "../../../js-utilits/appState/resetNonogramState";
+import { timer } from "../../../js-utilits/timer/timerInstance";
 import { table } from "../../nonogramTable/nonogramTable";
 
 export function showSolution() {
@@ -15,4 +16,5 @@ export function showSolution() {
 
   table.style.pointerEvents = "none";
   resetNonogramState();
+  timer.reset();
 }
