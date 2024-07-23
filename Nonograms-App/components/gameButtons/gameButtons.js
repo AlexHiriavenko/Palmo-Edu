@@ -24,7 +24,7 @@ function initializeGameControls() {
   recordsButton?.addEventListener("click", () => {
     const recordsTable = createRecordsTable();
     appendModalContent(recordsTable);
-    openModal("victory");
+    openModal("records");
   });
 }
 
