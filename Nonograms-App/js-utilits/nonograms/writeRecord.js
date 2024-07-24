@@ -7,6 +7,7 @@ export function writeRecord(gameResults) {
 
   const sortedRecords = sortRecords(records);
 
+  // топ 5 игроков
   while (sortedRecords.length > 5) {
     sortedRecords.pop();
   }
