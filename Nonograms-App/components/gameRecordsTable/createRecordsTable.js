@@ -14,41 +14,43 @@ export function createRecordsTable() {
   btn.textContent = "OK";
   btn.addEventListener("click", closeModal);
 
-  // Создаем таблицу и заголовок
-  const table = document.createElement("table");
-  table.className = "records-table";
-  const thead = document.createElement("thead");
-  const theadRow = document.createElement("tr");
-
-  // Добавляем заголовки
-  const headers = ["#", "Player Name", "Nonogram", "Difficulty", "Time"];
-  headers.forEach((headerText) => {
-    const th = document.createElement("th");
-    th.className = "records__th";
-    th.textContent = headerText;
-    theadRow.appendChild(th);
-  });
-
-  thead.appendChild(theadRow);
-  table.appendChild(thead);
-
-  // Создаем тело таблицы
-  const tbody = document.createElement("tbody");
-
-  // Получаем записи из localStorage
   const records = JSON.parse(localStorage.getItem("recordsTable")) || [];
 
-  // Добавляем строки данных
-  for (let i = 0; i < 5; i += 1) {
-    const tbodyRow = document.createElement("tr");
+  if (records.length === 0) {
+    const noRecordsMessage = document.createElement("p");
+    noRecordsMessage.textContent = "No records yet";
+    noRecordsMessage.className = "norecords-text";
+    container.append(h3, noRecordsMessage, btn);
+  } else {
+    // Создаем таблицу и заголовок
+    const table = document.createElement("table");
+    table.className = "records-table";
+    const thead = document.createElement("thead");
+    const theadRow = document.createElement("tr");
 
-    // Добавляем порядковый номер
-    const indexCell = document.createElement("td");
-    indexCell.textContent = (i + 1).toString();
-    tbodyRow.appendChild(indexCell);
+    // Добавляем заголовки
+    const headers = ["#", "Player Name", "Nonogram", "Difficulty", "Time"];
+    headers.forEach((headerText) => {
+      const th = document.createElement("th");
+      th.className = "records__th";
+      th.textContent = headerText;
+      theadRow.appendChild(th);
+    });
 
-    if (records[i]) {
-      const record = records[i];
+    thead.appendChild(theadRow);
+    table.appendChild(thead);
+
+    // Создаем тело таблицы
+    const tbody = document.createElement("tbody");
+
+    // Добавляем строки данных
+    records.forEach((record, index) => {
+      const tbodyRow = document.createElement("tr");
+
+      // Добавляем порядковый номер
+      const indexCell = document.createElement("td");
+      indexCell.textContent = (index + 1).toString();
+      tbodyRow.appendChild(indexCell);
 
       // Добавляем ячейки данных
       const dataCells = ["playerName", "nonogramName", "difficulty", "time"];
@@ -61,21 +63,13 @@ export function createRecordsTable() {
         }
         tbodyRow.appendChild(td);
       });
-    } else {
-      // Если записи нет, заполняем ячейки "empty"
-      for (let j = 0; j < 4; j += 1) {
-        const td = document.createElement("td");
-        td.textContent = "empty";
-        tbodyRow.appendChild(td);
-      }
-    }
 
-    tbody.appendChild(tbodyRow);
+      tbody.appendChild(tbodyRow);
+    });
+
+    table.appendChild(tbody);
+    container.append(h3, table, btn);
   }
-
-  table.appendChild(tbody);
-
-  container.append(h3, table, btn);
 
   return container;
 }
