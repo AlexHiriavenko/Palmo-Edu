@@ -1,5 +1,5 @@
-export const apiKey = "a6mPIjNopR8bPfhreg4tukiBeua9PQDq7XDRFGBnRFk";
-// export const apiKey = "jFgS8tteGD425f4oZfygQVaVnD6gt6GucN2yyz3xFek";
+const apiKey = import.meta.env.VITE_UNSPLASH_API_KEY;
+// const apiKey = import.meta.env.VITE_UNSPLASH_API_KEY_ALTERNATIVE;
 
 class UnsplashAPI {
   constructor(apiKey) {

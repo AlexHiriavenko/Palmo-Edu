@@ -42,10 +42,11 @@
   position: absolute;
   right: 0.8rem;
   top: 0.4rem;
-  color: #a1a1a1;
+  color: var(--gallery-text);
   transition: all 0.1s ease-in-out;
   cursor: pointer;
   padding: 3px;
+  background-color: white;
 }
 
 .container:focus-within > .searchInputWrapper > .searchInputIcon {
