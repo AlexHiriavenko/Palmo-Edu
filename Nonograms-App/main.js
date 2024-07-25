@@ -11,6 +11,8 @@ import {
 import { gameNotFinished } from "./js-utilits/nonograms/gameNotFinished";
 import { timer } from "./js-utilits/timer/timerInstance";
 import { continueGame } from "./js-utilits/nonograms/continueGame";
+import { renderRandomImages } from "./Photo-Gallery/components/images-gallery/renderRandomImages";
+import initGallery from "./Photo-Gallery/initGallery";
 
 // при загрузке страницы установить тему (светлая / темная)
 document.addEventListener("DOMContentLoaded", function () {
@@ -29,6 +31,7 @@ setAccentLink();
 
 const path = window.location.pathname;
 const isMainPage = path.endsWith("/nonograms/");
+const isGalleryPage = path.endsWith("/Photo-Gallery/");
 
 if (isMainPage) {
   // инициализация интерфейса игровых кнопок (слушатели на кнопки)
@@ -43,4 +46,9 @@ if (isMainPage) {
   } else {
     timer.reset();
   }
+}
+
+if (isGalleryPage) {
+  renderRandomImages();
+  initGallery();
 }

@@ -135,3 +135,14 @@ header {
 .music-icon path {
   stroke: var(--addition-text-color);
 }
+
+@include tablet() {
+  .header__container {
+    flex-wrap: wrap;
+    min-height: 100px;
+  }
+
+  .header__btn-group {
+    width: 100%;
+  }
+}

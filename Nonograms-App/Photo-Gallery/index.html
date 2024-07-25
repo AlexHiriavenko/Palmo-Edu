@@ -9,19 +9,27 @@
       type="image/png"
       href="../app-files/imgs/nonogram.png"
       sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
     <link rel="stylesheet" href="../styles/reset.scss" />
     <link rel="stylesheet" href="../styles/styles.scss" />
   <title>Photo-Gallery</title>
 </head>
 
 <body>
-    <div id="app">
-    <load
-    ="../components/header/header.html" 
-    hrefHome="../"
-    hrefGallery="./"
-    />
-    <script type="module" src="../main.js"></script>
+  <div id="app">
+    <load ="../components/header/header.html" hrefHome="../" hrefGallery="./" />
+    <section class="search-section gallery-section">
+      <load ="/Photo-Gallery/components/search-menu/search-menu.html" />
+      <load ="/Photo-Gallery/components/search-bar/search-bar.html" />
+    </section>
+    <section class="image-gallery container gallery-section">
+      <load ="/Photo-Gallery/components/images-gallery/images-gallery.html" />
+    </section>
+  </div>
+  <script type="module" src="../main.js"></script>
 </body>
 
 </html>
