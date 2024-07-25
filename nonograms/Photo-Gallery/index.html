@@ -8,14 +8,18 @@
       rel="icon"
       type="image/png"
       href="/Palmo-Edu/nonograms/assets/nonogram-rZXRcbe1.png"
-      sizes="32x32" />
+      sizes="32x32" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
   <title>Photo-Gallery</title>
-  <script type="module" crossorigin src="/Palmo-Edu/nonograms/assets/main-DrhTHcra.js"></script>
-  <link rel="stylesheet" crossorigin href="/Palmo-Edu/nonograms/assets/main-CYLKFJ6n.css">
+  <script type="module" crossorigin src="/Palmo-Edu/nonograms/assets/main-Dt1vkRnW.js"></script>
+  <link rel="stylesheet" crossorigin href="/Palmo-Edu/nonograms/assets/main-Bn_91ase.css">
 </head>
 
 <body>
-    <div id="app">
+  <div id="app">
     <header>
   <div class="header__container app-container">
     <a class="header__link nonograms" href="../">
@@ -40,7 +44,52 @@
     </div>
   </div>
 </header>
-
+
+    <section class="search-section gallery-section">
+      <form action="" class="gallery-form">
+    <h3>Select a category:</h3>
+    <select id="nature">
+        <option disabled selected>Nature</option>
+        <option value="forest">Forest</option>
+        <option value="lake">Lake</option>
+        <option value="mountain">Mountains</option>
+        <option value="desert">Desert</option>
+        <option value="island">Islands</option>
+        <option value="ocean">Ocean</option>
+        <option value="sea">Sea</option>
+    </select>
+    <select id="cities">
+        <option disabled selected>Cities</option>
+        <option value="Kyiv">Kyiv</option>
+        <option value="Astana">Astana</option>
+        <option value="Minsk">Minsk</option>
+        <option value="Tbilisi">Tbilisi</option>
+        <option value="Warsaw">Warsaw</option>
+        <option value="Vilnius">Vilnius</option>
+        <option value="Riga">Riga</option>
+    </select>
+    <select id="sport">
+        <option disabled selected>Sport</option>
+        <option value="football">Football</option>
+        <option value="basketball">Basketball</option>
+        <option value="tennis">Tennis</option>
+        <option value="swimming">Swimming</option>
+        <option value="golf">Golf</option>
+        <option value="hockey">Hockey</option>
+    </select>
+</form>
+      <div class="searchInputContainer">
+  <div class="searchInputWrapper">
+    <input class="searchInput" type="text" placeholder='search...'>
+    <i class="searchInputIcon fa fa-search"></i>
+    </input>
+  </div>
+</div>
+    </section>
+    <section class="image-gallery container gallery-section">
+      <div id="grid"></div>
+    </section>
+  </div>
 </body>
 
 </html>
