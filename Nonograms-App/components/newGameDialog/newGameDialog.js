@@ -6,7 +6,7 @@ import { arrFillZeros } from "../../js-utilits/nonograms/arrayFillZeros";
 import { renderNonogramTable } from "../nonogramTable/nonogramTable";
 import { resetNonogramState } from "../../js-utilits/appState/resetNonogramState";
 import { table } from "../nonogramTable/nonogramTable";
-import appState from "../../AppState";
+import { timer } from "../../js-utilits/timer/timerInstance";
 
 export function createNewGameDialog() {
   const template = document.getElementById("newGameDialog");
@@ -42,6 +42,8 @@ export function createNewGameDialog() {
     };
 
     resetNonogramState();
+    timer.reset();
+
     setNonogramState(gameSettings);
     localStorage.setItem("currentNonogram", JSON.stringify(gameSettings));
 
