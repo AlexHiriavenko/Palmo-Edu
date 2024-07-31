@@ -1,5 +1,5 @@
-const apiKey = import.meta.env.VITE_UNSPLASH_API_KEY;
-// const apiKey = import.meta.env.VITE_UNSPLASH_API_KEY_ALTERNATIVE;
+// const apiKey = import.meta.env.VITE_UNSPLASH_API_KEY;
+const apiKey = import.meta.env.VITE_UNSPLASH_API_KEY_ALTERNATIVE;
 
 class UnsplashAPI {
   constructor(apiKey) {
