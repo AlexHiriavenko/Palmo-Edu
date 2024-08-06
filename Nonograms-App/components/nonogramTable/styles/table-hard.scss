@@ -1,0 +1,37 @@
+.th_top.hard:not(:first-of-type) {
+  width: 29px;
+  min-width: 29px;
+}
+
+.th_top.hard:first-of-type {
+  min-width: 92px;
+}
+
+.th_left.hard {
+  height: 29px;
+}
+
+@include tablet {
+  .th_top.hard:not(:first-of-type) {
+    width: 23px;
+    min-width: 23px;
+  }
+
+  .th_left.hard {
+    height: 23px;
+  }
+}
+
+@include mobile {
+  .th_top.hard:not(:first-of-type) {
+    width: 23px;
+    min-width: 23px;
+  }
+
+  .th_left.hard {
+    height: 23px;
+  }
+  .th_top.hard:first-of-type {
+    min-width: 104px;
+  }
+}

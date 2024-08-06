@@ -1,0 +1,12 @@
+.th_top.easy:not(:first-of-type) {
+  width: 40px;
+  min-width: 40px;
+}
+
+.th_top.easy:first-of-type {
+  min-width: 92px;
+}
+
+.th_left.easy {
+  height: 40px;
+}

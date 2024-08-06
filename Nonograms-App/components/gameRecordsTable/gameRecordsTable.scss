@@ -1,0 +1,36 @@
+.records-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-x: auto;
+}
+
+.records-table {
+  font-size: 16px;
+  border-collapse: collapse;
+  background-color: var(--main-text-color);
+  border: 1px solid black;
+}
+
+.records-table th {
+  padding: 4px;
+  color: white;
+  border: 1px solid black;
+}
+
+.records-table td {
+  padding: 4px;
+  color: var(--th-bg);
+  background-color: white;
+  border: 1px solid black;
+}
+
+@include mobile {
+  .records-container {
+    margin-top: 24px;
+  }
+  .records-table {
+    font-size: 14px;
+  }
+}
