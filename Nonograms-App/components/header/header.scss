@@ -1,0 +1,148 @@
+header {
+  background-color: var(--secondary-bg-color);
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  background-color: var(--secondary-bg-color);
+  color: var(--secondary-text-color);
+}
+
+.header__link {
+  font-size: 16px;
+  text-shadow: 1px 1px 1px var(--modal-cross-side2);
+  letter-spacing: 2px;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.header__link.accent {
+  font-size: 24px;
+}
+
+.header__btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  @include mobile {
+    gap: 8px;
+  }
+}
+
+.header__btn {
+  box-sizing: content-box;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+  position: relative;
+  background-color: white;
+}
+
+.header__btn.off::after {
+  content: "";
+  position: absolute;
+  width: 105%;
+  height: 3px;
+  background-color: rgb(112, 112, 112);
+  top: 50%;
+  left: 0;
+  transform: rotate(-45deg);
+  opacity: 0.6;
+}
+
+.switch-theme__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.switch-theme__wrap-svg {
+  background-color: white;
+}
+
+.switch-theme__label {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 36px;
+}
+
+.switch-theme__input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-theme__span {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  background-image: url("../app-files/imgs/moon.png");
+
+  background-size: 46%;
+  background-position: 90% 49%;
+  background-repeat: no-repeat;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.switch-theme__span:before {
+  position: absolute;
+  content: "";
+  height: 28px;
+  width: 28px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--secondary-bg-color);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.switch-theme__input:checked + .switch-theme__span {
+  background-image: url("../app-files/imgs/bulb.png");
+  background-position: 10% 36%;
+  background-size: 38%;
+}
+
+.switch-theme__input:checked + .switch-theme__span {
+  box-shadow: 0 0 1px white;
+}
+
+.switch-theme__input:checked + .switch-theme__span::before {
+  -webkit-transform: translateX(32px);
+  -ms-transform: translateX(32px);
+  transform: translateX(32px);
+}
+
+.music-icon {
+  fill: var(--addition-text-color);
+}
+
+.music-icon path {
+  stroke: var(--addition-text-color);
+}
+
+@include tablet() {
+  .header__container {
+    flex-wrap: wrap;
+    min-height: 100px;
+  }
+
+  .header__btn-group {
+    width: 100%;
+  }
+}

@@ -1,0 +1,79 @@
+.difficulty-label,
+.nonogram-names-label {
+  color: var(--main-text-color);
+  font-size: 18px;
+  font-weight: 600;
+  @include mobile {
+    font-size: 16px;
+  }
+}
+
+#difficulty-select,
+#nonogram-names-select {
+  min-width: 102px;
+  display: inline-block;
+  margin-left: 6px;
+  padding-left: 4px;
+  padding-block: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+  cursor: pointer;
+  @include mobile {
+    padding-left: 2px;
+  }
+}
+
+.label-title {
+  display: inline-block;
+  min-width: 196px;
+  min-width: auto;
+}
+
+#playerName {
+  min-width: 102px;
+  max-width: 162px;
+  display: inline-block;
+  margin-left: 6px;
+  padding-left: 4px;
+  padding-block: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+}
+
+.settings-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  @include mobile {
+    margin-top: 22px;
+  }
+}
+
+.start-game-btn {
+  margin-top: 30px;
+  align-self: center;
+  color: white;
+  background-color: var(--btn-bg-color);
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  @include mobile {
+    margin-top: 72px;
+  }
+  &:hover {
+    filter: brightness(1);
+  }
+}
+
+.form-title {
+  font-size: 24px;
+  text-align: center;
+  justify-self: center;
+  @include mobile {
+    margin-right: 34px;
+  }
+}

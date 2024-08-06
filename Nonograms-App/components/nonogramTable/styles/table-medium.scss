@@ -1,0 +1,27 @@
+.th_top.medium:not(:first-of-type) {
+  width: 30px;
+  min-width: 30px;
+}
+
+.th_top.medium:first-of-type {
+  min-width: 92px;
+}
+
+.th_left.medium {
+  height: 30px;
+}
+
+@include mobile {
+  .th_top.medium:not(:first-of-type) {
+    width: 26px;
+    min-width: 26px;
+  }
+
+  .th_left.medium {
+    height: 26px;
+  }
+
+  .th_top.medium:first-of-type {
+    min-width: 52px;
+  }
+}
