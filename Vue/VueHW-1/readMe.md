@@ -7,7 +7,7 @@
 
 ## Deploy:
 
-[deploy-link]()
+[deploy-link](https://alexhiriavenko.github.io/Palmo-Edu/VueHW-1/)
 
 ## Branch
 
