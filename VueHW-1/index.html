@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue HW-1</title>
+    <!-- vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- loader -->
+    <script src="https://unpkg.com/vue3-sfc-loader@0.8.4/dist/vue3-sfc-loader.js"></script>
+    <!-- кастомная функция загрузки vue компонента с помощью лоадера -->
+    <script src="./utils/loadComponent.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <div id="App">
+      <app-vue />
+    </div>
+
+    <script type="module">
+      const { createApp } = Vue;
+
+      createApp({
+        components: {
+          "app-vue": loadComponent("./App.vue"),
+        },
+      }).mount("#App");
+    </script>
+  </body>
+</html>
