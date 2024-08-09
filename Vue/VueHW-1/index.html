@@ -21,19 +21,22 @@
       <!-- Завдання 4: Додайте в існуючий проект кнопку, яка буде змінювати значення вашої змінної в об'єкті Vue при кожному кліку. -->
       <button @click="toggleTitleText">Change Title Text</button>
 
+      <!-- Завдання 5: Створіть окремий файл з компонентом, зареєструйте та додайте до проєкту.  -->
+      <text-input></text-input>
+
       <!-- Завдання 10: Передайте данні від основного об'єкта до другорядного. -->
       <p class="sharedMessage">{{ store.sharedMessage }}</p>
       <button @click="store.toggleSharedMessage()">
-        Chane Data in Both Vue Objects
+        Change Data in Both Vue Objects
       </button>
-
-      <!-- Завдання 5: Створіть окремий файл з компонентом, зареєструйте та додайте до проєкту.  -->
-      <text-input />
+      <!-- Завдання 2.1: cтворіть реактивний об'єкт і виведіть його властивості в шаблон. -->
+      <reactive-object></reactive-object>
     </div>
 
-    <div id="AppSecondary">
+    <div id="AppSecondary" class="sharedMessage">
+      <h2>Другорядний об'єкт Vue</h2>
       <!-- Завдання 10: Передайте данні від основного об'єкта до другорядного. -->
-      <p class="sharedMessage">{{ store.sharedMessage }}</p>
+      <p>{{ store.sharedMessage }}</p>
     </div>
 
     <script type="module">
@@ -52,6 +55,7 @@
         // Завдання 5: зареєструйте компонет.
         components: {
           "text-input": loadComponent("./Components/TextInput.vue"),
+          "reactive-object": loadComponent("./Components/ReactiveObject.vue"),
         },
 
         data() {

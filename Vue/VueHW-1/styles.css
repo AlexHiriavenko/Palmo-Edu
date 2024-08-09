@@ -20,3 +20,8 @@ h1 {
   width: max-content;
   padding: 4px;
 }
+
+#AppSecondary {
+  padding: 8px;
+  margin-top: 20px;
+}
