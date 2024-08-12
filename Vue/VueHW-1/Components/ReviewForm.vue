@@ -1,17 +1,17 @@
 <template>
-  <!-- 2.3 Створіть метод, який приймає подію і використовує ії для зміни даних інстанса. -->
   <form @submit.prevent="submitReview" class="review-form">
     <h3>Movie: {{ movieTitle }}</h3>
 
     <div class="form-group">
       <label for="name">Your Name</label>
-      <input type="text" id="name" :value="user.name" required disabled />
+      <input type="text" id="name" @input="setUserName" :value="user.name" required />
     </div>
     <div class="form-group">
       <label for="score">Movie Grade</label>
       <input id="score" v-model="movieGrade" required />
     </div>
     <button type="submit" class="submit-button">Submit</button>
+    <p v-if="isNotValid" class="error">Please enter a valid score between 1 and 5.</p>
   </form>
 </template>
 
@@ -24,7 +24,8 @@ export default {
   },
   data() {
     return {
-      movieGrade: null
+      movieGrade: null,
+      isNotValid: false,
     }
   },
   methods: {
@@ -34,6 +35,9 @@ export default {
       return !isNaN(score) && score >= 1 && score <= 5;
     },
     // 2.3 Створіть метод, який приймає подію і використовує ії для зміни даних інстанса.
+    setUserName(event) {
+      this.$emit('edit-user-name', event.target.value);
+    },
     submitReview() {
       if (this.validateScore()) {
         this.$emit('submit-review', {
@@ -43,7 +47,7 @@ export default {
         });
         this.movieGrade = null;
       } else {
-        alert('Please enter a valid score between 1 and 5.');
+        this.isNotValid = true
       }
     }
   }
@@ -108,5 +112,9 @@ export default {
 
 .submit-button:hover {
   background-color: #45a049;
+}
+
+.error {
+  color: red;
 }
 </style>

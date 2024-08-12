@@ -12,7 +12,7 @@
       <li>{{ currentCryptocurrency }}-JPY: {{ cryptoPrices[currentCryptocurrency].JPY }}</li>
     </ul>
     <p :style="{ backgroundColor: backgroundColor }">
-      0.5 {{ currentCryptocurrency }} its {{ halfCryptoToUSD }} USD;
+      {{ cryptocurrencyPart }} {{ currentCryptocurrency }} its {{ halfCryptoToUSD }} USD;
     </p>
     <p> {{ halfCryptoToUSD }} USD its {{ halfCryptoToHRN }} HRN</p>
   </div>
@@ -24,6 +24,9 @@ export default {
   data() {
     return {
       currentCryptocurrency: 'BTC',
+      cryptocurrencyPart: 0.5,
+      rateHRN: 41,
+      backgroundColor: 'white',
       cryptoPrices: {
         BTC: {
           USD: 0,
@@ -41,26 +44,23 @@ export default {
           JPY: 0
         }
       },
-      apiKey: '260247a5c09824d11eacc4f26c9f6b8f1d20c900f0b366e746a65609f5dc05b5',
-      basicUrl: 'https://min-api.cryptocompare.com/data/',
-      backgroundColor: 'white'
     };
   },
   computed: {
     // Створіть computed property, яке комбінує дані відповіді від HTTP запиту та з рекативною змінною.
     halfCryptoToUSD() {
-      return this.cryptoPrices[this.currentCryptocurrency].USD / 2;
+      return this.cryptoPrices[this.currentCryptocurrency].USD * this.cryptocurrencyPart;
     },
     // Створіть кілька computed properties, які залежать одне від одного.
     halfCryptoToHRN() {
-      return Math.ceil(this.halfCryptoToUSD * 41);
+      return Math.ceil(this.halfCryptoToUSD * this.rateHRN);
     }
   },
   watch: {
     currentCryptocurrency: {
       // Використовуйте watcher для відправлення API запитів при зміні реактивних даних.
       handler(newVal) {
-        this.fetchCryptoPrices(newVal);
+        this.updateCryptoPrices(newVal);
       },
       // Використовуйте опцію immediate для виклику watcher при ініціалізації компонента.
       immediate: true
@@ -84,12 +84,15 @@ export default {
     }
   },
   methods: {
-    async fetchCryptoPrices(cryptocurrency) {
-      const response = await fetch(`${this.basicUrl}price?fsym=${cryptocurrency}&tsyms=USD,JPY,EUR&api_key=${this.apiKey}`);
-      const data = await response.json();
-      this.cryptoPrices[cryptocurrency].USD = data.USD;
-      this.cryptoPrices[cryptocurrency].EUR = data.EUR;
-      this.cryptoPrices[cryptocurrency].JPY = data.JPY;
+    async updateCryptoPrices(cryptocurrency) {
+      try {
+        const { USD, EUR, JPY } = await apiService.fetchCryptoPrices(cryptocurrency);
+        this.cryptoPrices[cryptocurrency].USD = USD;
+        this.cryptoPrices[cryptocurrency].EUR = EUR;
+        this.cryptoPrices[cryptocurrency].JPY = JPY;
+      } catch (error) {
+        console.error('Error updating crypto prices:', error);
+      }
     }
   }
 }
