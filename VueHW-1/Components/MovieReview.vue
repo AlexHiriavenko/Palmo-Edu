@@ -3,8 +3,8 @@
   <div class="container">
     <div>
       <button @click="resetFilters">Reset Filters</button>
-      <button @click="filterUnrated">Filter by Unrated</button>
-      <button @click="filterRated">Filter by Rated</button>
+      <button @click="filterByType('unrated')">Filter by Unrated</button>
+      <button @click="filterByType('rated')">Filter by Rated</button>
       <div class="rating-filter">
         <p>Filter by Average Rating:
           <button @click="decreaseRate">-</button>
@@ -14,7 +14,8 @@
       </div>
       <movies-list :movies="filterByRate" :user="user" @open-form="openReviewForm"></movies-list>
     </div>
-    <review-form v-if="showForm" :movieTitle="selectedMovie" :user="user" @submit-review="addUserReview"></review-form>
+    <review-form v-if="showForm" :movieTitle="selectedMovie" :user="user" @edit-user-name="editUserName"
+      @submit-review="addUserReview"></review-form>
   </div>
 </template>
 
@@ -34,18 +35,6 @@ const moviesData = [
   { title: "Movie B", averageRating: 1.7, ratingsCount: 4 }
 ];
 
-const userData = {
-  id: 1,
-  name: "John Doe",
-  ratedMovies: [
-    { title: "The Shawshank Redemption", userScore: 5 },
-    { title: "The Godfather", userScore: 4 },
-    { title: "The Dark Knight", userScore: 5 },
-    { title: "12 Angry Men", userScore: 4 },
-    { title: "Movie A", userScore: 3 },
-  ]
-};
-
 export default {
   name: "MovieReview",
   components: {
@@ -56,7 +45,17 @@ export default {
     return {
       movies: moviesData,
       // 2.1 Створіть реактивний об'єкт і виведіть його властивості в шаблон.
-      user: userData,
+      user: {
+        id: 1,
+        name: "John Doe",
+        ratedMovies: [
+          { title: "The Shawshank Redemption", userScore: 5 },
+          { title: "The Godfather", userScore: 4 },
+          { title: "The Dark Knight", userScore: 5 },
+          { title: "12 Angry Men", userScore: 4 },
+          { title: "Movie A", userScore: 3 },
+        ]
+      },
       rate: 1,
       showForm: false,
       selectedMovie: ''
@@ -89,12 +88,8 @@ export default {
       this.rate = 1;
     },
     // 2.4 Створіть метод для фільтрації масиву об'єктів за деяким критерієм.
-    filterUnrated() {
-      this.movies = moviesData.filter(movie => !this.getUserScore(movie.title));
-    },
-    // 2.4 Створіть метод для фільтрації масиву об'єктів за деяким критерієм.
-    filterRated() {
-      this.movies = moviesData.filter(movie => this.getUserScore(movie.title));
+    filterByType(type) {
+      this.movies = moviesData.filter(movie => type === "rated" ? this.getUserScore(movie.title) : !this.getUserScore(movie.title));
     },
     // 2.2 Створіть метод, який буде викликатися при кліку на кнопку і змінювати деякі дані в інстансі
     openReviewForm(movieTitle) {
@@ -106,7 +101,6 @@ export default {
     addUserReview({ movieTitle, userName, score }) {
       const userReview = { title: movieTitle, userScore: score };
       this.user.ratedMovies.push(userReview);
-      userData.ratedMovies.push(userReview)
 
       const targetMovie = this.movies.find(movie => movie.title === movieTitle);
       if (targetMovie) {
@@ -116,6 +110,9 @@ export default {
 
 
       this.showForm = false;
+    },
+    editUserName(name) {
+      this.user.name = name
     }
   },
 }
