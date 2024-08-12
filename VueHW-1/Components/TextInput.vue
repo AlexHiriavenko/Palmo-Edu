@@ -1,7 +1,7 @@
 <!-- Завдання 5: Створіть окремий файл з компонентом, зареєструйте та додайте до проєкту. -->
 
 <template>
-  <div class="text-input-component">
+  <div class="text-input-component component">
     <h2>Text Input Component</h2>
     <!-- Завдання 6: Створіть форму вводу тексту та зв'яжіть введене значення з властивістю об'єкта Vue. Виведіть введений
     текст на сторінці. -->
@@ -36,16 +36,6 @@ export default {
 </script>
 
 <style scoped>
-.text-input-component {
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  max-width: 400px;
-  margin-block: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f9f9f9;
-}
-
 .text-input-component h2 {
   font-size: 1.5em;
   color: #333;
