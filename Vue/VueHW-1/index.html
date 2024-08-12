@@ -15,6 +15,12 @@
   </head>
 
   <body>
+    <div id="AppSecondary" class="sharedMessage">
+      <h2>Другорядний об'єкт Vue</h2>
+      <!-- Завдання 10: Передайте данні від основного об'єкта до другорядного. -->
+      <p>{{ store.sharedMessage }}</p>
+    </div>
+
     <div id="App">
       <!-- Завдання 3: Створіть змінну в об'єкті Vue і виведіть її значення на сторінці. -->
       <h1>{{ titleText }}</h1>
@@ -30,13 +36,7 @@
         Change Data in Both Vue Objects
       </button>
       <!-- Завдання 2.1: cтворіть реактивний об'єкт і виведіть його властивості в шаблон. -->
-      <reactive-object></reactive-object>
-    </div>
-
-    <div id="AppSecondary" class="sharedMessage">
-      <h2>Другорядний об'єкт Vue</h2>
-      <!-- Завдання 10: Передайте данні від основного об'єкта до другорядного. -->
-      <p>{{ store.sharedMessage }}</p>
+      <container-component></container-component>
     </div>
 
     <script type="module">
@@ -55,7 +55,7 @@
         // Завдання 5: зареєструйте компонет.
         components: {
           "text-input": loadComponent("./Components/TextInput.vue"),
-          "reactive-object": loadComponent("./Components/ReactiveObject.vue"),
+          "container-component": loadComponent("./Blocks/Container.vue"),
         },
 
         data() {
