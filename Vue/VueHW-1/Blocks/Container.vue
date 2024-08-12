@@ -2,6 +2,7 @@
   <div class="container">
     <h2>HW-1 Part2 Container</h2>
     <movie-review></movie-review>
+    <crypto-calc-watcher></crypto-calc-watcher>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ export default {
 
   components: {
     "movie-review": loadComponent("./Components/MovieReview.vue"),
+    "crypto-calc-watcher": loadComponent("./Components/CryptoCalcWatcher.vue")
   }
 }
 </script>
