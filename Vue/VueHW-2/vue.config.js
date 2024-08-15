@@ -9,6 +9,9 @@ module.exports = defineConfig({
       title: "Vue HW-2", // Устанавливаем желаемый заголовок
     },
   },
+  // верный путь (basic url) для деплоя на gh-pages
+  publicPath:
+    process.env.NODE_ENV === "production" ? "/Palmo-Edu/VueHW-2/" : "/",
   configureWebpack: {
     plugins: [
       new webpack.DefinePlugin({
