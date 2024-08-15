@@ -16,3 +16,7 @@ https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw2
 ## Source Code Path
 
 https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1/Vue/VueHW-2/
+
+## Project setup:
+
+npm install; npm run serve; npm run build; npm run lint; npm run deploy
