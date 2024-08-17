@@ -1,19 +1,15 @@
 <template>
-  <h1>{{ msg }}</h1>
-  <GlobalComponent />
+  <h2>GlobalComponent</h2>
 </template>
 
 <script>
 export default {
-  name: "AppTitle",
-  props: {
-    msg: String,
-  },
+  name: "GlobalComponent",
 };
 </script>
 
 <style scoped>
-h1 {
+h2 {
   margin: 40px 0 0;
 }
 </style>
