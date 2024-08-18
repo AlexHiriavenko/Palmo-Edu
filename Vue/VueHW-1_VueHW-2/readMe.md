@@ -2,8 +2,8 @@
 
 ## Tasks:
 
-- [task-part-1](https://gist.github.com/morphey312/5f1a0e8e1e869cb4aa6ef591c892594e)
-- [task-part-2](https://gist.github.com/morphey312/7c50077b4b6dfd83596150f45ce109ab)
+- [vue-hw-1](https://gist.github.com/morphey312/5f1a0e8e1e869cb4aa6ef591c892594e)
+- [vue-hw-2](https://gist.github.com/morphey312/7c50077b4b6dfd83596150f45ce109ab)
 
 ## Deploy:
 
@@ -15,4 +15,4 @@ https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1-hw2
 
 ## Source Code Path
 
-https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1/Vue/VueHW-1_VueHW-2/
+https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1-hw2/Vue/VueHW-1_VueHW-2/
