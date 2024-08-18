@@ -1,0 +1,17 @@
+{
+  "singleQuote": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "vueIndentScriptAndStyle": true,
+  "printWidth": 80,
+  "plugins": [
+    "prettier-plugin-vue"
+  ],
+  "overrides": [
+    {
+      "files": "*.vue",
+      "options": {
+        "singleAttributePerLine": true
+      }
+    }
+  ]
+}
