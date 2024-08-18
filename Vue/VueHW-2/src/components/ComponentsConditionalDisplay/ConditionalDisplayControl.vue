@@ -41,7 +41,7 @@
 
 <style>
   .components-conditional-display {
-    background-color: lightgreen;
+    background-color: azure;
     padding-block: 20px;
   }
 </style>

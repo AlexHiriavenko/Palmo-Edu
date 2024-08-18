@@ -33,6 +33,20 @@
       <p v-show="showElement">Элемент с использованием v-show.</p>
       <button @click="toggleElement">Переключить отображение элементов</button>
     </div>
+
+    <!-- 
+        Використовуючи v-bind, динамічно додавайте або видаляйте атрибути елемента (наприклад, disabled, readonly) в залежності від умови.
+    -->
+    <div class="attribute-binding">
+      <h3 class="subtitle">Dynamic Attribute Binding</h3>
+      <input
+        type="text"
+        :disabled="isDisabled"
+        :readonly="isReadonly"
+        placeholder="Введите текст"
+      />
+      <button @click="toggleAttributes">Переключить атрибуты</button>
+    </div>
   </div>
 </template>
 
@@ -42,6 +56,8 @@
       return {
         showMessage: true,
         showElement: true,
+        isDisabled: false,
+        isReadonly: false,
       };
     },
     methods: {
@@ -51,31 +67,49 @@
       toggleElement() {
         this.showElement = !this.showElement;
       },
+      toggleAttributes() {
+        this.isDisabled = !this.isDisabled;
+        this.isReadonly = !this.isReadonly;
+      },
     },
   };
 </script>
 
 <style>
   .toggle-text {
-    background-color: lightgreen;
-    padding-block: 20px;
-  }
+  background-color: lightgreen;
+  padding-block: 20px;
+}
 
-  .accent-text {
-    color: white;
-  }
+.accent-text {
+  color: white;
+}
 
-  .display-changes {
-    background-color: azure;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 162px;
-    align-items: center;
-    padding-block: 20px;
-  }
+.display-changes {
+  background-color: azure;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 162px;
+  align-items: center;
+  padding-block: 20px;
+}
 
-  h3.subtitle {
-    margin: 0;
-  }
+.attribute-binding {
+  background-color: lightgreen;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-block: 20px;
+}
+
+h3.subtitle {
+  margin: 0;
+}
+
+input[type="text"] {
+  margin-bottom: 10px;
+  padding: 5px;
+}
 </style>

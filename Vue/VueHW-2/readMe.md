@@ -20,3 +20,8 @@ https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1/Vue/VueHW-2/
 ## Project setup:
 
 npm install; npm run serve; npm run build; npm run lint; npm run deploy
+
+## Notes:
+
+- чтобы запустить проект не меняя корневой дирректории (cd Vue/VueHW-2) <br>
+  можно ввести команду npm --prefix "./Vue/VueHW-2" install и npm --prefix "./Vue/VueHW-2" run serve
