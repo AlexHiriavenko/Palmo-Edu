@@ -1,0 +1,10 @@
+{
+  "[vue]": {
+    "editor.formatOnSave": true,
+    // "editor.defaultFormatter": "Vue.volar"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // ФИКС - "Parsing error: No babel config file detected"
+  // Автоматическое определение рабочего каталога: Эта настройка указывает ESLint автоматически определять правильный рабочий каталог для каждого файла на основе структуры вашего проекта. Это означает, что ESLint будет искать конфигурационные файлы (такие как .eslintrc.js и babel.config.js) в директории, где находится ваш проект, даже если он не в корне репозитория.
+  "eslint.workingDirectories": [{ "mode": "auto" }]
+}
