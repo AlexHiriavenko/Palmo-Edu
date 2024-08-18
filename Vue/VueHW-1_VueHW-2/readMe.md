@@ -11,8 +11,8 @@
 
 ## Branch
 
-https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1
+https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1-hw2
 
 ## Source Code Path
 
-https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1/Vue/VueHW-1/
+https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1/Vue/VueHW-1_VueHW-2/
