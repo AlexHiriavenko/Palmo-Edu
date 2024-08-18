@@ -1,17 +1,17 @@
-const { defineConfig } = require("@vue/cli-service");
-const webpack = require("webpack");
+const { defineConfig } = require('@vue/cli-service');
+const webpack = require('webpack');
 
 module.exports = defineConfig({
   transpileDependencies: true,
   pages: {
     index: {
-      entry: "src/main.js", // Путь к основному скрипту страницы index
-      title: "Vue HW-2", // Устанавливаем желаемый заголовок
+      entry: 'src/main.js', // Путь к основному скрипту страницы index
+      title: 'Vue HW-2', // Устанавливаем желаемый заголовок
     },
   },
   // верный путь (basic url) для деплоя на gh-pages
   publicPath:
-    process.env.NODE_ENV === "production" ? "/Palmo-Edu/VueHW-2/" : "/",
+    process.env.NODE_ENV === 'production' ? '/Palmo-Edu/VueHW-3/' : '/',
   configureWebpack: {
     experiments: {
       topLevelAwait: true,
