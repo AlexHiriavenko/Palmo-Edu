@@ -13,6 +13,9 @@ module.exports = defineConfig({
   publicPath:
     process.env.NODE_ENV === "production" ? "/Palmo-Edu/VueHW-2/" : "/",
   configureWebpack: {
+    experiments: {
+      topLevelAwait: true,
+    },
     plugins: [
       new webpack.DefinePlugin({
         // управляет включением или отключением Options API в Vue 3.

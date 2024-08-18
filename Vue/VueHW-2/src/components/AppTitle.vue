@@ -4,16 +4,16 @@
 </template>
 
 <script>
-export default {
-  name: "AppTitle",
-  props: {
-    msg: String,
-  },
-};
+  export default {
+    name: 'AppTitle',
+    props: {
+      msg: String,
+    },
+  };
 </script>
 
 <style scoped>
-h1 {
+  h1 {
   margin: 40px 0 0;
 }
 </style>

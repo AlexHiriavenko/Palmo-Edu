@@ -3,13 +3,14 @@
 </template>
 
 <script>
-export default {
-  name: "GlobalComponent",
-};
+  export default {
+    name: 'GlobalComponent',
+  };
 </script>
 
 <style scoped>
-h2 {
+  h2 {
   margin: 40px 0 0;
+  background-color: lightgreen;
 }
 </style>
