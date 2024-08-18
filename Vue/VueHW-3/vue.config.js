@@ -6,7 +6,7 @@ module.exports = defineConfig({
   pages: {
     index: {
       entry: 'src/main.js', // Путь к основному скрипту страницы index
-      title: 'Vue HW-2', // Устанавливаем желаемый заголовок
+      title: 'Vue HW-3', // Устанавливаем желаемый заголовок
     },
   },
   // верный путь (basic url) для деплоя на gh-pages
