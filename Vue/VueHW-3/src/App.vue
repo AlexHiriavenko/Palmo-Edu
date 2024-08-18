@@ -26,7 +26,7 @@
     },
 
     created() {
-      this.appTitle = 'Vue HW-2';
+      this.appTitle = 'Vue HW-3';
     },
   };
 </script>

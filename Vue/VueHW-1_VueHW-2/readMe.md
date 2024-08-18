@@ -1,9 +1,9 @@
-# Vue. HW-1
+# Vue. HW-1 HW-2
 
 ## Tasks:
 
-- [task-part-1](https://gist.github.com/morphey312/5f1a0e8e1e869cb4aa6ef591c892594e)
-- [task-part-2](https://gist.github.com/morphey312/7c50077b4b6dfd83596150f45ce109ab)
+- [vue-hw-1](https://gist.github.com/morphey312/5f1a0e8e1e869cb4aa6ef591c892594e)
+- [vue-hw-2](https://gist.github.com/morphey312/7c50077b4b6dfd83596150f45ce109ab)
 
 ## Deploy:
 

@@ -1,12 +1,12 @@
 {
-  "name": "vue_hw-2",
+  "name": "vue_hw-3",
   "version": "0.1.0",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "npx vue-cli-service build && npx gh-pages -d dist -e VueHW-2"
+    "deploy": "npx vue-cli-service build && npx gh-pages -d dist -e VueHW-3"
   },
   "dependencies": {
     "axios": "^1.7.4",
