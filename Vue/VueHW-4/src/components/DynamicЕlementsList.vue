@@ -44,8 +44,8 @@
         }
       },
       updateStyles(index) {
-        const randomTop = `${Math.floor(Math.random() * 300) - 150}px`;
-        const randomLeft = `${Math.floor(Math.random() * 300) - 150}px`;
+        const randomTop = `${Math.floor(Math.random() * 50) + 50}px`;
+        const randomLeft = `${Math.floor(Math.random() * 50) + 50}px`;
 
         this.items[index].style = {
           ...this.generateRandomStyle(),

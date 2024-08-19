@@ -9,6 +9,8 @@
     <FormSubscription />
     <MethodsSwitcher />
     <DynamicЕlementsList />
+    <TableCreator />
+    <NestedList />
   </div>
 </template>
 
@@ -18,6 +20,8 @@
   import MethodsSwitcher from './components/MethodsSwitcher.vue';
   import DynamicЕlementsList from './components/DynamicЕlementsList.vue';
   import ThemeSwitcher from './components/ThemeSwitcher.vue';
+  import TableCreator from './components/TableCreator.vue';
+  import NestedList from './components/NestedList.vue';
 
   export default {
     name: 'App',
@@ -28,6 +32,8 @@
       MethodsSwitcher,
       DynamicЕlementsList,
       ThemeSwitcher,
+      TableCreator,
+      NestedList,
     },
 
     data() {
