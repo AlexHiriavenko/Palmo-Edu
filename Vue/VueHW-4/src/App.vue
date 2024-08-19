@@ -11,6 +11,7 @@
     <DynamicЕlementsList />
     <TableCreator />
     <NestedList />
+    <PaginationList />
   </div>
 </template>
 
@@ -21,7 +22,8 @@
   import DynamicЕlementsList from './components/DynamicЕlementsList.vue';
   import ThemeSwitcher from './components/ThemeSwitcher.vue';
   import TableCreator from './components/TableCreator.vue';
-  import NestedList from './components/NestedList.vue';
+  import NestedList from './components/NestedFilteredList.vue';
+  import PaginationList from './components/PaginationList.vue';
 
   export default {
     name: 'App',
@@ -34,6 +36,7 @@
       ThemeSwitcher,
       TableCreator,
       NestedList,
+      PaginationList,
     },
 
     data() {
@@ -98,6 +101,7 @@
     }
 
     .component {
+      margin-left: 16px;
       padding: 20px;
       border: 1px solid #ddd;
       border-radius: 8px;
