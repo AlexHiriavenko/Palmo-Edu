@@ -1,49 +1,49 @@
 <template>
-  <form
-    @submit.prevent="submitForm"
-    class="component"
-  >
-    <div>
-      <label for="username">Name:</label>
-      <input
-        type="text"
-        id="username"
-        v-model="formData.username"
-        :class="{ invalid: errors.username }"
-      />
-      <span
-        v-if="errors.username"
-        class="error"
+  <div class="component">
+    <h2>Form Subscription</h2>
+    <form @submit.prevent="submitForm">
+      <div>
+        <label for="username">Name:</label>
+        <input
+          type="text"
+          id="username"
+          v-model="formData.username"
+          :class="{ invalid: errors.username }"
+        />
+        <span
+          v-if="errors.username"
+          class="error"
+        >
+          имя должно содержать не менее 2х символов
+        </span>
+      </div>
+
+      <div>
+        <label for="email">Email:</label>
+        <input
+          type="text"
+          id="email"
+          v-model="formData.email"
+          :class="{ invalid: errors.email }"
+        />
+        <span
+          v-if="errors.email"
+          class="error"
+        >
+          введите почту в формате: mail@domain.com
+        </span>
+      </div>
+
+      <button type="submit">Відправити</button>
+
+      <p
+        v-if="submitStatusText"
+        :style="{ color: submitStatus ? 'green' : 'red' }"
       >
-        имя должно содержать не менее 2х символов
-      </span>
-    </div>
-
-    <div>
-      <label for="email">Email:</label>
-      <input
-        type="text"
-        id="email"
-        v-model="formData.email"
-        :class="{ invalid: errors.email }"
-      />
-      <span
-        v-if="errors.email"
-        class="error"
-      >
-        введите почту в формате: mail@domain.com
-      </span>
-    </div>
-
-    <button type="submit">Відправити</button>
-
-    <p
-      v-if="submitStatusText"
-      :style="{ color: submitStatus ? 'green' : 'red' }"
-    >
-      {{ submitStatusText }}
-    </p>
-  </form>
+        {{ submitStatusText }}
+      </p>
+    </form>
+  </div>
 </template>
 
 <script>

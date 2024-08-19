@@ -1,5 +1,6 @@
 <template>
   <div class="component">
+    <h2>Click Time Saver</h2>
     <button @click="saveClickTime">Record Time</button>
     <ul>
       <li
