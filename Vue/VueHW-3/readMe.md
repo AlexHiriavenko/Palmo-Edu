@@ -14,7 +14,7 @@ https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw3
 
 ## Source Code Path
 
-https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1/Vue/VueHW-3/
+https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw3/Vue/VueHW-3/
 
 ## Project setup:
 
