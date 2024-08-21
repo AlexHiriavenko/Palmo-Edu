@@ -1,4 +1,7 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
   "[vue]": {
     "editor.formatOnSave": true,
     // "editor.defaultFormatter": "Vue.volar"
