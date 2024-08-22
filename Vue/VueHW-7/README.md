@@ -19,4 +19,6 @@ https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw7/Vue/VueHW-7/
 ## Notes:
 
 - чтобы запустить проект не меняя корневой дирректории (cd Vue/VueHW-7) <br>
-  можно ввести команду npm --prefix "./Vue/VueHW-7" install и npm --prefix "./Vue/VueHW-7" run dev
+  можно ввести команды:
+  - cd ./Vue/VueHW-7 && npm install && cd -
+  - npm --prefix "./Vue/VueHW-7" run dev

@@ -23,4 +23,6 @@ npm install; npm run serve; npm run build; npm run lint; npm run deploy
 ## Notes:
 
 - чтобы запустить проект не меняя корневой дирректории (cd Vue/VueHW-3) <br>
-  можно ввести команду npm --prefix "./Vue/VueHW-3" install и npm --prefix "./Vue/VueHW-3" run serve
+  можно ввести команды:
+  - cd ./Vue/VueHW-3 && npm install && cd -
+  - npm --prefix "./Vue/VueHW-3" run dev

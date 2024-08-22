@@ -9,3 +9,4 @@
 - [Vue-HW1-HW2](https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw1-hw2/Vue/VueHW-1_VueHW-2)
 - [Vue-HW3](https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw3/Vue/VueHW-3)
 - [Vue-HW4](https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw4/Vue/VueHW-4)
+- [Vue-HW7](https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw7/Vue/VueHW-7)
