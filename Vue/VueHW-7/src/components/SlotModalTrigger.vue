@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="modal-trigger">
     <h2>Modal Trigger Component</h2>
     <button @click="showModal">Open Modal</button>
 
@@ -21,7 +21,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import SlotModalNaming from './SlotModalNaming.vue'
 
 const isVisible = ref(false)
 
@@ -30,4 +29,9 @@ function showModal() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.modal-trigger {
+  background-color: cadetblue;
+  padding: 16px;
+}
+</style>

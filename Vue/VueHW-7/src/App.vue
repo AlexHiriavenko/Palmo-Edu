@@ -1,11 +1,3 @@
-<script setup>
-import SlotDefault from './components/SlotDefault.vue'
-import SlotDefaultContentFirst from '@/components/SlotDefaultContentFirst.vue'
-import SlotDefaultContentSecond from '@/components/SlotDefaultContentSecond.vue'
-import SlotDataSender from './components/SlotDataSender.vue'
-import SlotModalTrigger from './components/SlotModalTrigger.vue'
-</script>
-
 <template>
   <h1>Vue HW-7</h1>
   <SlotDefaultContentFirst />
@@ -21,7 +13,17 @@ import SlotModalTrigger from './components/SlotModalTrigger.vue'
     </SlotDataSender>
   </div>
   <SlotModalTrigger />
+  <MixinUsingComponent />
 </template>
+
+<script setup>
+import SlotDefault from './components/SlotDefault.vue'
+import SlotDefaultContentFirst from '@/components/SlotDefaultContentFirst.vue'
+import SlotDefaultContentSecond from '@/components/SlotDefaultContentSecond.vue'
+import SlotDataSender from './components/SlotDataSender.vue'
+import SlotModalTrigger from './components/SlotModalTrigger.vue'
+import MixinUsingComponent from './components/MixinUsingComponent.vue'
+</script>
 
 <style>
 h1,
