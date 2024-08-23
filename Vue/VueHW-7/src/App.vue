@@ -7,13 +7,14 @@
     <h3>Get data from child component</h3>
     <SlotDataSender>
       <template #message&number="slotProps">
-        <p>{{ slotProps.message }}</p>
+        <p v-textcolor="'green'">{{ slotProps.message }}</p>
         <p>{{ slotProps.number }}</p>
       </template>
     </SlotDataSender>
   </div>
   <SlotModalTrigger />
   <MixinUsingComponent />
+  <MixinFormComponent />
 </template>
 
 <script setup>
@@ -23,6 +24,7 @@ import SlotDefaultContentSecond from '@/components/SlotDefaultContentSecond.vue'
 import SlotDataSender from './components/SlotDataSender.vue'
 import SlotModalTrigger from './components/SlotModalTrigger.vue'
 import MixinUsingComponent from './components/MixinUsingComponent.vue'
+import MixinFormComponent from './components/MixinFormComponent.vue'
 </script>
 
 <style>
