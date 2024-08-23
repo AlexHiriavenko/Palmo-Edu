@@ -1,14 +1,18 @@
 <template>
-  <h1>Vue HW-7</h1>
+  <h1 v-tooltip="{ text: 'tooltip top', position: 'top' }">
+    Vue HW-7 <span>(check v-tooltip)</span>
+  </h1>
   <SlotDefaultContentFirst />
   <SlotDefaultContentSecond />
   <SlotDefault />
   <div class="parent-slot-sender">
-    <h3>Get data from child component</h3>
+    <h3 v-tooltip="{ text: 'tooltip right', position: 'right' }">Get data from child component</h3>
     <SlotDataSender>
       <template #message&number="slotProps">
         <p v-textcolor="'green'">{{ slotProps.message }}</p>
-        <p>{{ slotProps.number }}</p>
+        <p v-currency="{ amount: slotProps.number, currency: slotProps.currentCurrency }">
+          тут директивой v-currency будет сформирован текст в формате: $1 111,11
+        </p>
       </template>
     </SlotDataSender>
   </div>
@@ -32,6 +36,14 @@ h1,
 h2,
 h3 {
   padding: 8px;
+}
+
+h1 {
+  cursor: pointer;
+}
+
+h1 span {
+  font-size: 14px;
 }
 
 .parent-slot-sender {
