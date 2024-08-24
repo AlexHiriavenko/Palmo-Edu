@@ -1,7 +1,7 @@
 <template>
   <div class="modal-trigger">
     <h2>Modal Trigger Component</h2>
-    <button @click="showModal" v-draggable>Open Modal</button>
+    <button @click="showModal">Open Modal</button>
 
     <SlotModalNaming v-model="isVisible">
       <template #header>
