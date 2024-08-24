@@ -1,3 +1,5 @@
+// директива которая добавляет префикс валюты к числу и визуально делит число на разряды
+
 function formatCurrency(amount, currency = '$') {
   const parsedAmount = parseFloat(amount)
 

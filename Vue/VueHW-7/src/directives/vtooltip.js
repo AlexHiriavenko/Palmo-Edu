@@ -2,10 +2,8 @@ export default {
   name: 'tooltip',
 
   beforeMount(el, binding) {
-    // Добавляем текст тултипа в data-tooltip
     el.setAttribute('data-tooltip', binding.value.text || binding.value)
 
-    // Добавляем классы для стилизации
     el.classList.add('with-tooltip')
 
     const position = binding.value.position || 'top'
