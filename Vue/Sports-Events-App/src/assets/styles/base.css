@@ -1,0 +1,21 @@
+button {
+  border: none;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition-duration: 0.5s;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.app-header {
+  height: 80px;
+  background-color: aquamarine;
+  padding-inline: 16px;
+}
