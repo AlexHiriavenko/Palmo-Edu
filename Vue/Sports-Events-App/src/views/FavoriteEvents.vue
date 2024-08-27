@@ -1,5 +1,7 @@
 <template>
   <div>
-    <h1>Booking</h1>
+    <h1>Favorites</h1>
   </div>
 </template>
+
+<style></style>

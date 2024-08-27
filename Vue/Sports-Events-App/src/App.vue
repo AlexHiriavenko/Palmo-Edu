@@ -1,15 +1,13 @@
-<script setup>
-import { RouterView } from 'vue-router'
-import NavBar from './components/NavBar.vue'
-</script>
-
 <template>
-  <v-app>
-    <NavBar />
+  <v-layout>
+    <HeaderApp />
     <v-main>
       <RouterView />
     </v-main>
-  </v-app>
+  </v-layout>
 </template>
 
-<style></style>
+<script setup>
+import HeaderApp from '@/blocks/HeaderApp.vue'
+import { RouterView } from 'vue-router'
+</script>

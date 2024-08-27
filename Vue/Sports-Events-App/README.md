@@ -20,5 +20,11 @@
 
 - Vue3: CompositionAPI, Router, Pinia, Vuetify.
 - Vue3: Composables, Slots, Custom Directives
-- Axios: instanses, interseptors.
+- Axios: instances, interseptors.
 - FireBase: auth.
+
+## Notes:
+Чтобы запустить проект не меняя корневой дирректории (cd Vue/Sports-Events-App) <br>
+можно ввести команды:
+  - cd ./Vue/Sports-Events-App && npm install && cd -
+  - npm --prefix "./Vue/Sports-Events-App" run dev
