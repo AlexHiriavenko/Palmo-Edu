@@ -26,14 +26,31 @@
     :modelValue="drawer"
     @update:modelValue="drawer = $event"
   />
+
+  <ModalDialog v-if="modalStore.isOpen">
+    <template #modal-content>
+      <AuthForm
+        :currentSubmitMethod="currentSubmitMethod"
+        :form-title="formTitle"
+      />
+    </template>
+  </ModalDialog>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useModalStore } from '@/stores/modalStore'
 import NavBar from '@/components/NavBar.vue'
 import NavBurger from '@/components/NavBurger.vue'
 import DropMenu from '@/components/DropMenu.vue'
+import AuthForm from '@/components/AuthForm.vue'
+
+const modalStore = useModalStore()
+
+const openModal = () => {
+  modalStore.openModal()
+}
 
 const drawer = ref(false)
 
@@ -52,13 +69,32 @@ const menuItems = ref([
   { text: 'Logout', action: 'logout' }
 ])
 
+// Определяем методы для логина и регистрации
+const loginMethod = () => {
+  console.log('login')
+  modalStore.closeModal()
+}
+
+const signupMethod = () => {
+  console.log('signup')
+  modalStore.closeModal()
+}
+
+// Переменная для текущего метода отправки формы
+const currentSubmitMethod = ref(null)
+const formTitle = ref('')
+
 const handleMenuClick = (item) => {
   switch (item.action) {
     case 'login':
-      console.log('Login')
+      currentSubmitMethod.value = loginMethod
+      formTitle.value = 'Log In'
+      openModal()
       break
     case 'signup':
-      console.log('Sign Up')
+      currentSubmitMethod.value = signupMethod
+      formTitle.value = 'Sign Up'
+      openModal()
       break
     case 'logout':
       console.log('Logout')
