@@ -27,8 +27,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
 // Props
 defineProps({
   currentSubmitMethod: {

@@ -20,7 +20,6 @@
 
 <script setup>
 import { useModalStore } from '@/stores/modalStore'
-import { computed } from 'vue'
 
 const modalStore = useModalStore()
 

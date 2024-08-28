@@ -11,8 +11,8 @@
 </template>
 
 <script setup>
-import router from '@/router'
 import icon404 from '@/assets/imgs/icon404.png'
+import router from '@/router'
 
 function redirectToHome() {
   router.push({ name: 'home' })

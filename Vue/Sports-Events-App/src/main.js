@@ -1,9 +1,8 @@
 import './assets/styles/main.css'
-import { createApp } from 'vue'
-import { createVuetify } from 'vuetify'
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
-import { createPinia } from 'pinia'
+
+import { createVuetify } from 'vuetify'
 import ModalDialog from '@/components/ModalDialog.vue'
 
 import App from './App.vue'
