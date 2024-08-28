@@ -1,9 +1,12 @@
 <template>
   <v-sheet class="mx-auto" width="300">
     <v-form fast-fail @submit.prevent="currentSubmitMethod">
-      <v-card-title class="text-center">{{ formTitle }}</v-card-title>
+      <v-card-title v-if="formTitle" class="text-center">
+        {{ formTitle }}
+      </v-card-title>
+
       <v-text-field
-        v-model="email"
+        v-model.trim="email"
         :rules="emailRules"
         label="Email"
         type="email"
@@ -11,7 +14,7 @@
       ></v-text-field>
 
       <v-text-field
-        v-model="password"
+        v-model.trim="password"
         :rules="passwordRules"
         label="Password"
         type="password"
@@ -23,36 +26,34 @@
   </v-sheet>
 </template>
 
-<script>
-export default {
-  props: {
-    currentSubmitMethod: {
-      type: Function,
-      required: true
-    },
-    formTitle: {
-      type: String,
-      required: false
-    }
+<script setup>
+import { ref } from 'vue'
+
+// Props
+defineProps({
+  currentSubmitMethod: {
+    type: Function,
+    required: true
   },
-  data: () => ({
-    email: '',
-    emailRules: [
-      (value) => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (emailPattern.test(value)) return true
+  formTitle: {
+    type: String,
+    required: false
+  }
+})
 
-        return 'Please enter a valid email address.'
-      }
-    ],
-    password: '',
-    passwordRules: [
-      (value) => {
-        if (value?.length >= 6) return true
+const email = ref('')
+const password = ref('')
 
-        return 'Password must be at least 6 characters.'
-      }
-    ]
-  })
-}
+const emailRules = [
+  (value) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailPattern.test(value) || 'Please enter a valid email address.'
+  }
+]
+
+const passwordRules = [
+  (value) => {
+    return value?.length >= 6 || 'Password must be at least 6 characters.'
+  }
+]
 </script>

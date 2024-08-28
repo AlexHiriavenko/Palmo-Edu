@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import BookingEvents from '@/views/BookingEvents.vue'
 import AdminPanel from '@/views/AdminPanel.vue'
 import FavoriteEvents from '@/views/FavoriteEvents.vue'
+import NotFound from '@/views/NotFound.vue'
 
 const routes = [
   {
@@ -28,6 +29,12 @@ const routes = [
     name: 'admin-panel',
     component: AdminPanel,
     meta: { title: 'Admin', showInTabs: true }
+  },
+  {
+    path: '/:catchAll(.*)', // Ловит все маршруты, которые не определены выше
+    name: 'not-found',
+    component: NotFound,
+    meta: { title: '404', showInTabs: false }
   }
 ]
 

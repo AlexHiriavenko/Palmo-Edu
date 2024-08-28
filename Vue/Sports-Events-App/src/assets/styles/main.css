@@ -1,2 +1,6 @@
 @import './base.css';
 @import './reset.css';
+
+:root {
+  --header-height: 64px;
+}

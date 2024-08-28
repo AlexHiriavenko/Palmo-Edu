@@ -104,3 +104,9 @@ const handleMenuClick = (item) => {
   }
 }
 </script>
+
+<style>
+.app-header .v-toolbar__content {
+  padding-bottom: 6px;
+}
+</style>

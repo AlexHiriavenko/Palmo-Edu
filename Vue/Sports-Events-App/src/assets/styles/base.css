@@ -15,6 +15,7 @@ a {
 }
 
 .app-header {
-  background-color: aquamarine;
-  padding-inline: 16px;
+  /* padding-inline: 16px;
+  padding-block: 4px; */
+  box-sizing: border-box;
 }
