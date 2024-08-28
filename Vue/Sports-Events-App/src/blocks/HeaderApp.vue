@@ -88,12 +88,12 @@ const handleMenuClick = (item) => {
   switch (item.action) {
     case 'login':
       currentSubmitMethod.value = loginMethod
-      formTitle.value = 'Log In'
+      formTitle.value = 'LogIn Form'
       openModal()
       break
     case 'signup':
       currentSubmitMethod.value = signupMethod
-      formTitle.value = 'Sign Up'
+      formTitle.value = 'SignUp Form'
       openModal()
       break
     case 'logout':

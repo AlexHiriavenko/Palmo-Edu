@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="mx-auto" width="300">
-    <v-form fast-fail @submit.prevent="currentSubmitMethod">
+    <v-form ref="form" fast-fail @submit.prevent="onSubmit">
       <v-card-title v-if="formTitle" class="text-center">
         {{ formTitle }}
       </v-card-title>
@@ -27,31 +27,29 @@
 </template>
 
 <script setup>
-// Props
-defineProps({
+import { useAuthFormValidation } from '@/composables/useAuthFormValidation'
+
+const { currentSubmitMethod } = defineProps({
   currentSubmitMethod: {
     type: Function,
     required: true
   },
   formTitle: {
     type: String,
-    required: false
+    required: false,
+    default: 'Form'
   }
 })
 
 const email = ref('')
 const password = ref('')
+const form = ref(null)
 
-const emailRules = [
-  (value) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailPattern.test(value) || 'Please enter a valid email address.'
-  }
-]
+const { emailRules, passwordRules } = useAuthFormValidation()
 
-const passwordRules = [
-  (value) => {
-    return value?.length >= 6 || 'Password must be at least 6 characters.'
-  }
-]
+async function onSubmit() {
+  const { valid, errors } = await form.value.validate()
+
+  valid ? currentSubmitMethod() : console.log(errors)
+}
 </script>
