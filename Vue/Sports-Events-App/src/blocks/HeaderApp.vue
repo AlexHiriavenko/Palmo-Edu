@@ -14,7 +14,7 @@
 
     <v-spacer></v-spacer>
 
-    <DropMenu :items="menuItems" @item-click="handleMenuClick">
+    <DropMenu :items="menuItems" @itemClick="handleMenuClick">
       <template #activator="{ props }">
         <v-btn icon="mdi-account" variant="text" v-bind="props"></v-btn>
       </template>

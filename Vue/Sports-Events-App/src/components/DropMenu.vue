@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     handleClick(item) {
-      this.$emit('item-click', item)
+      this.$emit('itemClick', item)
     }
   }
 }

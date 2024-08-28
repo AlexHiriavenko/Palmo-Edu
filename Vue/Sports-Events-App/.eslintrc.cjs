@@ -11,6 +11,27 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest'
   },
+  rules: {
+    // Требует имена пропсов в стиле camelCase
+    'vue/prop-name-casing': ['error', 'camelCase'],
+
+    // Требует emit в стиле camelCase
+    'vue/custom-event-name-casing': ['error', 'camelCase'],
+
+    // Запрещает использовать `this` в шаблонах компонентов
+    'vue/this-in-template': ['error', 'never'],
+
+    // Запрещает использование нескольких пробелов подряд
+    'vue/no-multi-spaces': 'error',
+
+    // Требует определённый порядок тегов `<template>`, `<script>` и `<style>`
+    'vue/component-tags-order': [
+      'error',
+      {
+        order: ['template', 'script', 'style']
+      }
+    ]
+  },
   globals: {
     Component: true,
     ComponentPublicInstance: true,
