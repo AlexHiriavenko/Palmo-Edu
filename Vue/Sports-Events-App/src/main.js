@@ -4,6 +4,7 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import { createVuetify } from 'vuetify'
 import ModalDialog from '@/components/ModalDialog.vue'
+import LoaderSpinner from './components/LoaderSpinner.vue'
 
 import App from './App.vue'
 import router from './router'
@@ -22,4 +23,5 @@ app
   .use(createPinia())
   .use(router)
   .component('ModalDialog', ModalDialog)
+  .component('LoaderSpinner', LoaderSpinner)
   .mount('#app')

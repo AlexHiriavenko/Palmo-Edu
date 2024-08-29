@@ -29,7 +29,12 @@
 
   <ModalDialog v-if="modalStore.isOpen">
     <template #modal-content>
+      <LoaderSpinner v-if="userStore.isLoading" />
+      <AuthResultMessage
+        v-else-if="userStore.isLoggedIn || userStore.authError"
+      />
       <AuthForm
+        v-else
         :currentSubmitMethod="currentSubmitMethod"
         :form-title="formTitle"
       />
@@ -41,16 +46,16 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useModalStore } from '@/stores/modalStore'
+import { useUserStore } from '@/stores/userStore'
 import NavBar from '@/components/NavBar.vue'
 import NavBurger from '@/components/NavBurger.vue'
 import DropMenu from '@/components/DropMenu.vue'
 import AuthForm from '@/components/AuthForm.vue'
+import LoaderSpinner from '@/components/LoaderSpinner.vue'
+import AuthResultMessage from '@/components/AuthResultMessage.vue'
 
 const modalStore = useModalStore()
-
-const openModal = () => {
-  modalStore.openModal()
-}
+const userStore = useUserStore()
 
 const drawer = ref(false)
 
@@ -63,41 +68,32 @@ const toggleDrawer = () => {
   drawer.value = !drawer.value
 }
 
-const menuItems = ref([
-  { text: 'Login', action: 'login' },
-  { text: 'Sign Up', action: 'signup' },
-  { text: 'Logout', action: 'logout' }
-])
+const menuItems = computed(() => {
+  return userStore.isLoggedIn
+    ? [{ text: 'Logout', action: 'logout' }]
+    : [
+        { text: 'Login', action: 'login' },
+        { text: 'Sign Up', action: 'signup' }
+      ]
+})
 
-// Определяем методы для логина и регистрации
-const loginMethod = () => {
-  console.log('login')
-  modalStore.closeModal()
-}
-
-const signupMethod = () => {
-  console.log('signup')
-  modalStore.closeModal()
-}
-
-// Переменная для текущего метода отправки формы
 const currentSubmitMethod = ref(null)
 const formTitle = ref('')
 
 const handleMenuClick = (item) => {
   switch (item.action) {
     case 'login':
-      currentSubmitMethod.value = loginMethod
+      currentSubmitMethod.value = userStore.login
       formTitle.value = 'LogIn Form'
-      openModal()
+      modalStore.openModal()
       break
     case 'signup':
-      currentSubmitMethod.value = signupMethod
+      currentSubmitMethod.value = userStore.signup
       formTitle.value = 'SignUp Form'
-      openModal()
+      modalStore.openModal()
       break
     case 'logout':
-      console.log('Logout')
+      userStore.logout()
       break
     default:
       console.log('Unknown action')

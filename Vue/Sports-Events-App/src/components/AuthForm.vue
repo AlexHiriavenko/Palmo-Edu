@@ -50,6 +50,14 @@ const { emailRules, passwordRules } = useAuthFormValidation()
 async function onSubmit() {
   const { valid, errors } = await form.value.validate()
 
-  valid ? currentSubmitMethod() : console.log(errors)
+  if (valid) {
+    try {
+      await currentSubmitMethod(email.value, password.value)
+    } catch (error) {
+      console.error('Error during submission:', error)
+    }
+  } else {
+    console.log(errors)
+  }
 }
 </script>

@@ -4,14 +4,14 @@
     @update:model-value="closeModal"
     max-width="500px"
   >
-    <v-card>
+    <v-card min-height="400px">
       <div class="d-flex justify-end">
         <v-btn icon @click="closeModal" class="mt-4 mr-4">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </div>
 
-      <v-card-text>
+      <v-card-text class="d-flex justify-center align-center">
         <slot name="modal-content"></slot>
       </v-card-text>
     </v-card>
