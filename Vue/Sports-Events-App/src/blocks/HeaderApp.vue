@@ -43,8 +43,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useModalStore } from '@/stores/modalStore'
 import { useUserStore } from '@/stores/userStore'
 import NavBar from '@/components/NavBar.vue'
@@ -61,6 +59,7 @@ const drawer = ref(false)
 
 const router = useRouter()
 const filteredRoutes = computed(() => {
+  console.log(router.options.routes)
   return router.options.routes.filter((route) => route.meta?.showInTabs)
 })
 

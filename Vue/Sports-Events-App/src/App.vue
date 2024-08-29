@@ -9,5 +9,4 @@
 
 <script setup>
 import HeaderApp from '@/blocks/HeaderApp.vue'
-import { RouterView } from 'vue-router'
 </script>
