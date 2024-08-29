@@ -31,7 +31,7 @@ const routes = [
     meta: { title: 'Admin', showInTabs: true }
   },
   {
-    path: '/:catchAll(.*)', // Ловит все маршруты, которые не определены выше
+    path: '/:catchAll(.*)',
     name: 'not-found',
     component: NotFound,
     meta: { title: '404', showInTabs: false }
