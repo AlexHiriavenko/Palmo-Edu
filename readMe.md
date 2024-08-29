@@ -1,1 +1,0 @@
-# Palmo Full Stack Course
