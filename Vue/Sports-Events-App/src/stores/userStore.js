@@ -74,6 +74,10 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
+  const setAuthErrorState = (value) => {
+    authError.value = value
+  }
+
   const modalStore = useModalStore()
 
   watch(
@@ -92,6 +96,7 @@ export const useUserStore = defineStore('userStore', () => {
     isLoggedIn,
     login,
     signup,
-    logout
+    logout,
+    setAuthErrorState
   }
 })

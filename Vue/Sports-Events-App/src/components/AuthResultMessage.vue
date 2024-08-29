@@ -22,6 +22,10 @@ const message = computed(() =>
 const buttonColor = computed(() => (userStore.isLoggedIn ? 'success' : 'error'))
 
 const handleClose = () => {
-  modalStore.closeModal()
+  if (userStore.isLoggedIn) {
+    modalStore.closeModal()
+  } else if (userStore.authError) {
+    userStore.setAuthErrorState(false)
+  }
 }
 </script>
