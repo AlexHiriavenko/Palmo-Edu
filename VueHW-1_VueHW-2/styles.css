@@ -1,0 +1,37 @@
+body {
+  background-color: lightgray;
+}
+
+button {
+  font-size: 16px;
+  padding: 6px 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+h1 {
+  color: green;
+}
+
+.sharedMessage {
+  color: orange;
+  font-size: 16px;
+  background-color: black;
+  width: max-content;
+  padding: 4px;
+}
+
+#AppSecondary {
+  padding: 8px;
+  margin-top: 20px;
+}
+
+.component {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 400px;
+  margin-block: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
