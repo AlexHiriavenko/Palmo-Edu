@@ -9,11 +9,9 @@ import { useModalStore } from '@/stores/modalStore'
 export const useUserStore = defineStore('userStore', () => {
   const currentUser = ref(null)
   const authError = ref('')
-  const isLoading = ref(false)
-  const isLoggedIn = computed(() => currentUser.value && !isLoading.value)
+  const isLoggedIn = computed(() => currentUser.value)
 
   const login = async (email, password) => {
-    isLoading.value = true
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -22,22 +20,16 @@ export const useUserStore = defineStore('userStore', () => {
       )
       currentUser.value = userCredential.user
       authError.value = ''
-      console.log('User logged in:', currentUser.value)
     } catch (error) {
       if (error.code === 'auth/invalid-credential') {
         authError.value = 'Invalid Credentials.'
-        console.log(authError.value)
       } else {
         authError.value = 'Login Error'
       }
-      console.log('Login Error:', error.message)
-    } finally {
-      isLoading.value = false
     }
   }
 
   const signup = async (email, password) => {
-    isLoading.value = true
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -53,24 +45,16 @@ export const useUserStore = defineStore('userStore', () => {
       } else {
         authError.value = 'An unexpected error. Please try again later.'
       }
-      console.log('Error signup:', error)
-    } finally {
-      isLoading.value = false
     }
   }
 
   const logout = async () => {
-    isLoading.value = true
     try {
       await signOut(auth)
       currentUser.value = null
       authError.value = ''
-      console.log('User logged out')
     } catch (error) {
       authError.value = 'LogOut Error - try later'
-      console.error('Error logout:', error)
-    } finally {
-      isLoading.value = false
     }
   }
 
@@ -92,7 +76,6 @@ export const useUserStore = defineStore('userStore', () => {
   return {
     currentUser,
     authError,
-    isLoading,
     isLoggedIn,
     login,
     signup,

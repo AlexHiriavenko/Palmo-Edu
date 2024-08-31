@@ -29,7 +29,7 @@
 <script setup>
 import { useAuthFormValidation } from '@/composables/useAuthFormValidation'
 
-const { currentSubmitMethod } = defineProps({
+const { currentSubmitMethod, formTitle } = defineProps({
   currentSubmitMethod: {
     type: Function,
     required: true
@@ -41,6 +41,8 @@ const { currentSubmitMethod } = defineProps({
   }
 })
 
+const emit = defineEmits(['update:isLoading'])
+
 const email = ref('')
 const password = ref('')
 const form = ref(null)
@@ -48,16 +50,16 @@ const form = ref(null)
 const { emailRules, passwordRules } = useAuthFormValidation()
 
 async function onSubmit() {
-  const { valid, errors } = await form.value.validate()
+  const { valid } = await form.value.validate()
 
   if (valid) {
+    emit('update:isLoading', true)
     try {
       await currentSubmitMethod(email.value, password.value)
     } catch (error) {
       console.error('Error during submission:', error)
     }
-  } else {
-    console.log(errors)
+    emit('update:isLoading', false)
   }
 }
 </script>

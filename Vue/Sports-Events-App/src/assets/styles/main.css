@@ -1,5 +1,7 @@
 @import './base.css';
 @import './reset.css';
+@import './header.css';
+@import './not-found.css';
 
 :root {
   --header-height: 64px;

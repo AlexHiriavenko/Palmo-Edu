@@ -1,11 +1,11 @@
-    <v-menu>
-      <template v-slot:activator="{ props }">
-        <v-btn icon="mdi-account" variant="text" v-bind="props"></v-btn>
-      </template>
-      <v-list>
-        <v-list-item>
-          <v-list-item-title>{{ 'sadajhdja' }}</v-list-item-title>
-          <v-list-item-title>{{ 'sadajhdja' }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+<!-- <v-app-bar-nav-icon
+      v-if="$vuetify.display.smAndDown"
+      variant="text"
+      @click.stop="toggleDrawer"
+    ></v-app-bar-nav-icon> -->
+
+<!-- <NavBurger
+    :routes="filteredRoutes"
+    :modelValue="drawer"
+    @update:modelValue="drawer = $event"
+  /> -->

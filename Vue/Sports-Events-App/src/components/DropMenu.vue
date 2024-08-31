@@ -1,34 +1,32 @@
 <template>
   <v-menu>
     <template #activator="{ props }">
-      <slot>
-        <v-btn icon="mdi-account" variant="text" v-bind="props"></v-btn>
+      <slot name="menuActivator" :props="props">
+        <v-btn icon="mdi-menu" variant="text" v-bind="props"></v-btn>
       </slot>
     </template>
     <v-list>
       <v-list-item
         v-for="(item, index) in items"
-        :key="index"
-        @click="handleClick(item)"
+        :key="item.id || index"
+        @click="itemClick(item)"
       >
-        <v-list-item-title>{{ item.text }}</v-list-item-title>
+        <v-list-item-title>{{ item.text || item.name }}</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-menu>
 </template>
 
-<script>
-export default {
-  props: {
-    items: {
-      type: Array,
-      required: true
-    }
-  },
-  methods: {
-    handleClick(item) {
-      this.$emit('itemClick', item)
-    }
+<script setup>
+import { defineProps, defineEmits } from 'vue'
+
+defineProps({
+  items: {
+    type: Array,
+    required: true
   }
-}
+})
+
+const emit = defineEmits(['itemClick'])
+const itemClick = (item) => emit('itemClick', item)
 </script>

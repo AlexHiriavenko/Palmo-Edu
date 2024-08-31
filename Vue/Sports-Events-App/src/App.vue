@@ -8,5 +8,5 @@
 </template>
 
 <script setup>
-import HeaderApp from '@/blocks/HeaderApp.vue'
+import HeaderApp from '@/components/HeaderApp.vue'
 </script>
