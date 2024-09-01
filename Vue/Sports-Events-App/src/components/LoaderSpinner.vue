@@ -5,8 +5,8 @@
     class="d-flex justify-center align-center"
   >
     <v-progress-circular
-      :size="50"
-      color="primary"
+      :size="size"
+      :color="color"
       indeterminate
     ></v-progress-circular>
   </v-container>
@@ -18,6 +18,16 @@ defineProps({
     type: Boolean,
     required: true,
     default: false
+  },
+  size: {
+    type: Number,
+    required: false,
+    default: 50
+  },
+  color: {
+    type: String,
+    required: false,
+    default: 'primary'
   }
 })
 </script>

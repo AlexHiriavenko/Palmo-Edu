@@ -4,6 +4,7 @@ import BookingEvents from '@/views/BookingEvents.vue'
 import AdminPanel from '@/views/AdminPanel.vue'
 import FavoriteEvents from '@/views/FavoriteEvents.vue'
 import NotFound from '@/views/NotFound.vue'
+import EventDetails from '@/views/EventDetails.vue' // Добавьте импорт страницы карточки
 
 const routes = [
   {
@@ -29,6 +30,13 @@ const routes = [
     name: 'admin-panel',
     component: AdminPanel,
     meta: { title: 'Admin', showInTabs: true }
+  },
+  {
+    path: '/event/:id', // Новый маршрут для страницы карточки
+    name: 'event-details',
+    component: EventDetails,
+    props: true,
+    meta: { title: 'Event Details', showInTabs: false }
   },
   {
     path: '/:catchAll(.*)',

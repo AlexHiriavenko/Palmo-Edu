@@ -1,44 +1,54 @@
 <template>
   <v-container fluid class="views">
-    <v-row g-4>
-      <v-col
-        v-for="event in eventsStore.events"
-        :key="event.id"
-        cols="12"
-        md="4"
-      >
-        <v-card class="v-card-custom" elevation="10">
-          <v-card-title class="text-center font-weight-bold">
-            {{ event.name }}
-          </v-card-title>
-          <v-card-subtitle class="font-weight-bold"
-            >Price: {{ event.price }}</v-card-subtitle
-          >
-          <v-card-text class="font-weight-bold"
-            >Location: {{ event.location }}</v-card-text
-          >
-          <v-card-text v-formatdate="event.dateTime" class="font-weight-bold"
-            >Date:</v-card-text
-          >
-          <v-card-actions class="justify-center">
-            <v-btn
-              color="primary"
-              text="More Details"
-              class="font-weight-bold"
-            />
-          </v-card-actions>
-        </v-card>
+    <h2 class="text-h3 text-white text-center py-4">Upcoming events</h2>
+    <LoaderSpinner :isLoading="isLoading" :size="70" color="white" />
+    <v-row style="max-width: 960px; min-height: 600px" class="mx-auto">
+      <v-col v-for="event in paginatedEvents" :key="event.id" cols="12" md="4">
+        <EventCard :event="event" />
       </v-col>
     </v-row>
+    <div class="text-xs-center">
+      <PaginationBar
+        v-if="eventsStore.events.length"
+        v-model="page"
+        :length="totalPages"
+        :total-visible="6"
+        @update:model-value="handlePageChange"
+      />
+    </div>
   </v-container>
 </template>
 
 <script setup>
 import { useEventsStore } from '@/stores/eventsStore'
+import PaginationBar from '@/components/PaginationBar.vue'
+import EventCard from '@/components/EventCard.vue'
 
 const eventsStore = useEventsStore()
+const page = ref(1)
+const itemsPerPage = 6
+const isLoading = ref(false)
 
-onMounted(() => {
-  eventsStore.getEvents()
+const paginatedEvents = computed(() => {
+  const start = (page.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return eventsStore.events.slice(start, end)
+})
+
+const totalPages = computed(() => {
+  const total = Math.ceil(eventsStore.events.length / itemsPerPage)
+  return total
+})
+
+function handlePageChange(newPage) {
+  page.value = newPage
+}
+
+onMounted(async () => {
+  if (!eventsStore.events.length) {
+    isLoading.value = true
+    await eventsStore.getEvents()
+    isLoading.value = false
+  }
 })
 </script>

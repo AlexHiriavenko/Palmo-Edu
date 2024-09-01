@@ -17,7 +17,7 @@ export const useEventsStore = defineStore('eventsStore', () => {
           ...doc.data()
         }
       })
-      console.log(events)
+      return events.value
     } catch (e) {
       getEventsError.value = 'Error receiving sports events'
     }
