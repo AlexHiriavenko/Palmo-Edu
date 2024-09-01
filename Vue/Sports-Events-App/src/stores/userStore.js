@@ -2,7 +2,10 @@ import {
   auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  db,
+  addDoc,
+  collection
 } from '@/firebase'
 import { useModalStore } from '@/stores/modalStore'
 
@@ -19,6 +22,7 @@ export const useUserStore = defineStore('userStore', () => {
         password
       )
       currentUser.value = userCredential.user
+      console.log(currentUser.value)
       authError.value = ''
     } catch (error) {
       if (error.code === 'auth/invalid-credential') {
@@ -38,7 +42,10 @@ export const useUserStore = defineStore('userStore', () => {
       )
       currentUser.value = userCredential.user
       authError.value = ''
-      console.log('User registered:', currentUser.value)
+
+      if (currentUser.value) {
+        createUserDB()
+      }
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         authError.value = 'This Email Is Already In Use.'
@@ -55,6 +62,18 @@ export const useUserStore = defineStore('userStore', () => {
       authError.value = ''
     } catch (error) {
       authError.value = 'LogOut Error - try later'
+    }
+  }
+
+  const createUserDB = async () => {
+    try {
+      const docRef = await addDoc(collection(db, 'users'), {
+        email: currentUser.value.email,
+        uid: currentUser.value.uid
+      })
+      console.log('Документ успешно добавлен с ID: ', docRef.id)
+    } catch (e) {
+      console.error('Ошибка добавления документа: ', e)
     }
   }
 

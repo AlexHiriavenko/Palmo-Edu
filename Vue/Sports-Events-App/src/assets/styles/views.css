@@ -1,0 +1,7 @@
+.views {
+  background-image: url('@/assets/imgs/Background2.jpg');
+  background-position: center;
+  background-size: cover;
+  min-height: calc(100vh - var(--header-height));
+  max-height: calc(100vh - var(--header-height));
+}
