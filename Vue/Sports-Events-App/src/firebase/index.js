@@ -5,6 +5,8 @@ import {
   doc,
   addDoc,
   getDocs,
+  getDoc,
+  setDoc,
   query,
   where
 } from 'firebase/firestore'
@@ -12,7 +14,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  onAuthStateChanged
 } from 'firebase/auth'
 
 const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG)
@@ -24,14 +27,15 @@ const auth = getAuth(firebaseApp)
 const db = getFirestore(firebaseApp)
 
 const dbCollections = {
-  users: 'users',
-  basketballEvents: 'basketballEvents'
+  users: collection(db, 'users'),
+  basketballEvents: collection(db, 'basketballEvents')
 }
 
 export {
   auth,
   db,
   dbCollections,
+  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
@@ -40,5 +44,7 @@ export {
   query,
   where,
   doc,
-  getDocs
+  getDocs,
+  getDoc,
+  setDoc
 }

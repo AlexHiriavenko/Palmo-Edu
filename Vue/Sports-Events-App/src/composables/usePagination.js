@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 
-export function usePagination(items, itemsPerPage = 10) {
+export function usePagination(items, itemsPerPage = 6) {
   const page = ref(1)
 
   const totalPages = computed(() => {

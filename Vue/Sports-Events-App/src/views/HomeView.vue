@@ -9,7 +9,7 @@
     </v-row>
     <div class="text-xs-center">
       <PaginationBar
-        v-if="eventsStore.events.length"
+        v-if="eventsStore.events.length > itemsPerPage"
         v-model="page"
         :length="totalPages"
         :total-visible="6"

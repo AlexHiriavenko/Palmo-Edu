@@ -1,4 +1,4 @@
-import { db, getDocs, collection, dbCollections, query } from '@/firebase'
+import { getDocs, dbCollections, query } from '@/firebase'
 
 const { basketballEvents } = dbCollections
 
@@ -8,8 +8,7 @@ export const useEventsStore = defineStore('eventsStore', () => {
 
   async function getEvents() {
     try {
-      const eventsRef = collection(db, basketballEvents)
-      const q = query(eventsRef)
+      const q = query(basketballEvents)
       const querySnapshot = await getDocs(q)
       events.value = querySnapshot.docs.map((doc) => {
         return {
