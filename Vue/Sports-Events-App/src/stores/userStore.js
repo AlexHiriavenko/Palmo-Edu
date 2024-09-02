@@ -18,13 +18,9 @@ export const useUserStore = defineStore('userStore', () => {
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      console.log('user logged in')
-      console.log(auth.currentUser)
       const userId = auth.currentUser.uid
       currentUser.value = await getUserById(userId)
-      console.log(currentUser.value)
     } else {
-      console.log('no logged in users')
       // currentUser.value = null
     }
   })
