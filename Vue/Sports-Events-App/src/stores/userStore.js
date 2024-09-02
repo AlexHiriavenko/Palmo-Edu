@@ -25,7 +25,7 @@ export const useUserStore = defineStore('userStore', () => {
       console.log(currentUser.value)
     } else {
       console.log('no logged in users')
-      currentUser.value = null
+      // currentUser.value = null
     }
   })
 
@@ -43,7 +43,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const signup = async (email, password, name = 'unnamed') => {
+  const signup = async (email, password, name = 'NoName') => {
     try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
@@ -54,7 +54,15 @@ export const useUserStore = defineStore('userStore', () => {
       authError.value = ''
 
       if (user) {
-        createUserDB(user, name)
+        const userData = {
+          name: name,
+          email: user.email,
+          uid: user.uid,
+          favoriteEvents: [],
+          bookedEvents: []
+        }
+        createUserDB(userData)
+        updateProfile(user, { displayName: name })
       }
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -75,18 +83,9 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const createUserDB = async (user, username) => {
+  const createUserDB = async (userData) => {
     try {
-      const userData = {
-        name: username,
-        email: user.email,
-        uid: user.uid,
-        favoriteEvents: [],
-        bookedEvents: []
-      }
-
-      updateProfile(user, { displayName: username })
-      await setEntityInDB('users', user.uid, userData)
+      await setEntityInDB('users', userData.uid, userData)
       currentUser.value = userData
     } catch (e) {
       deleteUser(auth.currentUser)

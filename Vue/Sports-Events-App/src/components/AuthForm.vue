@@ -6,6 +6,15 @@
       </v-card-title>
 
       <v-text-field
+        v-if="authType === 'signup'"
+        v-model.trim="name"
+        :rules="nameRules"
+        label="Name"
+        type="text"
+        autocomplete="name"
+      ></v-text-field>
+
+      <v-text-field
         v-model.trim="email"
         :rules="emailRules"
         label="Email"
@@ -29,7 +38,7 @@
 <script setup>
 import { useAuthFormValidation } from '@/composables/useAuthFormValidation'
 
-const { currentSubmitMethod, formTitle } = defineProps({
+const { currentSubmitMethod } = defineProps({
   currentSubmitMethod: {
     type: Function,
     required: true
@@ -38,16 +47,21 @@ const { currentSubmitMethod, formTitle } = defineProps({
     type: String,
     required: false,
     default: 'Form'
+  },
+  authType: {
+    type: String,
+    required: true
   }
 })
 
 const emit = defineEmits(['update:isLoading'])
 
+const name = ref('')
 const email = ref('')
 const password = ref('')
 const form = ref(null)
 
-const { emailRules, passwordRules } = useAuthFormValidation()
+const { emailRules, passwordRules, nameRules } = useAuthFormValidation()
 
 async function onSubmit() {
   const { valid } = await form.value.validate()
@@ -55,7 +69,7 @@ async function onSubmit() {
   if (valid) {
     emit('update:isLoading', true)
     try {
-      await currentSubmitMethod(email.value, password.value)
+      await currentSubmitMethod(email.value, password.value, name.value)
     } catch (error) {
       console.error('Error during submission:', error)
     }

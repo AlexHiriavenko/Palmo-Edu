@@ -31,6 +31,7 @@
         v-show="!isLoading"
         :currentSubmitMethod="currentSubmitMethod"
         :form-title="formTitle"
+        :authType="authType"
         v-model:isLoading="isLoading"
       />
     </template>
@@ -38,8 +39,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useModalStore } from '@/stores/modalStore'
 import { useUserStore } from '@/stores/userStore'
 import NavBar from '@/components/NavBar.vue'
@@ -75,11 +74,15 @@ const authItems = computed(() => {
 const currentSubmitMethod = ref(null)
 const formTitle = ref('')
 const isLoading = ref(false)
+const authType = ref('')
+
 const authResult = computed(
   () => !isLoading.value && (userStore.isLoggedIn || userStore.authError)
 )
 
 const authItemClick = (item) => {
+  authType.value = item.action
+
   if (item.action === 'login') {
     currentSubmitMethod.value = userStore.login
     formTitle.value = 'LogIn Form'

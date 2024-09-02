@@ -11,6 +11,11 @@ export default {
       minute: '2-digit',
       timeZoneName: 'short'
     }
-    el.textContent += date.toLocaleString('en-GB', options)
+
+    if (!isNaN(date.getTime())) {
+      el.textContent += date.toLocaleString('en-GB', options)
+    } else {
+      el.textContent += binding.value
+    }
   }
 }

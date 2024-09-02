@@ -25,11 +25,10 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { defineProps } from 'vue'
 
 const router = useRouter()
 
-const props = defineProps({
+const { event } = defineProps({
   event: {
     type: Object,
     required: true
@@ -37,6 +36,6 @@ const props = defineProps({
 })
 
 const goToEventDetails = () => {
-  router.push({ name: 'event-details', params: { id: props.event.id } })
+  router.push({ name: 'event-details', params: { id: event.id } })
 }
 </script>
