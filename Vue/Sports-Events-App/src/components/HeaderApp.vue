@@ -16,6 +16,7 @@
 
     <DropMenu :items="authItems" @itemClick="authItemClick">
       <template #menuActivator="{ props }">
+        <span>{{ userStore.currentUser?.name || '' }}</span>
         <v-btn icon="mdi-account" variant="text" v-bind="props"></v-btn>
       </template>
     </DropMenu>

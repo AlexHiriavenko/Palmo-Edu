@@ -1,23 +1,15 @@
-import { getDocs, dbCollections, query } from '@/firebase'
-
-const { basketballEvents } = dbCollections
+import { getEntitiesFromDB } from '@/firebase/getEntitiesFromDB'
 
 export const useEventsStore = defineStore('eventsStore', () => {
   const events = ref([])
   const getEventsError = ref('')
 
-  async function getEvents() {
+  const getEvents = async () => {
     try {
-      const q = query(basketballEvents)
-      const querySnapshot = await getDocs(q)
-      events.value = querySnapshot.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data()
-        }
-      })
+      events.value = await getEntitiesFromDB('basketballEvents')
       return events.value
     } catch (e) {
+      events.value = []
       getEventsError.value = 'Error receiving sports events'
     }
   }

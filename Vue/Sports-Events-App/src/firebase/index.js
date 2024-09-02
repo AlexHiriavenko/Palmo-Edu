@@ -7,15 +7,16 @@ import {
   getDocs,
   getDoc,
   setDoc,
-  query,
-  where
+  query
 } from 'firebase/firestore'
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  deleteUser,
+  updateProfile
 } from 'firebase/auth'
 
 const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG)
@@ -39,10 +40,11 @@ export {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  deleteUser,
+  updateProfile,
   collection,
   addDoc,
   query,
-  where,
   doc,
   getDocs,
   getDoc,

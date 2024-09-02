@@ -4,23 +4,22 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  doc,
-  setDoc,
-  dbCollections
+  deleteUser,
+  updateProfile
 } from '@/firebase'
 import { useModalStore } from '@/stores/modalStore'
 import { getEntityByID } from '@/firebase/getEntityByID'
+import { setEntityInDB } from '@/firebase/setEntityInDB'
 
 export const useUserStore = defineStore('userStore', () => {
   const currentUser = ref(null)
   const authError = ref('')
   const isLoggedIn = computed(() => currentUser.value)
 
-  const { users } = dbCollections
-
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       console.log('user logged in')
+      console.log(auth.currentUser)
       const userId = auth.currentUser.uid
       currentUser.value = await getUserById(userId)
       console.log(currentUser.value)
@@ -32,13 +31,8 @@ export const useUserStore = defineStore('userStore', () => {
 
   const login = async (email, password) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      )
-      currentUser.value = userCredential.user
-      console.log(currentUser.value)
+      await signInWithEmailAndPassword(auth, email, password)
+
       authError.value = ''
     } catch (error) {
       if (error.code === 'auth/invalid-credential') {
@@ -49,7 +43,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const signup = async (email, password) => {
+  const signup = async (email, password, name = 'unnamed') => {
     try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
@@ -60,9 +54,7 @@ export const useUserStore = defineStore('userStore', () => {
       authError.value = ''
 
       if (user) {
-        createUserDB(user)
-        console.log(user)
-        console.log(auth.currentUser)
+        createUserDB(user, name)
       }
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -83,21 +75,22 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const createUserDB = async (user) => {
+  const createUserDB = async (user, username) => {
     try {
       const userData = {
+        name: username,
         email: user.email,
         uid: user.uid,
         favoriteEvents: [],
         bookedEvents: []
       }
 
-      const userRef = doc(users, user.uid)
-      await setDoc(userRef, userData)
+      updateProfile(user, { displayName: username })
+      await setEntityInDB('users', user.uid, userData)
       currentUser.value = userData
-      console.log('Document added or updated successfully!')
     } catch (e) {
-      console.error('Ошибка добавления документа: ', e)
+      deleteUser(auth.currentUser)
+      authError.value = 'Error writing to database. Try again later.'
     }
   }
 
@@ -130,15 +123,3 @@ export const useUserStore = defineStore('userStore', () => {
     setAuthErrorState
   }
 })
-
-// const createUserDB = async () => {
-//   try {
-//     const docRef = await addDoc(collection(db, 'users'), {
-//       email: currentUser.value.email,
-//       uid: currentUser.value.uid
-//     })
-//     console.log('Документ успешно добавлен с ID: ', docRef.id)
-//   } catch (e) {
-//     console.error('Ошибка добавления документа: ', e)
-//   }
-// }
