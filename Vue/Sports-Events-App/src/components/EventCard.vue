@@ -1,7 +1,11 @@
 <template>
   <v-card class="v-card-custom mx-auto" elevation="10">
+    <v-card-subtitle class="font-weight-bold text-center">
+      Category: {{ event.category }}
+    </v-card-subtitle>
     <v-card-title class="text-center font-weight-bold wrap-text">
       {{ event.name }}
+      <v-tooltip activator="parent" location="top">{{ event.name }}</v-tooltip>
     </v-card-title>
     <v-card-subtitle class="font-weight-bold">
       Price: {{ event.price }}

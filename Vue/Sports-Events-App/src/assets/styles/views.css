@@ -5,4 +5,13 @@
   background-attachment: fixed;
   min-height: calc(100vh - var(--header-height));
   max-height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+}
+
+.v-container.views {
+  padding-block: 0;
+}
+
+.v-pagination .v-btn {
+  text-shadow: 2px 2px 2px black;
 }

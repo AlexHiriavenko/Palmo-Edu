@@ -5,6 +5,7 @@
     :total-visible="totalVisible"
     @update:modelValue="updatePage"
     color="white"
+    style="text-shadow: 1px 1px 1px black"
   ></v-pagination>
 </template>
 

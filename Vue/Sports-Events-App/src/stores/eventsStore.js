@@ -6,7 +6,7 @@ export const useEventsStore = defineStore('eventsStore', () => {
 
   const getEvents = async () => {
     try {
-      events.value = await getEntitiesFromDB('basketballEvents')
+      events.value = await getEntitiesFromDB('sportsEvents')
       return events.value
     } catch (e) {
       events.value = []
