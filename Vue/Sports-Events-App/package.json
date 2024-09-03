@@ -11,7 +11,7 @@
     "format": "prettier --write src/",
     "deploy": "npm run pre-deploy && npm run prepare-404 && npm run add-404",
     "pre-deploy": "npx vite build && npx gh-pages -d dist -e Sports-Events",
-    "prepare-404": "[ -d ghPages404 ] || mkdir ghPages404 && cp dist/index.html ghPages404/404.html",
+    "prepare-404": "([ -d ghPages404 ] || mkdir ghPages404) && cp dist/index.html ghPages404/404.html",
     "add-404": "npx gh-pages -d ghPages404 --add"
   },
   "dependencies": {
