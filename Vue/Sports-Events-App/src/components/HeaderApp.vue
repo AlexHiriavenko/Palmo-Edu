@@ -67,7 +67,7 @@ const authItems = computed(() => {
     ? [{ text: 'Logout', action: 'logout' }]
     : [
         { text: 'Login', action: 'login' },
-        { text: 'Sign Up', action: 'signup' }
+        { text: 'SignUp', action: 'signup' }
       ]
 })
 

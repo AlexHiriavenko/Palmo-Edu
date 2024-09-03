@@ -1,9 +1,12 @@
 <template>
   <v-card class="v-card-custom mx-auto" elevation="10">
-    <v-card-subtitle class="font-weight-bold text-center">
-      Category: {{ event.category }}
-    </v-card-subtitle>
-    <v-card-title class="text-center font-weight-bold wrap-text">
+    <v-card-text class="font-weight-bold text-center" style="padding: 6px">
+      Category: <span class="text-blue-darken-1"> {{ event.category }}</span>
+    </v-card-text>
+    <v-card-title
+      class="text-center font-weight-bold wrap-text"
+      style="cursor: default"
+    >
       {{ event.name }}
       <v-tooltip activator="parent" location="top">{{ event.name }}</v-tooltip>
     </v-card-title>

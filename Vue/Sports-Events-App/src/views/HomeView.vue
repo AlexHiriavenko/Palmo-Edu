@@ -1,6 +1,8 @@
 <template>
   <v-container fluid class="views">
-    <h2 class="text-h3 text-white text-center py-4">Upcoming events</h2>
+    <h2 class="text-h3 text-white text-center py-4">
+      {{ eventsStore.getEventsError || 'Upcoming events' }}
+    </h2>
     <EventsList :isLoading="isLoading" :events="eventsStore.filteredEvents" />
   </v-container>
 </template>

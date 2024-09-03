@@ -24,8 +24,7 @@ https://github.com/AlexHiriavenko/Palmo-Edu/tree/sports-events-app/Vue/Sports-Ev
 
 - Vue3: CompositionAPI, Router, Pinia, Vuetify.
 - Vue3: Composables, Slots, Custom Directives
-- Axios: instances, interseptors.
-- FireBase: auth.
+- FireBase: auth, database
 
 ## Notes:
 

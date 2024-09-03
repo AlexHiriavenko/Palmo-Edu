@@ -3,7 +3,7 @@ import { getEntitiesFromDB } from '@/firebase/getEntitiesFromDB'
 export const useEventsStore = defineStore('eventsStore', () => {
   const events = ref([])
   const getEventsError = ref('')
-  const filterBy = ref('Volleyball')
+  const filterBy = ref('')
 
   const getEvents = async () => {
     try {
