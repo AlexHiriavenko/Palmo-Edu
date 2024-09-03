@@ -41,11 +41,11 @@
 <script setup>
 import { useModalStore } from '@/stores/modalStore'
 import { useUserStore } from '@/stores/userStore'
-import NavBar from '@/components/NavBar.vue'
-import DropMenu from '@/components/DropMenu.vue'
-import AuthForm from '@/components/AuthForm.vue'
-import LoaderSpinner from '@/components/LoaderSpinner.vue'
-import AuthResultMessage from '@/components/AuthResultMessage.vue'
+import NavBar from '@/components/general/NavBar.vue'
+import DropMenu from '@/components/general/DropMenu.vue'
+import AuthForm from '@/components/auth/AuthForm.vue'
+import LoaderSpinner from '@/components/general/LoaderSpinner.vue'
+import AuthResultMessage from '@/components/auth/AuthResultMessage.vue'
 
 const modalStore = useModalStore()
 const userStore = useUserStore()

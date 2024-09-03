@@ -4,8 +4,8 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import { createVuetify } from 'vuetify'
 import directives from './directives'
-import ModalDialog from '@/components/ModalDialog.vue'
-import LoaderSpinner from './components/LoaderSpinner.vue'
+import ModalDialog from '@/components/general/ModalDialog.vue'
+import LoaderSpinner from './components/general/LoaderSpinner.vue'
 
 import App from './App.vue'
 import router from './router'
