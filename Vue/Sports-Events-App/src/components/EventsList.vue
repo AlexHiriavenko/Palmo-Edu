@@ -1,7 +1,7 @@
 <template>
   <LoaderSpinner :isLoading="isLoading" :size="70" color="white" />
 
-  <div class="text-center pb-2">
+  <div v-show="events.length" class="text-center pb-2">
     <DropMenu :items="categories" @itemClick="handleCategoryClick">
       <template #menuActivator="{ props }">
         <span v-bind="props" style="cursor: pointer">

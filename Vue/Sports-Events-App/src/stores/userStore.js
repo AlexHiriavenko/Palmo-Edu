@@ -13,28 +13,30 @@ import { setEntityInDB } from '@/firebase/setEntityInDB'
 
 export const useUserStore = defineStore('userStore', () => {
   const currentUser = ref(null)
-  const authError = ref('')
-  const isLoggedIn = computed(() => currentUser.value)
+  const authResult = ref('')
+  const isLoggedIn = ref(false)
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
+      isLoggedIn.value = true
       const userId = auth.currentUser.uid
       currentUser.value = await getUserById(userId)
     } else {
-      // currentUser.value = null
+      isLoggedIn.value = false
+      currentUser.value = null
     }
   })
 
-  const login = async (email, password) => {
+  async function login(email, password) {
     try {
       await signInWithEmailAndPassword(auth, email, password)
 
-      authError.value = ''
+      authResult.value = 'You Logged In!'
     } catch (error) {
       if (error.code === 'auth/invalid-credential') {
-        authError.value = 'Invalid Credentials.'
+        authResult.value = 'Invalid Credentials.'
       } else {
-        authError.value = 'Login Error'
+        authResult.value = 'Login Error'
       }
     }
   }
@@ -47,7 +49,7 @@ export const useUserStore = defineStore('userStore', () => {
         password
       )
 
-      authError.value = ''
+      authResult.value = 'You have successfully registered !'
 
       if (user) {
         const userData = {
@@ -62,9 +64,9 @@ export const useUserStore = defineStore('userStore', () => {
       }
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
-        authError.value = 'This Email Is Already In Use.'
+        authResult.value = 'This Email Is Already In Use.'
       } else {
-        authError.value = 'An unexpected error. Please try again later.'
+        authResult.value = 'An unexpected error. Please try again later.'
       }
     }
   }
@@ -73,9 +75,9 @@ export const useUserStore = defineStore('userStore', () => {
     try {
       await signOut(auth)
       currentUser.value = null
-      authError.value = ''
+      authResult.value = ''
     } catch (error) {
-      authError.value = 'LogOut Error - try later'
+      authResult.value = 'LogOut Error - try later'
     }
   }
 
@@ -85,7 +87,7 @@ export const useUserStore = defineStore('userStore', () => {
       currentUser.value = userData
     } catch (e) {
       deleteUser(auth.currentUser)
-      authError.value = 'Error writing to database. Try again later.'
+      authResult.value = 'Error writing to database. Try again later.'
     }
   }
 
@@ -93,28 +95,49 @@ export const useUserStore = defineStore('userStore', () => {
     return await getEntityByID('users', userId)
   }
 
-  const setAuthErrorState = (value) => {
-    authError.value = value
+  const setAuthResult = (value) => (authResult.value = value)
+
+  function toggleFavorite(eventId) {
+    if (!isLoggedIn.value) {
+      return
+    }
+    const index = currentUser.value.favoriteEvents.indexOf(eventId)
+    if (index === -1) {
+      currentUser.value.favoriteEvents.push(eventId)
+    } else {
+      currentUser.value.favoriteEvents.splice(index, 1)
+    }
   }
 
   const modalStore = useModalStore()
 
   watch(
+    currentUser,
+    (newValue) => {
+      if (newValue && isLoggedIn.value) {
+        setEntityInDB('users', newValue.uid, newValue)
+      }
+    },
+    { deep: true }
+  )
+
+  watch(
     () => modalStore.isOpen,
     (isOpen) => {
       if (!isOpen) {
-        authError.value = ''
+        authResult.value = ''
       }
     }
   )
 
   return {
     currentUser,
-    authError,
+    authResult,
     isLoggedIn,
     login,
     signup,
     logout,
-    setAuthErrorState
+    setAuthResult,
+    toggleFavorite
   }
 })

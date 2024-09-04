@@ -19,13 +19,13 @@
 </template>
 
 <script setup>
-import { useModalStore } from '@/stores/modalStore'
+import { ref } from 'vue'
 
-const modalStore = useModalStore()
+const isOpen = ref(false)
 
-const isOpen = computed(() => modalStore.isOpen)
+const closeModal = () => (isOpen.value = false)
 
-const closeModal = () => {
-  modalStore.closeModal()
-}
+const openModal = () => (isOpen.value = true)
+
+defineExpose({ openModal, closeModal })
 </script>

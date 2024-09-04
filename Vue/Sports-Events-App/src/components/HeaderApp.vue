@@ -22,13 +22,17 @@
     </DropMenu>
   </v-app-bar>
 
-  <ModalDialog v-if="modalStore.isOpen">
+  <!-- Используем ref для ссылки на ModalDialog -->
+  <ModalDialog ref="modalRef">
     <template #modal-content>
       <LoaderSpinner :isLoading="isLoading" />
-      <AuthResultMessage v-if="authResult" />
+      <AuthResultMessage
+        v-if="userStore.authResult && !isLoading"
+        :closeModal="closeModal"
+      />
       <AuthForm
         v-else
-        v-show="!isLoading"
+        v-show="!isLoading && !userStore.isLoggedIn"
         :currentSubmitMethod="currentSubmitMethod"
         :form-title="formTitle"
         :authType="authType"
@@ -39,7 +43,6 @@
 </template>
 
 <script setup>
-import { useModalStore } from '@/stores/modalStore'
 import { useUserStore } from '@/stores/userStore'
 import NavBar from '@/components/general/NavBar.vue'
 import DropMenu from '@/components/general/DropMenu.vue'
@@ -47,7 +50,6 @@ import AuthForm from '@/components/auth/AuthForm.vue'
 import LoaderSpinner from '@/components/general/LoaderSpinner.vue'
 import AuthResultMessage from '@/components/auth/AuthResultMessage.vue'
 
-const modalStore = useModalStore()
 const userStore = useUserStore()
 const router = useRouter()
 
@@ -75,10 +77,9 @@ const currentSubmitMethod = ref(null)
 const formTitle = ref('')
 const isLoading = ref(false)
 const authType = ref('')
+const modalRef = ref(null)
 
-const authResult = computed(
-  () => !isLoading.value && (userStore.isLoggedIn || userStore.authError)
-)
+const closeModal = () => modalRef.value?.closeModal()
 
 const authItemClick = (item) => {
   authType.value = item.action
@@ -86,17 +87,19 @@ const authItemClick = (item) => {
   if (item.action === 'login') {
     currentSubmitMethod.value = userStore.login
     formTitle.value = 'LogIn Form'
-    modalStore.openModal()
+    modalRef.value.openModal()
   }
 
   if (item.action === 'signup') {
     currentSubmitMethod.value = userStore.signup
     formTitle.value = 'SignUp Form'
-    modalStore.openModal()
+    modalRef.value.openModal()
   }
 
   if (item.action === 'logout') {
     userStore.logout()
   }
+
+  userStore.setAuthResult('')
 }
 </script>

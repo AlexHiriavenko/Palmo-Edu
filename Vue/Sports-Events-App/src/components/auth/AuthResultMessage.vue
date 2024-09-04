@@ -3,29 +3,28 @@
     class="d-flex flex-column ga-5 justify-center align-center"
     height="200px"
   >
-    <p class="text-h4 text-center">{{ message }}</p>
+    <p class="text-h4 text-center">{{ userStore.authResult }}</p>
     <v-btn text="OK" :color="buttonColor" @click="handleClose"></v-btn>
   </v-container>
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
-import { useModalStore } from '@/stores/modalStore'
+
+// Получаем переданный метод через props
+const props = defineProps({
+  closeModal: Function
+})
 
 const userStore = useUserStore()
-const modalStore = useModalStore()
-
-const message = computed(() =>
-  userStore.isLoggedIn ? 'You Logged In!' : userStore.authError
-)
 
 const buttonColor = computed(() => (userStore.isLoggedIn ? 'success' : 'error'))
 
 const handleClose = () => {
   if (userStore.isLoggedIn) {
-    modalStore.closeModal()
+    props.closeModal()
   }
-
-  userStore.setAuthErrorState(false)
+  userStore.setAuthResult('')
 }
 </script>
