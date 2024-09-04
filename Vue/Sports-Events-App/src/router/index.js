@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
 import HomeView from '../views/HomeView.vue'
 import BookingEvents from '@/views/BookingEvents.vue'
 import AdminPanel from '@/views/AdminPanel.vue'
 import FavoriteEvents from '@/views/FavoriteEvents.vue'
 import NotFound from '@/views/NotFound.vue'
-import EventDetails from '@/views/EventDetails.vue' // Добавьте импорт страницы карточки
+import EventDetails from '@/views/EventDetails.vue'
 
 const routes = [
   {
@@ -17,13 +18,13 @@ const routes = [
     path: '/favorites',
     name: 'favorites',
     component: FavoriteEvents,
-    meta: { title: 'Favorites', showInTabs: true }
+    meta: { title: 'Favorites', requiresAuth: true, showInTabs: true }
   },
   {
     path: '/booking',
     name: 'booking',
     component: BookingEvents,
-    meta: { title: 'Booking', showInTabs: true }
+    meta: { title: 'Booking', requiresAuth: true, showInTabs: true }
   },
   {
     path: '/admin-panel',
@@ -32,11 +33,17 @@ const routes = [
     meta: { title: 'Admin', showInTabs: true }
   },
   {
-    path: '/event/:id', // Новый маршрут для страницы карточки
+    path: '/event/:id',
     name: 'event-details',
     component: EventDetails,
     props: true,
     meta: { title: 'Event Details', showInTabs: false }
+  },
+  {
+    path: '/auth-required',
+    name: 'auth-required',
+    component: NotFound,
+    meta: { title: 'Authorization Required', showInTabs: false }
   },
   {
     path: '/:catchAll(.*)',
@@ -49,6 +56,18 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: routes
+})
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
+  const isLoggedIn = userStore.isLoggedIn
+
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    // -> на 404 с флагом authRequired чтобы показать нужный контент
+    next({ name: 'auth-required' })
+  } else {
+    next()
+  }
 })
 
 export default router

@@ -27,6 +27,7 @@ export const useEventsStore = defineStore('eventsStore', () => {
   return {
     events,
     filteredEvents,
+    filterBy,
     getEvents,
     setFilterBy
   }

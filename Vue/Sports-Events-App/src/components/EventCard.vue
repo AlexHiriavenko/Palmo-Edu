@@ -35,21 +35,20 @@
     </v-card-actions>
   </v-card>
 
-  <!-- <ModalDialog>
+  <ModalDialog ref="modalRef">
     <template #modal-content>
-      <v-card-text>You need to LogIn</v-card-text>
-      <v-btn @click="modalStore.closeModal">OK</v-btn>
+      <v-container class="d-flex flex-column align-center justify-center">
+        <v-card-title class="text-h5">You need to LogIn</v-card-title>
+        <v-spacer style="height: 20px"></v-spacer>
+        <v-btn @click="modalRef.closeModal">OK</v-btn>
+      </v-container>
     </template>
-  </ModalDialog> -->
+  </ModalDialog>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
-import { useModalStore } from '@/stores/modalStore'
-
-const router = useRouter()
-const modalStore = useModalStore()
 
 const props = defineProps({
   event: {
@@ -57,6 +56,10 @@ const props = defineProps({
     required: true
   }
 })
+
+const router = useRouter()
+
+const modalRef = ref(null)
 
 function goToEventDetails() {
   router.push({ name: 'event-details', params: { id: props.event.id } })
@@ -73,7 +76,7 @@ const buttonColor = computed(() =>
 
 function toggleFavorite() {
   if (!userStore.isLoggedIn) {
-    modalStore.openModal()
+    modalRef.value.openModal()
   }
   userStore.toggleFavorite(props.event.id)
 }

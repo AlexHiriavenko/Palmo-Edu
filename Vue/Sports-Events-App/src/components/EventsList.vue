@@ -5,9 +5,9 @@
     <DropMenu :items="categories" @itemClick="handleCategoryClick">
       <template #menuActivator="{ props }">
         <span v-bind="props" style="cursor: pointer">
-          <v-btn variant="text" color="white" style="font-weight: 600"
-            >Filter Events</v-btn
-          >
+          <v-btn variant="text" color="white" style="font-weight: 600">
+            Filter By: {{ eventsStore.filterBy || 'All' }}
+          </v-btn>
           <v-icon icon="mdi-filter" color="white"></v-icon>
         </span>
       </template>
