@@ -36,6 +36,7 @@
 </template>
 
 <script setup>
+import router from '@/router'
 import { useAuthFormValidation } from '@/composables/useAuthFormValidation'
 
 const { currentSubmitMethod } = defineProps({
@@ -63,6 +64,9 @@ const form = ref(null)
 
 const { emailRules, passwordRules, nameRules } = useAuthFormValidation()
 
+const route = useRoute()
+const redirectPath = route.query.redirect || { name: 'home' }
+
 async function onSubmit() {
   const { valid } = await form.value.validate()
 
@@ -70,6 +74,7 @@ async function onSubmit() {
     emit('update:isLoading', true)
     try {
       await currentSubmitMethod(email.value, password.value, name.value)
+      router.push(redirectPath)
     } catch (error) {
       console.error('Error during submission:', error)
     }

@@ -10,11 +10,13 @@ import {
 import { useModalStore } from '@/stores/modalStore'
 import { getEntityByID } from '@/firebase/getEntityByID'
 import { setEntityInDB } from '@/firebase/setEntityInDB'
+import { useRouter } from 'vue-router'
 
 export const useUserStore = defineStore('userStore', () => {
   const currentUser = ref(null)
   const authResult = ref('')
   const isLoggedIn = ref(false)
+  const router = useRouter()
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -24,6 +26,14 @@ export const useUserStore = defineStore('userStore', () => {
     } else {
       isLoggedIn.value = false
       currentUser.value = null
+    }
+  })
+
+  watch(isLoggedIn, (newValue) => {
+    if (!newValue) {
+      if (router.currentRoute.value.meta.requiresAuth) {
+        router.push({ name: 'home' })
+      }
     }
   })
 

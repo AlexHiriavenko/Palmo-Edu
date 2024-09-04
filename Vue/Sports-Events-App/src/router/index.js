@@ -63,8 +63,8 @@ router.beforeEach((to, from, next) => {
   const isLoggedIn = userStore.isLoggedIn
 
   if (to.meta.requiresAuth && !isLoggedIn) {
-    // -> на 404 с флагом authRequired чтобы показать нужный контент
-    next({ name: 'auth-required' })
+    // query - чтобы отследить куда хотел попать юзер и после логина редиректнуть именно туда
+    next({ name: 'auth-required', query: { redirect: to.fullPath } })
   } else {
     next()
   }
