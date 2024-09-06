@@ -1,16 +1,21 @@
-<!-- <v-app-bar-nav-icon
+{
+  /* <v-app-bar-nav-icon
       v-if="$vuetify.display.smAndDown"
       variant="text"
       @click.stop="toggleDrawer"
     ></v-app-bar-nav-icon> -->
 
-<!-- <NavBurger
+<NavBurger
     :routes="filteredRoutes"
     :modelValue="drawer"
     @update:modelValue="drawer = $event"
-  /> -->
+  /> */
+}
 
-<!-- <template>
+/////////////////////////////////
+
+{
+  /* <template>
   <LoaderSpinner :isLoading="isLoading" :size="70" color="white" />
   <v-row style="max-width: 960px; min-height: 600px" class="mx-auto">
     <v-col v-for="event in paginatedEvents" :key="event.id" cols="12" md="4">
@@ -54,4 +59,49 @@ const totalPages = computed(() => {
 function handlePageChange(newPage) {
   page.value = newPage
 }
-</script> -->
+</script>  */
+}
+
+///////////////////////////////////////////////////////////
+
+// router.beforeEach((to, from, next) => {
+//   const userStore = useUserStore()
+
+//   if (to.meta.requiresAuth && !userStore.isLoggedIn) {
+//     // query - чтобы отследить куда хотел попать юзер и после логина редиректнуть именно туда
+//     next({ name: 'auth-required', query: { redirect: to.fullPath } })
+//   } else {
+//     next()
+//   }
+// })
+
+//////////////////////////////////////////////
+// <template>
+//   <v-navigation-drawer
+//     :model-value="modelValue"
+//     :location="'top'"
+//     temporary
+//     @input="$emit('update:modelValue', $event)"
+//   >
+//     <v-list>
+//       <v-list-item v-for="route in routes" :key="route.name" :to="route.path">
+//         <v-list-item-title>
+//           {{ route.meta?.title || route.name }}
+//         </v-list-item-title>
+//       </v-list-item>
+//     </v-list>
+//   </v-navigation-drawer>
+// </template>
+
+// <script setup>
+// defineProps({
+//   routes: {
+//     type: Array,
+//     required: true
+//   },
+//   modelValue: {
+//     type: Boolean,
+//     required: true
+//   }
+// })
+// </script>

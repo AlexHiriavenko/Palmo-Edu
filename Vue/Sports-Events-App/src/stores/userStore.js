@@ -7,14 +7,14 @@ import {
   deleteUser,
   updateProfile
 } from '@/firebase'
-import { useModalStore } from '@/stores/modalStore'
 import { getEntityByID } from '@/firebase/getEntityByID'
 import { setEntityInDB } from '@/firebase/setEntityInDB'
 import { useRouter } from 'vue-router'
 
 export const useUserStore = defineStore('userStore', () => {
   const currentUser = ref(null)
-  const authResult = ref('')
+  const authResultMessage = ref('')
+  const isAuthReady = ref(false)
   const isLoggedIn = ref(false)
   const router = useRouter()
 
@@ -27,6 +27,7 @@ export const useUserStore = defineStore('userStore', () => {
       isLoggedIn.value = false
       currentUser.value = null
     }
+    isAuthReady.value = true
   })
 
   watch(isLoggedIn, (newValue) => {
@@ -41,12 +42,12 @@ export const useUserStore = defineStore('userStore', () => {
     try {
       await signInWithEmailAndPassword(auth, email, password)
 
-      authResult.value = 'You Logged In!'
+      authResultMessage.value = 'You Logged In!'
     } catch (error) {
       if (error.code === 'auth/invalid-credential') {
-        authResult.value = 'Invalid Credentials.'
+        authResultMessage.value = 'Invalid Credentials.'
       } else {
-        authResult.value = 'Login Error'
+        authResultMessage.value = 'Login Error'
       }
     }
   }
@@ -59,7 +60,7 @@ export const useUserStore = defineStore('userStore', () => {
         password
       )
 
-      authResult.value = 'You have successfully registered !'
+      authResultMessage.value = 'You have successfully registered !'
 
       if (user) {
         const userData = {
@@ -74,9 +75,9 @@ export const useUserStore = defineStore('userStore', () => {
       }
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
-        authResult.value = 'This Email Is Already In Use.'
+        authResultMessage.value = 'This Email Is Already In Use.'
       } else {
-        authResult.value = 'An unexpected error. Please try again later.'
+        authResultMessage.value = 'An unexpected error. Please try again later.'
       }
     }
   }
@@ -85,9 +86,9 @@ export const useUserStore = defineStore('userStore', () => {
     try {
       await signOut(auth)
       currentUser.value = null
-      authResult.value = ''
+      authResultMessage.value = ''
     } catch (error) {
-      authResult.value = 'LogOut Error - try later'
+      authResultMessage.value = 'LogOut Error - try later'
     }
   }
 
@@ -97,7 +98,7 @@ export const useUserStore = defineStore('userStore', () => {
       currentUser.value = userData
     } catch (e) {
       deleteUser(auth.currentUser)
-      authResult.value = 'Error writing to database. Try again later.'
+      authResultMessage.value = 'Error writing to database. Try again later.'
     }
   }
 
@@ -105,7 +106,7 @@ export const useUserStore = defineStore('userStore', () => {
     return await getEntityByID('users', userId)
   }
 
-  const setAuthResult = (value) => (authResult.value = value)
+  const setAuthResult = (value) => (authResultMessage.value = value)
 
   function toggleFavorite(eventId) {
     if (!isLoggedIn.value) {
@@ -119,8 +120,6 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const modalStore = useModalStore()
-
   watch(
     currentUser,
     (newValue) => {
@@ -131,18 +130,10 @@ export const useUserStore = defineStore('userStore', () => {
     { deep: true }
   )
 
-  watch(
-    () => modalStore.isOpen,
-    (isOpen) => {
-      if (!isOpen) {
-        authResult.value = ''
-      }
-    }
-  )
-
   return {
     currentUser,
-    authResult,
+    authResultMessage,
+    isAuthReady,
     isLoggedIn,
     login,
     signup,

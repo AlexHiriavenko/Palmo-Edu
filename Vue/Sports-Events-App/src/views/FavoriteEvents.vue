@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="views">
     <h2 class="text-h3 text-white text-center py-4">
-      {{ eventsStore.getEventsError || 'Upcoming events' }}
+      {{ eventsStore.getEventsError || 'Favorites Events' }}
     </h2>
     <EventsList :isLoading="isLoading" :events="eventsStore.favoritesEvents" />
   </v-container>
@@ -13,8 +13,6 @@ import EventsList from '@/components/EventsList.vue'
 
 const eventsStore = useEventsStore()
 const isLoading = ref(false)
-
-console.log(eventsStore.favoritesEvents)
 
 onMounted(async () => {
   if (!eventsStore.events.length) {

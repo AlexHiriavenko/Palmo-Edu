@@ -4,7 +4,7 @@
       Sports Events App
     </v-toolbar-title>
 
-    <NavBar v-if="$vuetify.display.mdAndUp" :routes="filteredRoutes" />
+    <NavBar v-if="$vuetify.display.mdAndUp" :tabs="filteredRoutes" />
 
     <DropMenu
       v-if="$vuetify.display.smAndDown"
@@ -22,12 +22,11 @@
     </DropMenu>
   </v-app-bar>
 
-  <!-- Используем ref для ссылки на ModalDialog -->
   <ModalDialog ref="modalRef">
     <template #modal-content>
       <LoaderSpinner :isLoading="isLoading" />
       <AuthResultMessage
-        v-if="userStore.authResult && !isLoading"
+        v-if="userStore.authResultMessage && !isLoading"
         :closeModal="closeModal"
       />
       <AuthForm
@@ -55,7 +54,11 @@ const router = useRouter()
 
 const filteredRoutes = computed(() => {
   return router.options.routes
-    .filter((route) => route.meta?.showInTabs)
+    .filter(
+      (route) =>
+        route.meta?.showInTabs ||
+        (route.meta?.requiresAdmin && userStore.currentUser?.role === 'admin')
+    )
     .map((route) => ({
       ...route,
       text: route.meta?.title

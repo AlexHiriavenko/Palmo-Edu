@@ -7,6 +7,7 @@
 
       <v-text-field
         v-if="authType === 'signup'"
+        v-focus="authType === 'signup'"
         v-model.trim="name"
         :rules="nameRules"
         label="Name"
@@ -16,6 +17,7 @@
 
       <v-text-field
         v-model.trim="email"
+        v-focus="authType === 'login'"
         :rules="emailRules"
         label="Email"
         type="email"

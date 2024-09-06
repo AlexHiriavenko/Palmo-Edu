@@ -3,16 +3,14 @@
     class="d-flex flex-column ga-5 justify-center align-center"
     height="200px"
   >
-    <p class="text-h4 text-center">{{ userStore.authResult }}</p>
-    <v-btn text="OK" :color="buttonColor" @click="handleClose"></v-btn>
+    <p class="text-h4 text-center">{{ userStore.authResultMessage }}</p>
+    <v-btn text="OK" :color="buttonColor" @click="handleClose" v-focus></v-btn>
   </v-container>
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 
-// Получаем переданный метод через props
 const props = defineProps({
   closeModal: Function
 })

@@ -30,7 +30,12 @@ const routes = [
     path: '/admin-panel',
     name: 'admin-panel',
     component: AdminPanel,
-    meta: { title: 'Admin', showInTabs: true }
+    meta: {
+      title: 'Admin',
+      requiresAuth: true,
+      requiresAdmin: true,
+      showInTabs: false
+    }
   },
   {
     path: '/event/:id',
@@ -42,6 +47,12 @@ const routes = [
   {
     path: '/auth-required',
     name: 'auth-required',
+    component: NotFound,
+    meta: { title: 'Authorization Required', showInTabs: false }
+  },
+  {
+    path: '/admin-required',
+    name: 'admin-required',
     component: NotFound,
     meta: { title: 'Authorization Required', showInTabs: false }
   },
@@ -58,16 +69,40 @@ const router = createRouter({
   routes: routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
-  const isLoggedIn = userStore.isLoggedIn
 
-  if (to.meta.requiresAuth && !isLoggedIn) {
-    // query - чтобы отследить куда хотел попать юзер и после логина редиректнуть именно туда
-    next({ name: 'auth-required', query: { redirect: to.fullPath } })
-  } else {
-    next()
+  // Проверяем, требуется ли авторизация для маршрута
+  if (to.meta.requiresAuth) {
+    // Дождемся, пока флаг авторизации не будет установлен в true
+    if (!userStore.isAuthReady) {
+      await new Promise((resolve) => {
+        const unwatch = watch(
+          () => userStore.isAuthReady,
+          (ready) => {
+            if (ready) {
+              unwatch()
+              resolve()
+            }
+          }
+        )
+      })
+    }
+
+    // Проверяем, авторизован ли пользователь
+    if (!userStore.isLoggedIn) {
+      next({ name: 'auth-required', query: { redirect: to.fullPath } })
+      return
+    }
+
+    // Проверяем, если маршрут требует права администратора
+    if (to.meta.requiresAdmin && userStore.currentUser.role !== 'admin') {
+      next({ name: 'admin-required' })
+      return
+    }
   }
+
+  next() // все проверки пройдены
 })
 
 export default router
