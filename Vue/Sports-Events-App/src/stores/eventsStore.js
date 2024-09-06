@@ -1,8 +1,10 @@
 import { getEntitiesFromDB } from '@/firebase/getEntitiesFromDB'
+import { useUserStore } from './userStore'
 
 export const useEventsStore = defineStore('eventsStore', () => {
   const events = ref([])
   const getEventsError = ref('')
+  const userStore = useUserStore()
 
   const getEvents = async () => {
     try {
@@ -14,8 +16,15 @@ export const useEventsStore = defineStore('eventsStore', () => {
     }
   }
 
+  const favoritesEvents = computed(() => {
+    return events.value.filter((event) => {
+      return userStore.currentUser?.favoriteEvents?.includes(event.id)
+    })
+  })
+
   return {
     events,
-    getEvents
+    getEvents,
+    favoritesEvents
   }
 })

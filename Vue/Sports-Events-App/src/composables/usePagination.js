@@ -21,6 +21,6 @@ export function usePagination(items, itemsPerPage = 6) {
     paginatedItems,
     totalPages,
     handlePageChange,
-    itemsPerPage // Возвращаем itemsPerPage из composable
+    itemsPerPage
   }
 }
