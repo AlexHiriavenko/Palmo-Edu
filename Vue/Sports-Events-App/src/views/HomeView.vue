@@ -3,7 +3,7 @@
     <h2 class="text-h3 text-white text-center py-4">
       {{ eventsStore.getEventsError || 'Upcoming events' }}
     </h2>
-    <EventsList :isLoading="isLoading" :events="eventsStore.filteredEvents" />
+    <EventsList :isLoading="isLoading" :events="eventsStore.events" />
   </v-container>
 </template>
 
@@ -15,7 +15,7 @@ const eventsStore = useEventsStore()
 const isLoading = ref(false)
 
 onMounted(async () => {
-  if (!eventsStore.filteredEvents.length) {
+  if (!eventsStore.events.length) {
     isLoading.value = true
     await eventsStore.getEvents()
     isLoading.value = false

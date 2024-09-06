@@ -6,7 +6,7 @@
       <template #menuActivator="{ props }">
         <span v-bind="props" style="cursor: pointer">
           <v-btn variant="text" color="white" style="font-weight: 600">
-            Filter By: {{ eventsStore.filterBy || 'All' }}
+            Filter By: {{ filterBy || 'All' }}
           </v-btn>
           <v-icon icon="mdi-filter" color="white"></v-icon>
         </span>
@@ -30,7 +30,6 @@
 </template>
 
 <script setup>
-import { useEventsStore } from '@/stores/eventsStore'
 import { usePagination } from '@/composables/usePagination'
 import PaginationBar from '@/components/general/PaginationBar.vue'
 import EventCard from '@/components/EventCard.vue'
@@ -41,13 +40,18 @@ const props = defineProps({
   events: Array
 })
 
-const {
-  page,
-  paginatedItems: paginatedEvents,
-  totalPages,
-  handlePageChange,
-  itemsPerPage
-} = usePagination(computed(() => props.events))
+const filterBy = ref('')
+
+const filteredEvents = computed(() => {
+  if (!filterBy.value || !props.events.length) {
+    return props.events
+  }
+  return props.events.filter((event) => event?.category === filterBy.value)
+})
+
+const handleCategoryClick = (category) => {
+  filterBy.value = category?.action
+}
 
 const categories = [
   { text: 'Football', action: 'Football' },
@@ -56,9 +60,11 @@ const categories = [
   { text: 'All', action: '' }
 ]
 
-const eventsStore = useEventsStore()
-
-const handleCategoryClick = (category) => {
-  eventsStore.setFilterBy(category.action)
-}
+const {
+  page,
+  paginatedItems: paginatedEvents,
+  totalPages,
+  handlePageChange,
+  itemsPerPage
+} = usePagination(filteredEvents)
 </script>
