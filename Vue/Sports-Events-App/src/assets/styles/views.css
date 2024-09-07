@@ -8,6 +8,10 @@
   overflow-y: auto;
 }
 
+.views.favorites {
+  background-image: url('@/assets/imgs/Background3.jpg');
+}
+
 .v-container.views {
   padding-block: 0;
 }

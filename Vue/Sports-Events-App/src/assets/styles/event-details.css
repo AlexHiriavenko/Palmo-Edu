@@ -1,0 +1,15 @@
+.v-container.event-container {
+  min-height: calc(100vh - var(--header-height));
+  max-width: none;
+  width: 100%;
+  background-image: url('@/assets/imgs/TurfBackground.jpg');
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.v-card.event-details {
+  background-color: rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  color: white;
+}

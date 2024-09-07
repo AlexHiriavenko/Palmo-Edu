@@ -4,6 +4,7 @@
 @import './not-found.css';
 @import './views.css';
 @import './cardsList.css';
+@import './event-details.css';
 
 :root {
   --header-height: 64px;

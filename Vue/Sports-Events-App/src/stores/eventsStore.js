@@ -4,6 +4,7 @@ import { useUserStore } from './userStore'
 export const useEventsStore = defineStore('eventsStore', () => {
   const events = ref([])
   const getEventsError = ref('')
+  const currentEvent = ref({})
   const userStore = useUserStore()
 
   const getEvents = async () => {
@@ -22,9 +23,14 @@ export const useEventsStore = defineStore('eventsStore', () => {
     })
   })
 
+  function setCurrentEvent(event) {
+    currentEvent.value = event
+  }
+
   return {
     events,
     getEvents,
-    favoritesEvents
+    favoritesEvents,
+    setCurrentEvent
   }
 })
