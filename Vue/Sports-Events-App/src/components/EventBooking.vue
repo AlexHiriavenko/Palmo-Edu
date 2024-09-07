@@ -13,18 +13,36 @@
         </v-btn>
       </v-col>
     </v-row>
+    <v-btn color="primary" @click="confirmBooking"
+      >Подтвердить бронирование</v-btn
+    >
   </v-container>
 </template>
 
 <script setup>
 import { ref, computed, defineProps } from 'vue'
-import { useUserStore } from '@/stores/userStore' // Подключаем userStore для получения данных о бронированиях пользователя
+import { useUserStore } from '@/stores/userStore'
+import { useEventsStore } from '@/stores/eventsStore'
+import { getEntityByID } from '@/firebase/getEntityByID'
+
+///////////////////////////////
+const route = useRoute()
+const eventId = route.params.id
+
+async function getEvent() {
+  const event = await getEntityByID('sportsEvents', eventId)
+  console.log(event) // я проверил у меня получилось получить данные
+}
+
+getEvent()
+//////////////////////////////
 
 const props = defineProps({
   event: Object
 })
 
-const userStore = useUserStore() // Получаем доступ к userStore
+const userStore = useUserStore()
+const eventsStore = useEventsStore()
 
 const seatsParams = {
   totalSeats: 50,
@@ -42,13 +60,16 @@ const userBookedSeats = computed(() => {
 
 // Инициализируем выбранные места с учетом уже забронированных пользователем
 const selectedSeats = ref([...userBookedSeats.value])
+console.log(selectedSeats)
 
 const seats = computed(() => {
   return Array.from({ length: seatsParams.totalSeats }, (_, index) => {
     const seatNumber = index + 1
     return {
       number: seatNumber,
-      isOccupied: props.event?.occupiedSeats.includes(seatNumber), // Занятое место (в общем)
+      isOccupied:
+        props.event?.occupiedSeats.includes(seatNumber) &&
+        !userBookedSeats.value.includes(seatNumber), // Занятое место (кроме заняты пользователем)
       isOccupiedByUser: userBookedSeats.value.includes(seatNumber), // Занятое место пользователем
       isSelected: selectedSeats.value.includes(seatNumber)
     }
@@ -68,8 +89,8 @@ const getSeatsForRow = (row) => {
 
 // Метод для определения цвета кнопки в зависимости от состояния места
 const getSeatColor = (seat) => {
-  if (seat.isOccupiedByUser || seat.isSelected) return 'green' // Зеленый, если занято пользователем или выбрано
-  if (seat.isOccupied) return 'orange' // Оранжевый, если занято другим пользователем
+  if (seat.isSelected) return 'green' // Зеленый, если занято пользователем или выбрано
+  if (seat.isOccupied && !seat.isSelected) return 'orange' // Оранжевый, если занято другим пользователем
   return 'white' // Белый, если свободно
 }
 
@@ -88,18 +109,50 @@ const selectSeat = (seat) => {
     return
   }
 
-  // Проверка, если место уже выбрано пользователем
+  // Логика для отмены или выбора места
   if (seat.isSelected) {
     selectedSeats.value = selectedSeats.value.filter((s) => s !== seat.number)
+    console.log(selectedSeats.value)
   } else {
-    // Проверка на лимит в 4 места
-    const totalSelected =
-      selectedSeats.value.length + userBookedSeats.value.length
-    if (totalSelected >= 4) {
+    if (selectedSeats.value.length >= 4) {
       alert('Нельзя забронировать более 4 мест')
       return
     }
     selectedSeats.value.push(seat.number)
+    console.log(selectedSeats.value)
   }
+}
+
+// Метод для подтверждения бронирования
+const confirmBooking = () => {
+  // Обновляем состояние userStore для текущего пользователя
+  const bookingIndex = userStore.currentUser.bookedEvents.findIndex(
+    (b) => b.eventID === props.event.id
+  )
+
+  if (bookingIndex !== -1) {
+    // Если бронирование уже существует, обновляем его
+    userStore.currentUser.bookedEvents[bookingIndex].bookedSeats =
+      selectedSeats.value
+  } else {
+    // Если бронирование не существует, добавляем его
+    userStore.currentUser.bookedEvents.push({
+      eventID: props.event.id,
+      bookedSeats: selectedSeats.value
+    })
+  }
+
+  // Обновляем состояние eventsStore для текущего события
+  const eventIndex = eventsStore.events.findIndex(
+    (e) => e.id === props.event.id
+  )
+
+  if (eventIndex !== -1) {
+    eventsStore.events[eventIndex].occupiedSeats = [
+      ...new Set([...props.event.occupiedSeats, ...selectedSeats.value])
+    ]
+  }
+
+  alert('Бронирование подтверждено!')
 }
 </script>

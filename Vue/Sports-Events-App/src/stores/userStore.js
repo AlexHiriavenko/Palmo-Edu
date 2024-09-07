@@ -121,10 +121,10 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   watch(
-    currentUser,
+    () => (currentUser.value ? currentUser.value.favoriteEvents : null),
     (newValue) => {
       if (newValue && isLoggedIn.value) {
-        setEntityInDB('users', newValue.uid, newValue)
+        setEntityInDB('users', currentUser.value.uid, currentUser.value)
       }
     },
     { deep: true }
