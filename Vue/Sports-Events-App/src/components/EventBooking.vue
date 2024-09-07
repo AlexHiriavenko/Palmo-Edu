@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <!-- Сетка мест -->
     <v-row v-for="row in rows" :key="row">
       <v-col
         v-for="seat in getSeatsForRow(row)"
@@ -20,29 +19,30 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useEventsStore } from '@/stores/eventsStore'
 import { getEntityByID } from '@/firebase/getEntityByID'
-
-///////////////////////////////
-const route = useRoute()
-const eventId = route.params.id
-
-async function getEvent() {
-  const event = await getEntityByID('sportsEvents', eventId)
-  console.log(event) // я проверил у меня получилось получить данные
-}
-
-getEvent()
-//////////////////////////////
-
-const props = defineProps({
-  event: Object
-})
+import { useRoute } from 'vue-router'
 
 const userStore = useUserStore()
 const eventsStore = useEventsStore()
+const route = useRoute()
+const eventId = route.params.id
+
+// Состояние события
+const event = ref(null)
+
+// Получаем событие из базы данных
+async function getEvent() {
+  try {
+    event.value = await getEntityByID('sportsEvents', eventId)
+  } catch (error) {
+    console.error('Ошибка при получении события:', error)
+  }
+}
+
+// Вызываем получение события при монтировании компонента
+onMounted(getEvent)
 
 const seatsParams = {
   totalSeats: 50,
@@ -53,22 +53,33 @@ const seatsParams = {
 // Получаем список забронированных пользователем мест для текущего события
 const userBookedSeats = computed(() => {
   const booking = userStore.currentUser?.bookedEvents.find(
-    (b) => b.eventID === props.event?.id
+    (b) => b.eventID === eventId
   )
   return booking ? booking.bookedSeats : []
 })
 
 // Инициализируем выбранные места с учетом уже забронированных пользователем
-const selectedSeats = ref([...userBookedSeats.value])
-console.log(selectedSeats)
+const selectedSeats = ref([])
+
+// Обновляем выбранные места при изменении `userBookedSeats` или `event`
+watch(
+  () => [userBookedSeats.value, event.value],
+  () => {
+    if (event.value) {
+      selectedSeats.value = [...userBookedSeats.value]
+    }
+  },
+  { immediate: true }
+)
 
 const seats = computed(() => {
+  if (!event.value) return []
   return Array.from({ length: seatsParams.totalSeats }, (_, index) => {
     const seatNumber = index + 1
     return {
       number: seatNumber,
       isOccupied:
-        props.event?.occupiedSeats.includes(seatNumber) &&
+        event.value.occupiedSeats.includes(seatNumber) &&
         !userBookedSeats.value.includes(seatNumber), // Занятое место (кроме заняты пользователем)
       isOccupiedByUser: userBookedSeats.value.includes(seatNumber), // Занятое место пользователем
       isSelected: selectedSeats.value.includes(seatNumber)
@@ -112,24 +123,25 @@ const selectSeat = (seat) => {
   // Логика для отмены или выбора места
   if (seat.isSelected) {
     selectedSeats.value = selectedSeats.value.filter((s) => s !== seat.number)
-    console.log(selectedSeats.value)
   } else {
     if (selectedSeats.value.length >= 4) {
       alert('Нельзя забронировать более 4 мест')
       return
     }
     selectedSeats.value.push(seat.number)
-    console.log(selectedSeats.value)
   }
 }
 
 // Метод для подтверждения бронирования
 const confirmBooking = () => {
+  if (!event.value) return
+
   // Обновляем состояние userStore для текущего пользователя
   const bookingIndex = userStore.currentUser.bookedEvents.findIndex(
-    (b) => b.eventID === props.event.id
+    (b) => b.eventID === eventId
   )
 
+  console.log(bookingIndex)
   if (bookingIndex !== -1) {
     // Если бронирование уже существует, обновляем его
     userStore.currentUser.bookedEvents[bookingIndex].bookedSeats =
@@ -137,19 +149,17 @@ const confirmBooking = () => {
   } else {
     // Если бронирование не существует, добавляем его
     userStore.currentUser.bookedEvents.push({
-      eventID: props.event.id,
+      eventID: eventId,
       bookedSeats: selectedSeats.value
     })
   }
 
   // Обновляем состояние eventsStore для текущего события
-  const eventIndex = eventsStore.events.findIndex(
-    (e) => e.id === props.event.id
-  )
+  const eventIndex = eventsStore.events.findIndex((e) => e.id === eventId)
 
   if (eventIndex !== -1) {
     eventsStore.events[eventIndex].occupiedSeats = [
-      ...new Set([...props.event.occupiedSeats, ...selectedSeats.value])
+      ...new Set([...event.value.occupiedSeats, ...selectedSeats.value])
     ]
   }
 
