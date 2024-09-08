@@ -28,8 +28,12 @@ https://github.com/AlexHiriavenko/Palmo-Edu/tree/sports-events-app/Vue/Sports-Ev
 
 ## Notes:
 
+Так как это монорепозиторий: несколько проектов в одном репо <br>
 Чтобы запустить проект не меняя корневой дирректории (cd Vue/Sports-Events-App) <br>
 можно ввести команды:
 
 - cd ./Vue/Sports-Events-App && npm install && cd -
 - npm --prefix "./Vue/Sports-Events-App" run dev
+- npm --prefix "./Vue/Sports-Events-App" run deploy
+  <br>
+  ... и т.д.

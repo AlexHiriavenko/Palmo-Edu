@@ -30,14 +30,6 @@ export const useUserStore = defineStore('userStore', () => {
     isAuthReady.value = true
   })
 
-  watch(isLoggedIn, (newValue) => {
-    if (!newValue) {
-      if (router.currentRoute.value.meta.requiresAuth) {
-        router.push({ name: 'home' })
-      }
-    }
-  })
-
   async function login(email, password) {
     try {
       await signInWithEmailAndPassword(auth, email, password)
@@ -120,15 +112,35 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
+  function setUserBookedEvent(eventID, bookingData) {
+    const eventIndex = currentUser?.value.bookedEvents?.findIndex(
+      (b) => b.eventID === eventID
+    )
+
+    if (eventIndex !== -1) {
+      currentUser.value.bookedEvents[eventIndex] = bookingData
+    } else {
+      currentUser.value.bookedEvents.push(bookingData)
+    }
+  }
+
   watch(
-    () => (currentUser.value ? currentUser.value.favoriteEvents : null),
-    (newValue) => {
-      if (newValue && isLoggedIn.value) {
-        setEntityInDB('users', currentUser.value.uid, currentUser.value)
+    currentUser,
+    (newValue, oldValue) => {
+      if (oldValue !== null && newValue && isLoggedIn.value) {
+        setEntityInDB('users', newValue.uid, newValue)
       }
     },
     { deep: true }
   )
+
+  watch(isLoggedIn, (newValue) => {
+    if (!newValue) {
+      if (router.currentRoute.value.meta.requiresAuth) {
+        router.push({ name: 'home' })
+      }
+    }
+  })
 
   return {
     currentUser,
@@ -139,6 +151,7 @@ export const useUserStore = defineStore('userStore', () => {
     signup,
     logout,
     setAuthResult,
-    toggleFavorite
+    toggleFavorite,
+    setUserBookedEvent
   }
 })

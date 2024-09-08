@@ -1,27 +1,74 @@
 <template>
-  <v-container>
-    <v-row v-for="row in rows" :key="row">
-      <v-col
-        v-for="seat in getSeatsForRow(row)"
-        :key="seat.number"
-        cols="1"
-        class="d-flex justify-center align-center"
+  <v-container class="booking-container mx-auto">
+    <!-- Информация для пользователя -->
+    <v-container class="info-container mb-4">
+      <v-row class="justify-center" :class="{ notEditable: !editable }">
+        <v-col cols="4" class="text-center">
+          <v-avatar color="green" size="24" class="ma-2"></v-avatar>
+          <span class="booking-info">Booked by you</span>
+        </v-col>
+
+        <v-col cols="4" class="text-center">
+          <v-avatar color="orange" size="24" class="ma-2"></v-avatar>
+          <span class="booking-info">Occupied by others</span>
+        </v-col>
+
+        <v-col cols="4" class="text-center">
+          <v-avatar color="white" size="24" class="ma-2"></v-avatar>
+          <span class="booking-info">Available</span>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <!-- Сетка мест -->
+    <v-container :class="{ notEditable: !editable }" class="seats-container">
+      <v-row v-for="row in rows" :key="row" class="justify-space-between">
+        <div
+          v-for="seat in getSeatsForRow(row)"
+          :key="seat.number"
+          class="seat"
+        >
+          <v-btn :color="getSeatColor(seat)" @click="selectSeat(seat)">
+            {{ seat.number }}
+          </v-btn>
+        </div>
+      </v-row>
+    </v-container>
+
+    <v-container v-if="userStore.isLoggedIn" class="booking-btngroup">
+      <v-btn
+        color="primary"
+        @click="confirmBooking"
+        :disabled="!editable"
+        style="width: 110px"
       >
-        <v-btn :color="getSeatColor(seat)" @click="selectSeat(seat)">
-          {{ seat.number }}
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-btn color="primary" @click="confirmBooking"
-      >Подтвердить бронирование</v-btn
-    >
+        Confirm
+      </v-btn>
+      <v-btn
+        color="primary"
+        @click="editBookingClick"
+        :disabled="editable"
+        style="width: 110px"
+      >
+        Edit
+      </v-btn>
+    </v-container>
   </v-container>
+
+  <ModalDialog ref="modalRef">
+    <template #modal-content>
+      <v-container class="text-center">
+        <v-card-text class="text-h5">{{ currentMessage }}</v-card-text>
+        <v-btn @click="closeModal">OK</v-btn>
+      </v-container>
+    </template>
+  </ModalDialog>
 </template>
 
 <script setup>
+import { ref, computed, watch, onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useEventsStore } from '@/stores/eventsStore'
-import { getEntityByID } from '@/firebase/getEntityByID'
 import { useRoute } from 'vue-router'
 
 const userStore = useUserStore()
@@ -29,47 +76,33 @@ const eventsStore = useEventsStore()
 const route = useRoute()
 const eventId = route.params.id
 
-// Состояние события
 const event = ref(null)
+const selectedSeats = ref([])
+const editable = ref(false)
+const modalRef = ref(null)
+const currentMessage = ref('')
 
-// Получаем событие из базы данных
-async function getEvent() {
-  try {
-    event.value = await getEntityByID('sportsEvents', eventId)
-  } catch (error) {
-    console.error('Ошибка при получении события:', error)
-  }
+function showModal(message) {
+  currentMessage.value = message
+  modalRef.value.openModal()
 }
 
-// Вызываем получение события при монтировании компонента
-onMounted(getEvent)
+function closeModal() {
+  modalRef.value.closeModal()
+}
 
+// Параметры мест
 const seatsParams = {
   totalSeats: 50,
   rows: 5,
   cellsInRow: 10
 }
 
-// Получаем список забронированных пользователем мест для текущего события
-const userBookedSeats = computed(() => {
-  const booking = userStore.currentUser?.bookedEvents.find(
-    (b) => b.eventID === eventId
-  )
-  return booking ? booking.bookedSeats : []
-})
-
-// Инициализируем выбранные места с учетом уже забронированных пользователем
-const selectedSeats = ref([])
-
-// Обновляем выбранные места при изменении `userBookedSeats` или `event`
-watch(
-  () => [userBookedSeats.value, event.value],
-  () => {
-    if (event.value) {
-      selectedSeats.value = [...userBookedSeats.value]
-    }
-  },
-  { immediate: true }
+// Вычисляемые свойства
+const userBookedSeats = computed(
+  () =>
+    userStore.currentUser?.bookedEvents.find((b) => b.eventID === eventId)
+      ?.bookedSeats || []
 )
 
 const seats = computed(() => {
@@ -80,9 +113,9 @@ const seats = computed(() => {
       number: seatNumber,
       isOccupied:
         event.value.occupiedSeats.includes(seatNumber) &&
-        !userBookedSeats.value.includes(seatNumber), // Занятое место (кроме заняты пользователем)
-      isOccupiedByUser: userBookedSeats.value.includes(seatNumber), // Занятое место пользователем
-      isSelected: selectedSeats.value.includes(seatNumber)
+        !userBookedSeats.value.includes(seatNumber), // место занято не юзером а кем-то другим
+      isOccupiedByUser: userBookedSeats.value.includes(seatNumber), // место занято юзером
+      isSelected: selectedSeats.value.includes(seatNumber) // место выбрано юзером
     }
   })
 })
@@ -91,78 +124,96 @@ const rows = computed(() =>
   Array.from({ length: seatsParams.rows }, (_, i) => i + 1)
 )
 
-// Метод для получения мест для текущего ряда
+// Функции
 const getSeatsForRow = (row) => {
   const startIndex = (row - 1) * seatsParams.cellsInRow
   const endIndex = row * seatsParams.cellsInRow
   return seats.value.slice(startIndex, endIndex)
 }
 
-// Метод для определения цвета кнопки в зависимости от состояния места
 const getSeatColor = (seat) => {
-  if (seat.isSelected) return 'green' // Зеленый, если занято пользователем или выбрано
-  if (seat.isOccupied && !seat.isSelected) return 'orange' // Оранжевый, если занято другим пользователем
-  return 'white' // Белый, если свободно
+  if (userStore.isLoggedIn && seat.isSelected) return 'green'
+  if (seat.isOccupied) return 'orange'
+  return 'white'
+}
+
+function editBookingClick() {
+  editable.value = true
+}
+
+async function confirmBooking() {
+  if (!event.value) return
+
+  // Удаляем старые места, забронированные пользователем ранее
+  const updatedOccupiedSeats = event.value.occupiedSeats.filter(
+    (seat) => !userBookedSeats.value.includes(seat)
+  )
+
+  // Добавляем новые места, забронированные пользователем
+  updatedOccupiedSeats.push(...selectedSeats.value)
+
+  // Обновляем состояние событий и отправляем данные на сервер
+  await eventsStore.setOccupiedSeatsByID(eventId, [
+    ...new Set(updatedOccupiedSeats)
+  ])
+
+  // Обновляем локальное состояние события (event) после изменения
+  event.value.occupiedSeats = [...new Set(updatedOccupiedSeats)]
+
+  const bookingData = {
+    eventID: eventId,
+    bookedSeats: selectedSeats.value
+  }
+
+  // Обновляем состояние пользователя и отправляем данные на сервер
+  userStore.setUserBookedEvent(eventId, bookingData)
+
+  // Запрещаем редактирование
+  editable.value = false
+  if (!selectedSeats.value.length) {
+    showModal('Забронировано: 0 мест. Бронирование отменено')
+  }
+  if (selectedSeats.value.length) {
+    showModal('Бронирование подтверждено!')
+  }
 }
 
 const selectSeat = (seat) => {
-  // Проверка авторизации
   if (!userStore.isLoggedIn) {
-    alert('Пожалуйста, залогиньтесь, чтобы забронировать место.')
+    showModal('Пожалуйста, залогиньтесь, чтобы забронировать место.')
     return
   }
-
-  // Проверка, если место занято другим пользователем
   if (seat.isOccupied && !seat.isOccupiedByUser) {
-    alert(
+    showModal(
       'Это место нельзя забронировать, оно уже забронировано другим пользователем'
     )
     return
   }
-
-  // Логика для отмены или выбора места
   if (seat.isSelected) {
     selectedSeats.value = selectedSeats.value.filter((s) => s !== seat.number)
   } else {
     if (selectedSeats.value.length >= 4) {
-      alert('Нельзя забронировать более 4 мест')
+      showModal('Нельзя забронировать более 4 мест')
       return
     }
     selectedSeats.value.push(seat.number)
   }
 }
 
-// Метод для подтверждения бронирования
-const confirmBooking = () => {
-  if (!event.value) return
+// Лайфсайкл хук
+onMounted(async () => {
+  event.value = await eventsStore.getEventFromDB(eventId)
+  editable.value = !userBookedSeats.value.length
+})
 
-  // Обновляем состояние userStore для текущего пользователя
-  const bookingIndex = userStore.currentUser.bookedEvents.findIndex(
-    (b) => b.eventID === eventId
-  )
-
-  console.log(bookingIndex)
-  if (bookingIndex !== -1) {
-    // Если бронирование уже существует, обновляем его
-    userStore.currentUser.bookedEvents[bookingIndex].bookedSeats =
-      selectedSeats.value
-  } else {
-    // Если бронирование не существует, добавляем его
-    userStore.currentUser.bookedEvents.push({
-      eventID: eventId,
-      bookedSeats: selectedSeats.value
-    })
-  }
-
-  // Обновляем состояние eventsStore для текущего события
-  const eventIndex = eventsStore.events.findIndex((e) => e.id === eventId)
-
-  if (eventIndex !== -1) {
-    eventsStore.events[eventIndex].occupiedSeats = [
-      ...new Set([...event.value.occupiedSeats, ...selectedSeats.value])
-    ]
-  }
-
-  alert('Бронирование подтверждено!')
-}
+// Обновление состояния при изменении
+watch(
+  () => [event.value],
+  () => {
+    if (event.value) {
+      selectedSeats.value = [...userBookedSeats.value]
+    }
+  },
+  { immediate: true }
+)
 </script>

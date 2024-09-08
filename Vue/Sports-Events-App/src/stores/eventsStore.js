@@ -1,10 +1,11 @@
 import { getEntitiesFromDB } from '@/firebase/getEntitiesFromDB'
 import { useUserStore } from './userStore'
+import { getEntityByID } from '@/firebase/getEntityByID'
+import { setEntityInDB } from '@/firebase/setEntityInDB'
 
 export const useEventsStore = defineStore('eventsStore', () => {
   const events = ref([])
   const getEventsError = ref('')
-  const currentEvent = ref({})
   const userStore = useUserStore()
 
   const getEvents = async () => {
@@ -23,14 +24,29 @@ export const useEventsStore = defineStore('eventsStore', () => {
     })
   })
 
-  function setCurrentEvent(event) {
-    currentEvent.value = event
+  async function getEventFromDB(eventID) {
+    return getEntityByID('sportsEvents', eventID)
+  }
+
+  async function writeEventToDB(eventID, updatedEvent) {
+    setEntityInDB('sportsEvents', eventID, updatedEvent)
+  }
+
+  function setOccupiedSeatsByID(eventID, occupiedSeats) {
+    const eventIndex = events.value.findIndex((e) => e.id === eventID)
+
+    if (eventIndex !== -1) {
+      events.value[eventIndex].occupiedSeats = occupiedSeats
+
+      writeEventToDB(eventID, events.value[eventIndex])
+    }
   }
 
   return {
     events,
     getEvents,
     favoritesEvents,
-    setCurrentEvent
+    getEventFromDB,
+    setOccupiedSeatsByID
   }
 })

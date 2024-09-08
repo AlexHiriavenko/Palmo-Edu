@@ -5,6 +5,7 @@
 @import './views.css';
 @import './cardsList.css';
 @import './event-details.css';
+@import './event-booking.css';
 
 :root {
   --header-height: 64px;

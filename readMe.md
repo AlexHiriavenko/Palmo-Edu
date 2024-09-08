@@ -11,3 +11,15 @@
 - [Vue-HW4](https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw4/Vue/VueHW-4)
 - [Vue-HW7](https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw7/Vue/VueHW-7)
 - [Sports-Events-App](https://github.com/AlexHiriavenko/Palmo-Edu/tree/sports-events-app/Vue/Sports-Events-App)
+
+## Notes:
+
+Так как это монорепозиторий: несколько проектов в одном репо <br>
+Чтобы запустить конкретный проект и если вы не хотите менять корневую дирректорию на (cd "путь*к*конкртетному_проетку") <br>
+можно ввести например такие команды:
+
+- для установки зависимостей: cd ./путь*к*проекту && npm install && cd -
+- для запуска проекта: npm --prefix "./путь*к*проекту run dev
+- для деплоя: npm --prefix "./путь*к*проекту run deploy
+  <br>
+  ... и т.д. например: npm --prefix "./Vue/Sports-Events-App" run dev

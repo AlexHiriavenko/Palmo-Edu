@@ -1,0 +1,59 @@
+.notEditable {
+  pointer-events: none;
+  filter: brightness(75%);
+}
+
+.booking-info {
+  color: white;
+  text-shadow: 1px 1px 1px black;
+}
+
+.v-container.info-container {
+  background-color: rgb(77, 76, 76);
+  padding-block: 8px;
+}
+
+.v-container.booking-container {
+  margin-top: 16px;
+  max-width: 760px;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.v-container.seats-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  padding: 8px;
+}
+
+.seat {
+  overflow: hidden;
+}
+
+.v-col-1.seat {
+  max-width: 40px;
+  min-width: none;
+}
+
+.v-col-1.seat .v-btn {
+  max-width: 40px;
+  min-width: none;
+}
+
+.v-col-1.seat .v-btn::after {
+  max-width: 40px;
+  min-width: none;
+}
+
+.v-col-1.seat .v-btn span {
+  max-width: 40px;
+  min-width: none;
+}
+
+.v-container.booking-btngroup {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
