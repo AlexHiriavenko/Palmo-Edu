@@ -14,8 +14,6 @@
 import icon404 from '@/assets/imgs/icon404.png'
 import authImg from '@/assets/imgs/auth-req.webp'
 import router from '@/router'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 
 const route = useRoute()
 

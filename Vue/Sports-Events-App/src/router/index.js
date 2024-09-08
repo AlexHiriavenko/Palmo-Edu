@@ -72,9 +72,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
 
-  // Проверяем, требуется ли авторизация для маршрута
   if (to.meta.requiresAuth) {
-    // Дождемся, пока флаг авторизации не будет установлен в true
     if (!userStore.isAuthReady) {
       await new Promise((resolve) => {
         const unwatch = watch(
@@ -89,20 +87,18 @@ router.beforeEach(async (to, from, next) => {
       })
     }
 
-    // Проверяем, авторизован ли пользователь
     if (!userStore.isLoggedIn) {
       next({ name: 'auth-required', query: { redirect: to.fullPath } })
       return
     }
 
-    // Проверяем, если маршрут требует права администратора
     if (to.meta.requiresAdmin && userStore.currentUser.role !== 'admin') {
       next({ name: 'admin-required' })
       return
     }
   }
 
-  next() // все проверки пройдены
+  next()
 })
 
 export default router

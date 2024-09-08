@@ -1,14 +1,14 @@
 <template>
   <v-container class="event-container">
     <EventDescription :event="event" @goBack="goBack" />
-    <EventBooking :event="event" />
+    <EventBooking />
   </v-container>
 </template>
 
 <script setup>
 import { useEventsStore } from '@/stores/eventsStore'
-import EventDescription from '@/components/EventDescription.vue'
-import EventBooking from '@/components/EventBooking.vue'
+import EventDescription from '@/components/events/EventDescription.vue'
+import EventBooking from '@/components/events/EventBooking.vue'
 
 const route = useRoute()
 const router = useRouter()

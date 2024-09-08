@@ -1,5 +1,4 @@
 .views {
-  background-image: url('@/assets/imgs/Background2.jpg');
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
@@ -8,8 +7,16 @@
   overflow-y: auto;
 }
 
+.views.home {
+  background-image: url('@/assets/imgs/Background2.jpg');
+}
+
 .views.favorites {
   background-image: url('@/assets/imgs/Background3.jpg');
+}
+
+.views.booking {
+  background-image: url('@/assets/imgs/volleyball.jpg');
 }
 
 .v-container.views {
@@ -17,5 +24,9 @@
 }
 
 .v-pagination .v-btn {
+  text-shadow: 2px 2px 2px black;
+}
+
+.page-title {
   text-shadow: 2px 2px 2px black;
 }

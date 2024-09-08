@@ -9,7 +9,6 @@ import {
 } from '@/firebase'
 import { getEntityByID } from '@/firebase/getEntityByID'
 import { setEntityInDB } from '@/firebase/setEntityInDB'
-import { useRouter } from 'vue-router'
 
 export const useUserStore = defineStore('userStore', () => {
   const currentUser = ref(null)
@@ -44,7 +43,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const signup = async (email, password, name = 'NoName') => {
+  async function signup(email, password, name = 'NoName') {
     try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
@@ -117,10 +116,16 @@ export const useUserStore = defineStore('userStore', () => {
       (b) => b.eventID === eventID
     )
 
-    if (eventIndex !== -1) {
-      currentUser.value.bookedEvents[eventIndex] = bookingData
+    if (bookingData.bookedSeats.length === 0) {
+      if (eventIndex !== -1) {
+        currentUser.value.bookedEvents.splice(eventIndex, 1)
+      }
     } else {
-      currentUser.value.bookedEvents.push(bookingData)
+      if (eventIndex !== -1) {
+        currentUser.value.bookedEvents[eventIndex] = bookingData
+      } else {
+        currentUser.value.bookedEvents.push(bookingData)
+      }
     }
   }
 

@@ -8,7 +8,22 @@ export const useEventsStore = defineStore('eventsStore', () => {
   const getEventsError = ref('')
   const userStore = useUserStore()
 
-  const getEvents = async () => {
+  const favoritesEvents = computed(() => {
+    return events.value.filter((event) => {
+      return userStore.currentUser?.favoriteEvents?.includes(event.id)
+    })
+  })
+
+  const bookedEvents = computed(() => {
+    const userBookedEventIDs =
+      userStore.currentUser?.bookedEvents.map(
+        (bookedEvent) => bookedEvent.eventID
+      ) || []
+
+    return events.value.filter((event) => userBookedEventIDs.includes(event.id))
+  })
+
+  async function getEvents() {
     try {
       events.value = await getEntitiesFromDB('sportsEvents')
       return events.value
@@ -17,12 +32,6 @@ export const useEventsStore = defineStore('eventsStore', () => {
       getEventsError.value = 'Error receiving sports events'
     }
   }
-
-  const favoritesEvents = computed(() => {
-    return events.value.filter((event) => {
-      return userStore.currentUser?.favoriteEvents?.includes(event.id)
-    })
-  })
 
   async function getEventFromDB(eventID) {
     return getEntityByID('sportsEvents', eventID)
@@ -46,6 +55,7 @@ export const useEventsStore = defineStore('eventsStore', () => {
     events,
     getEvents,
     favoritesEvents,
+    bookedEvents,
     getEventFromDB,
     setOccupiedSeatsByID
   }

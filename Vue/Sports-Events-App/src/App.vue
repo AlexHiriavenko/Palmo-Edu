@@ -15,6 +15,5 @@
 <script setup>
 import HeaderApp from '@/components/HeaderApp.vue'
 import { useUserStore } from './stores/userStore'
-
 const userStore = useUserStore()
 </script>

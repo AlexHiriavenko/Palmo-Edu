@@ -66,10 +66,8 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useEventsStore } from '@/stores/eventsStore'
-import { useRoute } from 'vue-router'
 
 const userStore = useUserStore()
 const eventsStore = useEventsStore()
@@ -91,14 +89,12 @@ function closeModal() {
   modalRef.value.closeModal()
 }
 
-// Параметры мест
 const seatsParams = {
   totalSeats: 50,
   rows: 5,
   cellsInRow: 10
 }
 
-// Вычисляемые свойства
 const userBookedSeats = computed(
   () =>
     userStore.currentUser?.bookedEvents.find((b) => b.eventID === eventId)
@@ -124,7 +120,6 @@ const rows = computed(() =>
   Array.from({ length: seatsParams.rows }, (_, i) => i + 1)
 )
 
-// Функции
 const getSeatsForRow = (row) => {
   const startIndex = (row - 1) * seatsParams.cellsInRow
   const endIndex = row * seatsParams.cellsInRow
@@ -200,13 +195,11 @@ const selectSeat = (seat) => {
   }
 }
 
-// Лайфсайкл хук
 onMounted(async () => {
   event.value = await eventsStore.getEventFromDB(eventId)
   editable.value = !userBookedSeats.value.length
 })
 
-// Обновление состояния при изменении
 watch(
   () => [event.value],
   () => {

@@ -32,8 +32,8 @@
 <script setup>
 import { usePagination } from '@/composables/usePagination'
 import PaginationBar from '@/components/general/PaginationBar.vue'
-import EventCard from '@/components/EventCard.vue'
-import DropMenu from './general/DropMenu.vue'
+import EventCard from '@/components/events/EventCard.vue'
+import DropMenu from '@/components/general/DropMenu.vue'
 
 const props = defineProps({
   isLoading: Boolean,

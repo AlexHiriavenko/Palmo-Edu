@@ -10,8 +10,7 @@ export default {
       'select',
       'textarea',
       'button',
-      'a[href]',
-      '[tabindex]:not([tabindex="-1"])'
+      'a[href]'
     ]
 
     const isFocusable = (element) =>

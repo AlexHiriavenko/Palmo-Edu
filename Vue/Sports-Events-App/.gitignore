@@ -18,6 +18,8 @@ coverage
 /cypress/videos/
 /cypress/screenshots/
 
+draft.js
+
 # Editor directories and files
 .env
 # .vscode/*
