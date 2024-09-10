@@ -1,6 +1,6 @@
 <template>
   <v-card class="v-card-custom mx-auto" elevation="10">
-    <v-card-text class="font-weight-bold text-center" style="padding: 6px">
+    <v-card-text class="font-weight-bold text-center py-1">
       Category: <span class="text-blue-darken-1"> {{ event.category }}</span>
     </v-card-text>
     <v-card-title
@@ -18,6 +18,9 @@
     </v-card-text>
     <v-card-text v-formatdate="event.dateTime" class="font-weight-bold">
       Date:
+    </v-card-text>
+    <v-card-text v-if="isBooking" class="font-weight-bold text-blue">
+      Booked Seats: <span>{{ bookedSeats }}</span>
     </v-card-text>
     <v-card-actions class="justify-center">
       <v-btn
@@ -48,6 +51,8 @@
 
 <script setup>
 import { useUserStore } from '@/stores/userStore'
+const userStore = useUserStore()
+const router = useRouter()
 
 const props = defineProps({
   event: {
@@ -56,15 +61,9 @@ const props = defineProps({
   }
 })
 
-const router = useRouter()
+const isBooking = inject('isBooking', false)
 
 const modalRef = ref(null)
-
-function goToEventDetails() {
-  router.push({ name: 'event-details', params: { id: props.event.id } })
-}
-
-const userStore = useUserStore()
 
 const isFavorite = computed(
   () => userStore.currentUser?.favoriteEvents?.includes(props.event.id) ?? false
@@ -72,6 +71,20 @@ const isFavorite = computed(
 const buttonColor = computed(() =>
   isFavorite.value ? 'orange-lighten-1' : 'brown-lighten-4'
 )
+
+const bookedSeats = computed(() => {
+  if (!userStore.isLoggedIn || !isBooking) return ''
+
+  const targetEvent = userStore.currentUser?.bookedEvents.find(
+    (event) => event.eventID === props.event.id
+  )
+
+  return targetEvent?.bookedSeats.join(', ') || ''
+})
+
+function goToEventDetails() {
+  router.push({ name: 'event-details', params: { id: props.event.id } })
+}
 
 function toggleFavorite() {
   if (!userStore.isLoggedIn) {

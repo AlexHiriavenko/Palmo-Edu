@@ -14,6 +14,8 @@ import EventsList from '@/components/events/EventsList.vue'
 const eventsStore = useEventsStore()
 const isLoading = ref(false)
 
+provide('isBooking', true)
+
 onMounted(async () => {
   if (!eventsStore.events.length) {
     isLoading.value = true

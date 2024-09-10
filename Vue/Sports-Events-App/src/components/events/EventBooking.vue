@@ -1,6 +1,5 @@
 <template>
   <v-container class="booking-container mx-auto">
-    <!-- Информация для пользователя -->
     <v-container class="info-container mb-4">
       <v-row class="justify-center" :class="{ notEditable: !editable }">
         <v-col cols="4" class="text-center">
@@ -20,7 +19,6 @@
       </v-row>
     </v-container>
 
-    <!-- Сетка мест -->
     <v-container :class="{ notEditable: !editable }" class="seats-container">
       <v-row v-for="row in rows" :key="row" class="justify-space-between">
         <div
@@ -123,6 +121,7 @@ const rows = computed(() =>
 const getSeatsForRow = (row) => {
   const startIndex = (row - 1) * seatsParams.cellsInRow
   const endIndex = row * seatsParams.cellsInRow
+
   return seats.value.slice(startIndex, endIndex)
 }
 

@@ -2,14 +2,18 @@ import { db } from '@/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 
 export async function getEntityByID(collectionPath, id) {
-  const docRef = doc(db, collectionPath, id)
-  const docSnap = await getDoc(docRef)
+  try {
+    const docRef = doc(db, collectionPath, id)
+    const docSnap = await getDoc(docRef)
 
-  if (docSnap.exists()) {
-    const data = docSnap.data()
-    return data
-  } else {
-    console.log('No such document!')
+    if (docSnap.exists()) {
+      return docSnap.data()
+    }
+
+    console.log('Документ не найден!')
     return null
+  } catch (error) {
+    console.error('Ошибка при получении данных по ID. ', error)
+    throw error
   }
 }
