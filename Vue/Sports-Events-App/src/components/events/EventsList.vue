@@ -2,7 +2,7 @@
   <LoaderSpinner :isLoading="isLoading" :size="70" color="white" />
 
   <div v-show="events.length" class="text-center pb-2">
-    <DropMenu :items="categories" @itemClick="handleCategoryClick">
+    <DropMenu :items="categories" v-model="filterBy">
       <template #menuActivator="{ props }">
         <span v-bind="props" style="cursor: pointer">
           <v-btn variant="text" color="white" style="font-weight: 600">
@@ -48,10 +48,6 @@ const filteredEvents = computed(() => {
   }
   return props.events.filter((event) => event?.category === filterBy.value)
 })
-
-const handleCategoryClick = (category) => {
-  filterBy.value = category?.action
-}
 
 const categories = [
   { text: 'Football', action: 'Football' },

@@ -19,12 +19,20 @@
 
 <script setup>
 defineProps({
+  modelValue: {
+    type: String,
+    default: ''
+  },
   items: {
     type: Array,
     required: true
   }
 })
 
-const emit = defineEmits(['itemClick'])
-const itemClick = (item) => emit('itemClick', item)
+const emit = defineEmits(['update:modelValue', 'itemClick'])
+
+const itemClick = (item) => {
+  emit('update:modelValue', item.action)
+  emit('itemClick', item)
+}
 </script>
