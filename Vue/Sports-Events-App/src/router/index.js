@@ -6,6 +6,8 @@ import AdminPanel from '@/views/AdminPanel.vue'
 import FavoriteEvents from '@/views/FavoriteEvents.vue'
 import NotFound from '@/views/NotFound.vue'
 import EventDetails from '@/views/EventDetails.vue'
+import EditEvent from '@/components/events/EditEvent.vue'
+import CreateEvent from '@/components/events/CreateEvent.vue'
 
 const routes = [
   {
@@ -35,7 +37,21 @@ const routes = [
       requiresAuth: true,
       requiresAdmin: true,
       showInTabs: false
-    }
+    },
+    children: [
+      {
+        path: 'edit-event',
+        name: 'edit-event',
+        component: EditEvent,
+        meta: { title: 'Edit Event', requiresAuth: true, requiresAdmin: true }
+      },
+      {
+        path: 'create-event',
+        name: 'create-event',
+        component: CreateEvent,
+        meta: { title: 'Create Event', requiresAuth: true, requiresAdmin: true }
+      }
+    ]
   },
   {
     path: '/event/:id',
@@ -93,7 +109,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     if (to.meta.requiresAdmin && userStore.currentUser.role !== 'admin') {
-      next({ name: 'admin-required' })
+      next({ name: 'admin-required', query: { redirect: to.fullPath } })
       return
     }
   }

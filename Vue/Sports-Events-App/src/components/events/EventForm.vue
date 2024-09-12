@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="mx-auto" width="400">
+  <v-sheet class="mx-auto mt-6" width="400">
     <v-form ref="form" fast-fail @submit.prevent="onSubmit" class="px-3 py-3">
       <v-card-title class="text-center">
         {{ formTitle }}
@@ -66,6 +66,16 @@
       <v-btn class="mt-2" type="submit" block>Submit</v-btn>
     </v-form>
   </v-sheet>
+
+  <ModalDialog ref="modalRef">
+    <template #modal-content>
+      <v-container class="d-flex flex-column align-center justify-center">
+        <v-card-title class="text-h5">{{ resultMessege }}</v-card-title>
+        <v-spacer style="height: 20px"></v-spacer>
+        <v-btn @click="modalRef.closeModal">OK</v-btn>
+      </v-container>
+    </template>
+  </ModalDialog>
 </template>
 
 <script setup>
@@ -89,6 +99,9 @@ const formData = ref({
 })
 
 const form = ref(null)
+
+const modalRef = ref(null)
+const resultMessege = ref('')
 
 const {
   nameRules,
@@ -119,10 +132,12 @@ async function onSubmit() {
       delete formData.value.date
       delete formData.value.time
 
-      eventStore.addEvent(formData.value)
+      await eventStore.addEvent(formData.value)
+      resultMessege.value = 'Event Added Successfully'
+      modalRef.value.openModal()
       resetForm()
     } catch (error) {
-      console.error('Error during submission:', error)
+      resultMessege.value = 'Error during submit'
     }
   }
 }
