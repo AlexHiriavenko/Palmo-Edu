@@ -133,6 +133,7 @@ const getSeatColor = (seat) => {
 
 function editBookingClick() {
   editable.value = true
+  console.log(event.value)
 }
 
 async function confirmBooking() {

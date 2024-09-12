@@ -63,4 +63,6 @@ const {
   handlePageChange,
   itemsPerPage
 } = usePagination(filteredEvents)
+
+watch(filterBy, () => (page.value = 1))
 </script>
