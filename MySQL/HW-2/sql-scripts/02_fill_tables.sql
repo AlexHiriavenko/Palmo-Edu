@@ -1,3 +1,5 @@
+START TRANSACTION;
+
 -- Заполняем таблицу users
 INSERT INTO users (email, fio, area_id) VALUES
 ('john.doe@gmail.com', 'John Doe', 1),
@@ -192,3 +194,5 @@ INSERT INTO districts (name) VALUES
 ('Coastal District'),
 ('Urban District'),
 ('Rural District');
+
+COMMIT;
