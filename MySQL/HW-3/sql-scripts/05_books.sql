@@ -1,5 +1,5 @@
+-- Отримати перелік книг та їхніх авторів:
 -- Використовуйте INNER JOIN між таблицями "Books" та "Authors" для отримання інформації про книги та їхніх авторів.
--- Знайти студентів, які не призначені жодному курсу:
 
 SELECT 
     books.book_title, 
@@ -19,6 +19,17 @@ GROUP BY genres.genre_name;
 
 -- Отримати список книг, які є улюбленими у більш як двох користувачів:
 -- Використовуйте підзапит та GROUP BY для знаходження книг, які мають більше двох записів в таблиці "Favorites".
+
+SELECT book_title
+FROM books
+WHERE id IN (
+    SELECT book_id
+    FROM favorites
+    GROUP BY book_id
+    HAVING COUNT(user_id) > 2
+);
+
+-- 2й вариант без подзапроса
 
 SELECT 
     books.book_title, 

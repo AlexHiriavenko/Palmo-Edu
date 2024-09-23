@@ -69,6 +69,19 @@ WHERE grades.id IS NULL;
 SELECT courses.course_name
 FROM courses
 INNER JOIN grades ON courses.id = grades.course_id
+WHERE 
+    grades.course_id IN (
+        SELECT course_id 
+        FROM grades 
+        WHERE grade > 90
+    )
+GROUP BY courses.id;
+
+-- 2й вариант без подзапроса
+
+SELECT courses.course_name
+FROM courses
+INNER JOIN grades ON courses.id = grades.course_id
 WHERE grades.grade > 90
 GROUP BY courses.course_name;
 
