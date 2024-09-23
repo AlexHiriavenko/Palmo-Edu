@@ -2,7 +2,7 @@
 
 SELECT * 
 FROM news 
-ORDER BY created_at 
+ORDER BY created_at DESC
 LIMIT 10;
 
 -- Необхідно порахувати скільки новин у кожній категорії

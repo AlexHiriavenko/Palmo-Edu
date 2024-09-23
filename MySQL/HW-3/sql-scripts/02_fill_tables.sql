@@ -101,5 +101,59 @@ VALUES
 (4, 5);    -- Patricia Martinez преподает History, категория 'Arts'
            -- никто не ведет Astronomy
 
+-- ////////////////////////////////////////////////////////////////////////////////////
+
+INSERT INTO authors (author_name)
+VALUES 
+('J.K. Rowling'),
+('George Orwell'),
+('J.R.R. Tolkien'),
+('Agatha Christie'),
+('Stephen King');
+
+INSERT INTO genres (genre_name)
+VALUES 
+('Fantasy'),
+('Science Fiction'),
+('Mystery'),
+('Horror'),
+('Classic');
+
+INSERT INTO books (book_title, genre_id, author_id)
+VALUES 
+('Harry Potter and the Philosophers Stone', 1, 1),
+('1984', 2, 2),
+('The Hobbit', 1, 3),
+('Murder on the Orient Express', 3, 4),
+('The Shining', 4, 5);
+
+INSERT INTO users (user_name)
+VALUES 
+('Alice'),
+('Bob'),
+('Charlie'),
+('David'),
+('Eve');
+
+INSERT INTO favorites (user_id, book_id)
+VALUES 
+(1, 1),  -- Alice добавила 'Harry Potter and the Philosopher\'s Stone'
+(1, 2),  -- Alice добавила '1984'
+(2, 1),  -- Bob добавил 'Harry Potter and the Philosopher\'s Stone'
+(2, 3),  -- Bob добавил 'The Hobbit'
+(3, 1),  -- Charlie добавил 'Harry Potter and the Philosopher\'s Stone'
+(3, 4),  -- Charlie добавил 'Murder on the Orient Express'
+(4, 5),  -- David добавил 'The Shining'
+(4, 2),  -- David добавил '1984'
+(5, 3),  -- Eve добавила 'The Hobbit'
+(5, 5);  -- Eve добавила 'The Shining'
+
+INSERT INTO user_activity (user_id, activity_date)
+VALUES 
+(1, '2024-08-21'),  -- Alice не активна, 21.08 а сегодня 23.09 
+(2, '2024-07-20'),  -- Bob не активен июль
+(3, '2024-09-10'),  -- Charlie активен, сентябрь
+(4, '2024-06-05'),  -- David не активен июнь
+(5, '2024-09-22');  -- Eve активна, сентябрь
 
 COMMIT;
