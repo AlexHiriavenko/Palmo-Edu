@@ -159,7 +159,8 @@ echo $var . BR;
   <section>
     <ul>
         <li><a href="../index.php">back to main</a></li>
-        <li><a href="./arrays.php">to arrays</a></li>
+        <li><a href="./arrays.php">to HW-1 Arrays</a></li>
+        <li><a href="../HW-2/functions.php">to HW-2 Functions</a></li>
     </ul>
   </section>
 </body>

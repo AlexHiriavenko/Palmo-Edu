@@ -16,6 +16,10 @@ li {
   margin-top: 8px;
 }
 
+ul {
+  margin-top: 24px;
+}
+
 a {
   text-decoration: none;
   color: inherit;
