@@ -9,7 +9,8 @@ function array_average(array $numbers): float {
 }
 
 $average = array_average([10, 20, 30, 40]); // 50
-echo "Середнє арифметичне: " . $average . BR;
+echo "Середнє арифметичне: " . $average;
+echo BR;
 
 // Напишіть функцію для перевертання рядка.
 
@@ -45,7 +46,7 @@ function countLatinVowels(string $str): int {
     $str = mb_strtolower($str);
     preg_match_all('/[aeiou]/', $str, $matches);
     
-    return count($matches[0]);
+    return count($matches[0] ?? []);
 }
 
 $vowelCount = countLatinVowels("Hello, how are you?");
@@ -141,7 +142,6 @@ function factorial(int $n, array &$memo = []): int {
     }
 
     $memo[$n] = $n * factorial($n - 1, $memo);
-    
     
     return $memo[$n];
 }
