@@ -1,4 +1,17 @@
 <?php
+session_start();
+
+function clearSession() {
+    $_SESSION = [];
+    session_destroy();
+    header("Location: " . $_SERVER['PHP_SELF']); 
+    exit();
+}
+
+if (isset($_POST['clear_session'])) {
+    clearSession();  
+}
+
 const BR = '<br>';
 
 // Timestamp: time та mktime. Використовуйте такі функції: time, mktime.
@@ -61,8 +74,74 @@ echo BR;
 echo date("H:i:s");  // Формат '12:59:59'
 echo BR;
 
+$timestamp = mktime(0, 0, 0, 2, 12, 2025);
+echo date("d.m.Y", $timestamp);
+echo BR;
+
+$week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thuгsday', 'friday', 'saturday'];
+echo "Today is: " . $week[date("w")];
+echo BR;
+
+$timestamp_2006 = mktime(0, 0, 0, 6, 6, 2006);
+echo "06.06.2006 was " . $week[date("w", $timestamp_2006)];
+echo BR;
+
+$timestamp_birthday = mktime(0, 0, 0, 03, 17, 1985);
+echo "My birthday was on: " . $week[date("w", $timestamp_birthday)];
+echo BR;
+
+$months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+echo "Now: " . $months[date("n") - 1];
+echo BR;
+
+echo "Кількість днів у поточному місяці: " . date("t");
+echo BR;
+
+if (isset($_POST['year'])) {
+    $year = (int)htmlspecialchars($_POST['year']);
+    
+    if (($year % 4 === 0 && $year % 100 !== 0) || $year % 400 === 0) {
+        $_SESSION['typeYearResult'] = "$year є високосним роком.";
+    } else {
+        $_SESSION['typeYearResult'] = "$year не є високосним роком.";
+    }
+}
+
+if (isset($_POST['date'])) {
+    $date = htmlspecialchars($_POST['date']);
+    $date_parts = explode('.', $date);
+
+    if (count($date_parts) === 3) {
+        list($day, $month, $year) = $date_parts;
+        $timestamp = mktime(0, 0, 0, $month, $day, $year);
+        $_SESSION['weekDayResult'] = "День тижня: " . $week[date("w", $timestamp)];
+    }
+}
+
+if (isset($_POST['iso_date'])) {
+    $iso_date = $_POST['iso_date']; // Получаем введённую дату
+    $date_parts = explode('-', $iso_date); // Разбиваем дату на год, месяц и день
+
+    if (count($date_parts) === 3) {
+        list($year, $month, $day) = $date_parts; // Присваиваем значения
+        $timestamp = mktime(0, 0, 0, $month, $day, $year); // Создаём timestamp
+        $monthResult = "Місяць: " . $months[date("n", $timestamp) - 1]; // Получаем название месяца
+        $_SESSION['monthResult'] = $monthResult; // Сохраняем результат в сессии
+    }
+}
 
 
+$typeYearResult = $_SESSION['typeYearResult'] ?? '';
+$weekDayResult = $_SESSION['weekDayResult'] ?? '';
+$monthResult = $_SESSION['monthResult'] ?? '';
+
+echo BR;
+
+
+echo BR;
+
+
+echo BR;
 ?>
 
 <!DOCTYPE html>
@@ -77,6 +156,53 @@ echo BR;
 </head>
 
 <body>
+  <section>
+    <form method="post">
+        <label for="year">Введіть рік:</label>
+        <input 
+          type="text" 
+          id="year" 
+          name="year" 
+          required 
+          minlength="4" 
+          maxlength="4" 
+          pattern="\d{4}"
+          placeholder="2024" 
+        >
+        <input type="submit" value="Перевірити">
+    </form>
+    <p>Відповідь: <?php echo $typeYearResult; ?></p>
+    <form method="post">
+      Введіть дату: 
+      <input 
+          type="text" 
+          name="date" 
+          required 
+          pattern="^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(\d{4})$" 
+          placeholder="31.12.2025" 
+          title="формат: 31.12.2025"
+      >
+      <input type="submit" value="Дізнатись день тижня">
+    </form>
+    <p>Відповідь: <?php echo $weekDayResult; ?></p>
+    <form method="post">
+      Введіть дату (формат: 2025-12-31): 
+      <input 
+          type="text" 
+          name="iso_date" 
+          required 
+          pattern="\d{4}-\d{2}-\d{2}" 
+          placeholder="2025-12-31" 
+          title="формат: 2025-12-31"
+      >
+      <input type="submit" value="Дізнатись місяць">
+    </form>
+    <p>Відповідь: <?php echo $monthResult; ?></p>
+    <form method="post">
+      <input type="hidden" name="clear_session" value="1">
+      <input type="submit" value="Очистити сесію">
+    </form>
+  </section>
   <section>
     <ul>
       <li><a href="./files-system.php">to HW-3 FileSystem</a></li>
