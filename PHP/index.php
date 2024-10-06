@@ -16,6 +16,7 @@
     <li><a href="./HW-2/functions.php">HW-2. Functions</a></li>
     <li><a href="./HW-3/files-system.php">HW-3. File System</a></li>
     <li><a href="./HW-3/dates.php">HW-3. Dates</a></li>
+    <li><a href="./HW-4/max_sumDig.php">HW-4. max_sumDig</a></li>
   </ul>
 </body>
 
