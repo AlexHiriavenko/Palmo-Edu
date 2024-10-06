@@ -25,3 +25,14 @@ a {
   color: inherit;
   font-size: inherit;
 }
+
+section {
+  margin-top: 16px;
+}
+
+.clear {
+  background-color: orangered;
+  font-weight: 600;
+  color: white;
+  padding: 8px;
+}
