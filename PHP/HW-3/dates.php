@@ -156,7 +156,6 @@ if (isset($_POST['date1']) && isset($_POST['date2'])) {
   $date1 = htmlspecialchars($_POST['date1']);
   $date2 = htmlspecialchars($_POST['date2']);
 
-  // Преобразуем даты в timestamp
   $timestamp1 = strtotime($date1);
   $timestamp2 = strtotime($date2);
 
@@ -261,7 +260,6 @@ $friday13Dates = $_SESSION['friday13'] ?? [];
 
 //  Дізнайтеся, який день тижня був 100 днів тому.
 
-// Створюємо об'єкт поточної дати
 $currentDate = new DateTime();
 $daysAgo100 =
   $currentDate->modify('-100 days')->format('l');
@@ -284,6 +282,7 @@ echo BR;
 
 <body>
   <section>
+    <!-- Высокосный год ? -->
     <form method="post">
       <label for="year">Введіть рік:</label>
       <input
@@ -299,6 +298,7 @@ echo BR;
       <input type="submit" value="Перевірити">
     </form>
     <p>Відповідь: <?php echo $typeYearResult; ?></p>
+    <!-- Ден Недели -->
     <form method="post">
       Введіть дату:
       <input
@@ -312,6 +312,7 @@ echo BR;
       <input type="submit" value="Дізнатись день тижня">
     </form>
     <p>Відповідь: <?php echo $weekDayResult; ?></p>
+    <!-- Месяц -->
     <form method="post">
       Введіть дату (формат: 2025-12-31):
       <input
@@ -325,6 +326,7 @@ echo BR;
       <input type="submit" value="Дізнатись місяць">
     </form>
     <p>Відповідь: <?php echo $monthResult; ?></p>
+    <!-- Сравнение Дат -->
     <form method="post">
       <label for="date1">Введіть першу дату (формат: 2025-12-31):</label>
       <input
@@ -352,11 +354,11 @@ echo BR;
       <br>
       <input type="submit" value="Порівняти дати">
     </form>
-    <!-- Вывод результата -->
     <p>Результат порівняння дат:
       <?php echo $comparisonResult;
       echo BR; ?>
     </p>
+    <!-- Переделать Формат Даты -->
     <form method="post">
       <label for="datetime">Введіть дату-час (формат: 2025-12-31T12:13:59):</label>
       <input
@@ -372,13 +374,12 @@ echo BR;
       <br>
       <input type="submit" value="Перетворити">
     </form>
-
-    <!-- Вывод результата -->
     <p>Відповідь:
       <?php echo htmlspecialchars($formattedResult);
       echo BR;
       ?>
     </p>
+    <!-- Найти пятницы 13е -->
     <form method="post">
       <input type="hidden" name="check_friday_13" value="1">
       <label for="friday_year">Введіть рік (для пошуку п'ятниць 13-го):</label>
@@ -396,15 +397,16 @@ echo BR;
       <br>
       <input type="submit" value="Знайти п'ятниці 13-го">
     </form>
-
-    <!-- Вывод результата п'ятниць 13-го -->
     <p>П'ятниці 13-го у вибраному році: <?php print_r($friday13Dates); ?></p>
 
+    <!-- Очистить Сессию -->
     <form method="post">
       <input type="hidden" name="clear_session" value="1">
       <input type="submit" value="Очистити сесію" class="clear">
     </form>
   </section>
+
+  <!-- Навигация -->
   <section>
     <ul>
       <li><a href="./files-system.php">to HW-3 FileSystem</a></li>
