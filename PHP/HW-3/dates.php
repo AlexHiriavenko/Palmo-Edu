@@ -34,13 +34,13 @@ $current_year = date("Y");
 echo "31 грудня поточного року у форматі timestamp: " . mktime(0, 0, 0, 12, 31, $current_year);
 echo BR;
 
-$timestamp_15_march_2000 = mktime(13, 12, 59, 3, 15, 2000);
-$seconds_passed = time() - $timestamp_15_march_2000;
+$timestampMarchDay = mktime(13, 12, 59, 3, 15, 2000);
+$seconds_passed = time() - $timestampMarchDay;
 echo "Кількість секунд з 13:12:59 15 березня 2000 року до теперішнього часу: " . $seconds_passed . " секунд";
 echo BR;
 
-$timestamp_today_7_23_48 = mktime(7, 23, 48, date("m"), date("d"), date("Y"));
-$hours_passed = (time() - $timestamp_today_7_23_48) / 3600;
+$timestampСertainTime = mktime(7, 23, 48, date("m"), date("d"), date("Y"));
+$hours_passed = (time() - $timestampСertainTime) / 3600;
 echo "Кількість годин з 7:23:48 поточного дня до теперішнього часу: " . round($hours_passed, 2) . " годин";
 echo BR;
 
@@ -78,8 +78,8 @@ $week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thuгsday', 'friday', 'sat
 echo "Today is: " . $week[date("w")];
 echo BR;
 
-$timestamp_2006 = mktime(0, 0, 0, 6, 6, 2006);
-echo "06.06.2006 was " . $week[date("w", $timestamp_2006)];
+$timestampCertainYear = mktime(0, 0, 0, 6, 6, 2006);
+echo "06.06.2006 was " . $week[date("w", $timestampCertainYear)];
 echo BR;
 
 $timestamp_birthday = mktime(0, 0, 0, 03, 17, 1985);
@@ -156,14 +156,14 @@ if (isset($_POST['date1']) && isset($_POST['date2'])) {
   $date1 = htmlspecialchars($_POST['date1']);
   $date2 = htmlspecialchars($_POST['date2']);
 
-  $timestamp1 = strtotime($date1);
-  $timestamp2 = strtotime($date2);
+  $timestampFirst = strtotime($date1);
+  $timestampSecond = strtotime($date2);
 
   // Сравниваем даты и сохраняем результат в сессию
-  if ($timestamp1 && $timestamp2) {
-    if ($timestamp1 > $timestamp2) {
+  if ($timestampFirst && $timestampSecond) {
+    if ($timestampFirst > $timestampSecond) {
       $_SESSION['comparisonResult'] = "Дата $date1 пізніше ніж $date2.";
-    } elseif ($timestamp1 < $timestamp2) {
+    } elseif ($timestampFirst < $timestampSecond) {
       $_SESSION['comparisonResult'] = "Дата $date2 пізніше ніж $date1.";
     } else {
       $_SESSION['comparisonResult'] = "Обидві дати рівні.";
@@ -241,22 +241,22 @@ echo BR;
 if (isset($_POST['check_friday_13'])) {
   $year = (int)htmlspecialchars($_POST['friday_year']);
 
-  $friday13Dates = [];
+  $fridayThirteenth = [];
 
   for ($month = 1; $month <= 12; $month++) {
     $date = new DateTime("$year-$month-13");
     // если пятница
     if ($date->format('N') == 5) {
-      $friday13Dates[] = $date->format('Y-m-d');
+      $fridayThirteenth[] = $date->format('Y-m-d');
     }
   }
 
-  $_SESSION['friday13'] = $friday13Dates;
+  $_SESSION['friday13'] = $fridayThirteenth;
   $_SESSION['savedFridayYear'] = $year;
 }
 
 $savedFridayYear = $_SESSION['savedFridayYear'] ?? '';
-$friday13Dates = $_SESSION['friday13'] ?? [];
+$fridayThirteenth = $_SESSION['friday13'] ?? [];
 
 //  Дізнайтеся, який день тижня був 100 днів тому.
 
@@ -397,7 +397,7 @@ echo BR;
       <br>
       <input type="submit" value="Знайти п'ятниці 13-го">
     </form>
-    <p>П'ятниці 13-го у вибраному році: <?php print_r($friday13Dates); ?></p>
+    <p>П'ятниці 13-го у вибраному році: <?php print_r($fridayThirteenth); ?></p>
 
     <!-- Очистить Сессию -->
     <form method="post">

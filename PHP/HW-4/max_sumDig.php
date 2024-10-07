@@ -90,11 +90,12 @@ echo BR;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../styles.css" rel="stylesheet">
-  <title>php find numbers</title>
+  <title>php max_sumDig</title>
 
 </head>
 
 <body>
+  <h1>max_sumDig</h1>
   <section>
     <ul>
       <li><a href="../index.php">back to Main</a></li>
