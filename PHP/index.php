@@ -18,6 +18,7 @@
     <li><a href="./HW-3/dates.php">HW-3. Dates</a></li>
     <li><a href="./HW-4/max_sumDig.php">HW-4. max_sumDig</a></li>
     <li><a href="./HW-4/crazy-rabbit.php">HW-4. Crazy Rabbit</a></li>
+    <li><a href="./HW-4/most-frequently-used-words.php">HW-4. Most frequently used words</a></li>
   </ul>
 </body>
 
