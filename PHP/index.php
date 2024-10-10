@@ -19,6 +19,7 @@
     <li><a href="./HW-4/max_sumDig.php">HW-4. max_sumDig</a></li>
     <li><a href="./HW-4/crazy-rabbit.php">HW-4. Crazy Rabbit</a></li>
     <li><a href="./HW-4/most-frequently-used-words.php">HW-4. Most frequently used words</a></li>
+    <li><a href="./HW-5/public/index.php">HW-5. OOP Classes</a></li>
   </ul>
 </body>
 

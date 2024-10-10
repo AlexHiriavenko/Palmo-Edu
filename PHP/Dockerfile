@@ -4,6 +4,9 @@ FROM php:8.0-cli
 # Устанавливаем рабочую директорию
 WORKDIR /var/www/html
 
+# Устанавливаем Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Копируем файлы проекта в контейнер
 COPY . /var/www/html
 
