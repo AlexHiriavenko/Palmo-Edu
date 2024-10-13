@@ -1,0 +1,21 @@
+{
+  "name": "root/sports_events",
+  "authors": [
+    {
+      "name": "alex_march",
+      "email": "martmarchmartmarch@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-pdo": "*"
+  },
+  "require-dev": {
+    "wanfeiyy/dd": "^1.0",
+    "fakerphp/faker": "^1.9.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Palmo\\": ""
+    }
+  }
+}
