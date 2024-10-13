@@ -2,6 +2,7 @@
 
 namespace App\Payment;
 
-interface PaymentMethod {
+interface PaymentMethod
+{
     public function processPayment(float $amount): bool;
 }

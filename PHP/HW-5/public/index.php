@@ -52,7 +52,6 @@ try {
     $cashPayment = new CashPayment();
     $rentalSystem->rentVehicle(1, 2, $cashPayment); // Арендуем мотоцикл на 2 часа
     echo BR;
-
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage() . "\n";
 }
