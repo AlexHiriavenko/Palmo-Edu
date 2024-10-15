@@ -1,0 +1,15 @@
+@import url("./header.css");
+
+:root {
+  --header-height: 72px;
+}
+
+.app-main {
+  background-color: rgb(37, 50, 57);
+  color: white;
+  min-height: calc(100vh - var(--header-height));
+}
+
+.center-x {
+  transform: translate(-50%, 0);
+}

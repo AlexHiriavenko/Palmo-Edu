@@ -1,28 +1,5 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
 
-use Palmo\Source\Db;
-
-try {
-    $dsn = "mysql:host=db;dbname=sports_events;charset=utf8mb4";
-    $username = "root";
-    $password = "123";
-
-    $pdo = new PDO($dsn, $username, $password);
-    echo "Connection successful!";
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-}
-
-$db = new Db();
-$pdo = $db->getHandler();
-
-$query = $pdo->query('SHOW DATABASES');
-$dbs = $query->fetchAll(PDO::FETCH_COLUMN);
-
-echo '<pre>';
-print_r($dbs);
-echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -31,11 +8,18 @@ echo '</pre>';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="icon" href="./public/imgs/football.ico">
+    <link rel="stylesheet" href="./public/styles/reset.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./public/styles/styles.css">
+    <title>Sports Events</title>
 </head>
 
 <body>
-    <h1>test</h1>
+    <header class="app-header">
+        <?php include './views/navbar.php'; ?>
+    </header>
+    <main class="app-main"></main>
 </body>
 
 </html>
