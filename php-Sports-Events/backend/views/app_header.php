@@ -51,13 +51,13 @@ $current_page = basename($_SERVER['REQUEST_URI'], ".php");
     </ul>
     <a
       class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold  rounded-xl transition duration-200"
-      href="#">
-      Sign In
+      href="/login.php">
+      Login
     </a>
     <a
       class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
-      href="#">
-      Sign up</a>
+      href="/signup.php">
+      Signup</a>
   </nav>
   <div class="navbar-menu relative z-50 hidden">
     <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
@@ -87,8 +87,8 @@ $current_page = basename($_SERVER['REQUEST_URI'], ".php");
       </div>
       <div>
         <div class="mt-4 pt-6">
-          <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-500 hover:bg-blue-600  rounded-xl" href="#">Sign in</a>
-          <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-500 hover:bg-blue-600  rounded-xl" href="#">Sign Up</a>
+          <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-500 hover:bg-blue-600  rounded-xl" href="/login.php">Sign in</a>
+          <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-500 hover:bg-blue-600  rounded-xl" href="/signup.php">Sign Up</a>
         </div>
       </div>
     </nav>
