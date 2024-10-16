@@ -16,10 +16,8 @@
 </head>
 
 <body>
-    <header class="app-header">
-        <?php include './views/app_header.php'; ?>
-    </header>
-    <main class="app-main"></main>
+    <?php include './views/app_header.php'; ?>
+    <main class="app-main views home"></main>
 </body>
 
 </html>

@@ -4,11 +4,11 @@
   --header-height: 72px;
 }
 
-.app-main {
+/* .app-main {
   background-color: rgb(37, 50, 57);
   color: white;
   min-height: calc(100vh - var(--header-height));
-}
+} */
 
 .center-x {
   transform: translate(-50%, 0);
@@ -16,4 +16,25 @@
 
 body {
   background-color: bisque;
+}
+
+.views {
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: calc(100vh - var(--header-height));
+  max-height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+}
+
+.views.home {
+  background-image: url("../imgs/Background2.jpg");
+}
+
+.views.favorites {
+  background-image: url("../imgs/Background3.jpg");
+}
+
+.views.booking {
+  background-image: url("../imgs/volleyball.jpg");
 }
