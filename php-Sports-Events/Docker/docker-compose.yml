@@ -37,6 +37,7 @@ services:
       - "${DB_PORT}:3306"
     volumes:
       - db-store:/var/lib/mysql
+      - ../backend/mysql-init-scripts:/docker-entrypoint-initdb.d
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASS} # Пароль для root
