@@ -1,0 +1,322 @@
+[
+  {
+    "name": "Ohio State Buckeyes Women's Volleyball vs. Nebraska Cornhuskers Womens Volleyball",
+    "dateTime": "2024-10-19T19:30:00Z",
+    "price": 18,
+    "location": "2640 Fred Taylor Dr.",
+    "category": "Volleyball",
+    "occupiedSeats": [30, 44, 21, 4, 20]
+  },
+  {
+    "name": "Oregon Ducks Volleyball vs. University of Nebraska Huskers Womens Volleyball",
+    "dateTime": "2024-11-08T03:00:00Z",
+    "price": 4,
+    "location": "1776 E. 13th Ave",
+    "category": "Volleyball",
+    "occupiedSeats": [42, 3, 25]
+  },
+  {
+    "name": "NCAA Division I Women's Volleyball Championship",
+    "price": 39,
+    "location": "1 Arena Plaza",
+    "category": "Volleyball",
+    "occupiedSeats": [41]
+  },
+  {
+    "name": "LOVB Madison vs LOVB Austin",
+    "dateTime": "2025-03-01T22:00:00Z",
+    "price": 33,
+    "location": "1919 Alliant Energy Center Way ",
+    "category": "Volleyball",
+    "occupiedSeats": [31, 35, 15, 34, 1, 41, 19]
+  },
+  {
+    "name": "LOVB Houston vs LOVB Omaha",
+    "dateTime": "2025-01-10T22:00:00Z",
+    "price": 35,
+    "location": "28505 Southwest Fwy",
+    "category": "Volleyball",
+    "occupiedSeats": [15, 22, 7, 1, 49, 30, 18, 33, 3, 12, 41, 26, 23, 19, 36]
+  },
+  {
+    "name": "LOVB Atlanta vs LOVB Omaha",
+    "dateTime": "2025-02-01T21:00:00Z",
+    "price": 28,
+    "location": "2000 Convention Center Concourse",
+    "category": "Volleyball",
+    "occupiedSeats": [19, 49]
+  },
+  {
+    "name": "LOVB Austin v LOVB Salt Lake",
+    "dateTime": "2025-02-20T22:00:00Z",
+    "price": 25,
+    "location": "2100 Avenue of the Stars",
+    "category": "Volleyball",
+    "occupiedSeats": [20, 41, 29, 18, 34, 28, 45, 8]
+  },
+  {
+    "name": "AVP Pro Beach Volleyball",
+    "dateTime": "2024-10-27T01:00:00Z",
+    "price": 45,
+    "location": "2695 E. Katella",
+    "category": "Volleyball",
+    "occupiedSeats": [30, 32, 27, 12, 19, 46, 14]
+  },
+  {
+    "name": "LOVB Omaha vs LOVB Houston",
+    "dateTime": "2025-03-22T21:00:00Z",
+    "price": 35,
+    "location": "2425 S. 67th St",
+    "category": "Volleyball",
+    "occupiedSeats": [30, 7, 36, 8, 29]
+  },
+  {
+    "name": "LOVB Atlanta vs LOVB Austin",
+    "dateTime": "2025-03-08T21:00:00Z",
+    "price": 28,
+    "location": "2000 Convention Center Concourse",
+    "category": "Volleyball",
+    "occupiedSeats": [11, 24, 48, 43, 6, 7, 33]
+  },
+  {
+    "name": "LOVB Houston vs LOVB Austin",
+    "dateTime": "2025-03-15T21:00:00Z",
+    "price": 35,
+    "location": "28505 Southwest Fwy",
+    "category": "Volleyball",
+    "occupiedSeats": [28, 43, 16, 27, 5, 50]
+  },
+  {
+    "name": "LOVB Salt Lake vs LOVB Austin",
+    "dateTime": "2025-04-05T22:00:00Z",
+    "price": 35,
+    "location": "4600 South Redwood Road",
+    "category": "Volleyball",
+    "occupiedSeats": [21, 35, 4, 46, 32, 44, 23, 29, 15, 26, 18, 48, 2, 34]
+  },
+  {
+    "name": "Ohio State Buckeyes Women's Volleyball vs. Penn State Womens Volleyball",
+    "dateTime": "2024-10-19T00:00:00Z",
+    "price": 18,
+    "location": "2640 Fred Taylor Dr.",
+    "category": "Volleyball",
+    "occupiedSeats": [50, 34, 41]
+  },
+  {
+    "name": "Iowa State Cyclones Volleyball vs. Texas Tech Red Raiders Womens Volleyball",
+    "dateTime": "2024-10-18T23:30:00Z",
+    "price": 5,
+    "location": "Iowa State Center",
+    "category": "Volleyball",
+    "occupiedSeats": [37, 20, 2, 48, 34, 27]
+  },
+  {
+    "name": "LOVB Salt Lake vs LOVB Omaha",
+    "dateTime": "2025-02-08T23:00:00Z",
+    "price": 41,
+    "location": "3200 South Decker Lake Drive",
+    "category": "Volleyball",
+    "occupiedSeats": [21, 36, 39, 3, 14, 6]
+  },
+  {
+    "name": "Louisville Cardinals Women's Volleyball vs. University of Pittsburgh Panthers Women's Volleyball",
+    "dateTime": "2024-11-28T00:00:00Z",
+    "price": 5,
+    "location": "1 Arena Plaza",
+    "category": "Volleyball",
+    "occupiedSeats": [18, 26, 30, 10, 43]
+  },
+  {
+    "name": "Iowa State Cyclones Volleyball vs. Kansas State University Volleyball",
+    "dateTime": "2024-10-27T17:00:00Z",
+    "price": 5,
+    "location": "Iowa State Center",
+    "category": "Volleyball",
+    "occupiedSeats": [8, 1, 19, 45]
+  },
+  {
+    "name": "NMSU Aggies Volleyball vs. Florida International University Golden Panthers Volleyball",
+    "dateTime": "2024-10-19T00:00:00Z",
+    "price": 7,
+    "location": "1810 E. University",
+    "category": "Volleyball",
+    "occupiedSeats": [50, 48, 35, 45, 23, 20, 22, 13, 14]
+  },
+  {
+    "name": "Ohio State Buckeyes Women's Volleyball vs. University of Minnesota Golden Gophers Women's Volleyball",
+    "dateTime": "2024-10-27T17:00:00Z",
+    "price": 18,
+    "location": "2640 Fred Taylor Dr.",
+    "category": "Volleyball",
+    "occupiedSeats": [31, 38, 18, 23, 19, 22, 37, 44, 36]
+  },
+  {
+    "name": "AVP League Dallas - Week 8",
+    "dateTime": "2024-11-02T23:00:00Z",
+    "price": 12,
+    "location": "2601 Avenue of the Stars",
+    "category": "Volleyball",
+    "occupiedSeats": [50, 48, 42, 16, 43, 2, 36]
+  },
+  {
+    "name": "AVP Pro Beach Volleyball",
+    "dateTime": "2024-10-27T20:00:00Z",
+    "price": 45,
+    "location": "2695 E. Katella",
+    "category": "Volleyball",
+    "occupiedSeats": [23, 33, 41, 44, 45, 6, 7, 36]
+  },
+  {
+    "name": "Ohio State Buckeyes Women's Volleyball vs. Rutgers Womens Volleyball",
+    "dateTime": "2024-11-17T00:00:00Z",
+    "price": 15,
+    "location": "2640 Fred Taylor Dr.",
+    "category": "Volleyball",
+    "occupiedSeats": [46, 13, 24, 2, 48, 27, 15, 1, 16, 14, 31, 38, 7]
+  },
+  {
+    "name": "LOVB Austin vs LOVB Atlanta",
+    "dateTime": "2025-01-16T00:30:00Z",
+    "price": 25,
+    "location": "2100 Avenue of the Stars",
+    "category": "Volleyball",
+    "occupiedSeats": [
+      27, 24, 43, 23, 7, 41, 26, 31, 1, 20, 42, 18, 15, 10, 37, 5
+    ]
+  },
+  {
+    "name": "Ohio State Buckeyes Women's Volleyball vs. Indiana Womens Volleyball",
+    "dateTime": "2024-11-25T00:30:00Z",
+    "price": 15,
+    "location": "2640 Fred Taylor Dr.",
+    "category": "Volleyball",
+    "occupiedSeats": [32, 16, 27, 21, 20, 8, 42, 3]
+  },
+  {
+    "name": "Oregon Ducks Volleyball vs. UCLA Bruins Women's Volleyball",
+    "dateTime": "2024-11-03T03:00:00Z",
+    "price": 3,
+    "location": "1776 E. 13th Ave",
+    "category": "Volleyball",
+    "occupiedSeats": [24, 40, 11, 3, 8, 9, 30, 50]
+  },
+  {
+    "name": "UCF Knights Volleyball vs. Kansas Jayhawks Womens Volleyball",
+    "dateTime": "2024-10-19T17:00:00Z",
+    "price": 15,
+    "location": "12777 Gemini Blvd",
+    "category": "Volleyball",
+    "occupiedSeats": [34, 50, 24, 17, 16, 30, 14, 36, 28, 47]
+  },
+  {
+    "name": "Tennessee Volunteers Volleyball vs. Auburn University Tigers Volleyball",
+    "dateTime": "2024-10-20T18:00:00Z",
+    "price": 4,
+    "location": "1600 Phillip Fulmer Way",
+    "category": "Volleyball",
+    "occupiedSeats": [42, 36, 47, 3, 9, 11]
+  },
+  {
+    "name": "Iowa State Cyclones Volleyball vs. Kansas Jayhawks Womens Volleyball",
+    "dateTime": "2024-11-29T23:00:00Z",
+    "price": 5,
+    "location": "Iowa State Center",
+    "category": "Volleyball",
+    "occupiedSeats": [3, 30, 27, 17, 49]
+  },
+  {
+    "name": "AVP League Dallas - Week 8",
+    "dateTime": "2024-11-03T19:00:00Z",
+    "price": 12,
+    "location": "2601 Avenue of the Stars",
+    "category": "Volleyball",
+    "occupiedSeats": [9, 44, 16, 46]
+  },
+  {
+    "name": "Ohio State Buckeyes Women's Volleyball vs. University of Washington Huskies Women's Volleyball",
+    "dateTime": "2024-11-23T00:00:00Z",
+    "price": 18,
+    "location": "2640 Fred Taylor Dr.",
+    "category": "Volleyball",
+    "occupiedSeats": [39, 13, 12, 18, 41, 25, 44, 1]
+  },
+  {
+    "name": "Louisville Cardinals Women's Volleyball vs. NC State Wolfpack Women's Volleyball",
+    "dateTime": "2024-10-20T17:00:00Z",
+    "price": 20,
+    "location": "2100 So. Floyd Street",
+    "category": "Volleyball",
+    "occupiedSeats": [10, 22]
+  },
+  {
+    "name": "Ohio State Buckeyes Women's Volleyball vs. University of Maryland Terrapins Volleyball",
+    "dateTime": "2024-11-16T00:00:00Z",
+    "price": 15,
+    "location": "2640 Fred Taylor Dr.",
+    "category": "Volleyball",
+    "occupiedSeats": [22, 48, 20, 14, 6, 21, 45]
+  },
+  {
+    "name": "Kentucky Wildcats Women's Volleyball vs. Texas A&M Volleyball",
+    "dateTime": "2024-11-09T00:00:00Z",
+    "price": 10,
+    "location": "201 Avenue of Champions",
+    "category": "Volleyball",
+    "occupiedSeats": [38, 19, 6, 33, 24, 29]
+  },
+  {
+    "name": "Oregon Ducks Volleyball vs. University of Maryland Terrapins Volleyball",
+    "dateTime": "2024-10-26T01:00:00Z",
+    "price": 3,
+    "location": "1776 E. 13th Ave",
+    "category": "Volleyball",
+    "occupiedSeats": [12, 32, 36, 28, 9, 10, 26]
+  },
+  {
+    "name": "Louisville Cardinals Women's Volleyball vs. Wake Forest Demon Deacons Women's Volleyball",
+    "dateTime": "2024-10-18T23:00:00Z",
+    "price": 20,
+    "location": "2100 So. Floyd Street",
+    "category": "Volleyball",
+    "occupiedSeats": [40, 42, 14, 4, 18, 36, 12, 24, 30, 9, 37]
+  },
+  {
+    "name": "Creighton Bluejays Womens Volleyball vs. Xavier Womens Volleyball",
+    "dateTime": "2024-10-18T23:00:00Z",
+    "price": 10,
+    "location": "19TH & WEBSTER",
+    "category": "Volleyball",
+    "occupiedSeats": [43, 11, 50, 5, 20, 6, 8, 27, 12, 26, 45]
+  },
+  {
+    "name": "WHSAA State Volleyball Tournament Pass",
+    "price": 20,
+    "location": "1 Events Drive",
+    "category": "Volleyball",
+    "occupiedSeats": [28, 15, 6, 21, 27, 47]
+  },
+  {
+    "name": "LOVB Houston vs LOVB Austin",
+    "dateTime": "2025-01-10T00:30:00Z",
+    "price": 25,
+    "location": "28505 Southwest Fwy",
+    "category": "Volleyball",
+    "occupiedSeats": [45, 19, 18, 10, 30, 22, 47, 24, 31, 7, 33, 49]
+  },
+  {
+    "name": "UCF Knights Volleyball vs. University of Houston Cougars Women's Volleyball",
+    "dateTime": "2024-10-25T23:00:00Z",
+    "price": 15,
+    "location": "12777 Gemini Blvd",
+    "category": "Volleyball",
+    "occupiedSeats": [9, 7, 14, 33]
+  },
+  {
+    "name": "Kentucky Wildcats Women's Volleyball vs. Lsu Tigers Volleyball",
+    "dateTime": "2024-11-10T21:30:00Z",
+    "price": 10,
+    "location": "201 Avenue of Champions",
+    "category": "Volleyball",
+    "occupiedSeats": [36, 16, 29, 41, 25, 15, 22, 39]
+  }
+]

@@ -1,4 +1,6 @@
-CREATE TABLE users (
+START TRANSACTION;
+
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -6,37 +8,39 @@ CREATE TABLE users (
     role ENUM('admin', 'user') NOT NULL
 );
 
-CREATE TABLE sportEvents (
+CREATE TABLE IF NOT EXISTS sportEvents (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     category VARCHAR(50) NOT NULL,
     location VARCHAR(255),
     dateTime DATETIME NOT NULL,
-    price DECIMAL(10, 2) NOT NULL
+    price DECIMAL(10, 2)
 );
 
-CREATE TABLE favorites (
+CREATE TABLE IF NOT EXISTS favorites (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userId INT,
-    eventId VARCHAR(50),
+    eventId INT,
     FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (eventId) REFERENCES sportEvents(id) ON DELETE CASCADE
 );
 
-CREATE TABLE bookedEvents (
+CREATE TABLE IF NOT EXISTS bookedEvents (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userId INT,
-    eventId VARCHAR(50),
+    eventId INT,
     FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (eventId) REFERENCES sportEvents(id) ON DELETE CASCADE
 );
 
-CREATE TABLE occupiedSeats (
+CREATE TABLE IF NOT EXISTS occupiedSeats (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    eventId VARCHAR(50),
+    eventId INT,
     seatNumber INT,
     userId INT,  
     FOREIGN KEY (eventId) REFERENCES sportEvents(id) ON DELETE CASCADE,
     FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
     UNIQUE (eventId, seatNumber)
 );
+
+COMMIT;

@@ -16,6 +16,8 @@ services:
       - DB_DATABASE=${DB_NAME:-php_course}
       - DB_USERNAME=${DB_USER:-php_course}
       - DB_PASSWORD=${DB_PASS:-php_course}
+    depends_on:
+      - db
     networks:
       - backend
 
@@ -28,6 +30,8 @@ services:
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - ../backend:/work/backend
+    depends_on:
+      - db
     networks:
       - backend
 
