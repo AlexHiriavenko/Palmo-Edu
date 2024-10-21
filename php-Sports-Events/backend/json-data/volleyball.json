@@ -17,6 +17,7 @@
   },
   {
     "name": "NCAA Division I Women's Volleyball Championship",
+    "dateTime": "2024-11-08T03:00:00Z",
     "price": 39,
     "location": "1 Arena Plaza",
     "category": "Volleyball",
@@ -290,6 +291,7 @@
   },
   {
     "name": "WHSAA State Volleyball Tournament Pass",
+    "dateTime": "2024-11-18T23:00:00Z",
     "price": 20,
     "location": "1 Events Drive",
     "category": "Volleyball",

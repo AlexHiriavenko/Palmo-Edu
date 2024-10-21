@@ -1,13 +1,13 @@
 <?php
 
-namespace Palmo\Source;
+namespace Palmo\Database;
 
 use PDO;
 
 class Db
 {
     /** @var PDO */
-    private PDO $handler;
+    private PDO $pdoInstance;
 
     public function __construct()
     {
@@ -21,11 +21,11 @@ class Db
             PDO::ATTR_EMULATE_PREPARES   => false,
         ];
 
-        $this->handler = new PDO($dsn, $dbConfig['user'], $dbConfig['password'], $opt);
+        $this->pdoInstance = new PDO($dsn, $dbConfig['user'], $dbConfig['password'], $opt);
     }
 
-    public function getHandler(): PDO
+    public function getPdoInstance(): PDO
     {
-        return $this->handler;
+        return $this->pdoInstance;
     }
 }

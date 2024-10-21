@@ -1,6 +1,6 @@
 <?php
 
-namespace Palmo\Source;
+namespace Palmo\Database;
 
 class Config
 {
@@ -13,7 +13,6 @@ class Config
 
     public function get(string $name): array
     {
-        echo $name;
         if (! empty($name) && isset($this->config[$name])) {
             return $this->config[$name];
         } elseif (empty($name)) {

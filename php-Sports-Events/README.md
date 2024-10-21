@@ -43,3 +43,7 @@ docker-compose exec app composer install && \
 docker-compose exec db mysql -u root -p123 -e "exit" || \
 (docker-compose down && docker-compose up -d)
 ```
+
+### для обновления namespaces:
+
+docker-compose run app composer dump-autoload
