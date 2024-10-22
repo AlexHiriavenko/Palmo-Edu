@@ -41,6 +41,41 @@ class CrudBaseModel
     }
   }
 
+  // Update (обновление записи)
+  public function update(string $table, int $id, array $data): bool
+  {
+    try {
+      $fieldDetails = implode(', ', array_map(fn($key) => "`$key` = :$key", array_keys($data)));
+      $sql = "UPDATE `$table` SET $fieldDetails WHERE id = :id";
+
+      $stmt = $this->db->prepare($sql);
+      foreach ($data as $key => $value) {
+        $stmt->bindValue(":$key", $value);
+      }
+      $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+      return $stmt->execute();
+    } catch (PDOException $e) {
+      $this->handleError($e);
+      return false;
+    }
+  }
+
+  // Delete (удаление записи)
+  public function delete(string $table, int $id): bool
+  {
+    try {
+      $sql = "DELETE FROM `$table` WHERE id = :id";
+      $stmt = $this->db->prepare($sql);
+      $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+      return $stmt->execute();
+    } catch (PDOException $e) {
+      $this->handleError($e);
+      return false;
+    }
+  }
+
   // Использование QueryBuilder для чтения записи по ID
   public function readById(string $table, int $id, $fetchMode = PDO::FETCH_ASSOC): array
   {
@@ -78,17 +113,18 @@ class CrudBaseModel
     }
   }
 
-  // Использование QueryBuilder для чтения записей с фильтрами
-  public function readFiltered(string $table, array $filters = [], $fetchMode = PDO::FETCH_ASSOC): array
+  // Получение событий с фильтрацией и пагинацией
+  public function readFiltered(string $table, array $filters = [], int $limit = 8, int $offset = 0, $fetchMode = PDO::FETCH_ASSOC): array
   {
     try {
       $queryBuilder = new QueryBuilder();
       $queryBuilder->table($table);
 
-      // Добавляем фильтры в запрос
       foreach ($filters as $field => $value) {
         $queryBuilder->where($field, '=', $value);
       }
+
+      $queryBuilder->limit($limit)->offset($offset);
 
       $sql = $queryBuilder->getSelectSql();
       $bindings = $queryBuilder->getBindings();
@@ -103,38 +139,27 @@ class CrudBaseModel
     }
   }
 
-  // Update (обновление записи)
-  public function update(string $table, int $id, array $data): bool
+  // Подсчёт записей с фильтрацией
+  public function countFiltered(string $table, array $filters = []): int
   {
     try {
-      $fieldDetails = implode(', ', array_map(fn($key) => "`$key` = :$key", array_keys($data)));
-      $sql = "UPDATE `$table` SET $fieldDetails WHERE id = :id";
+      $queryBuilder = new QueryBuilder();
+      $queryBuilder->table($table)->count();
 
-      $stmt = $this->db->prepare($sql);
-      foreach ($data as $key => $value) {
-        $stmt->bindValue(":$key", $value);
+      foreach ($filters as $field => $value) {
+        $queryBuilder->where($field, '=', $value);
       }
-      $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
-      return $stmt->execute();
-    } catch (PDOException $e) {
-      $this->handleError($e);
-      return false;
-    }
-  }
+      $sql = $queryBuilder->getCountSql();
+      $bindings = $queryBuilder->getBindings();
 
-  // Delete (удаление записи)
-  public function delete(string $table, int $id): bool
-  {
-    try {
-      $sql = "DELETE FROM `$table` WHERE id = :id";
       $stmt = $this->db->prepare($sql);
-      $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+      $stmt->execute($bindings);
 
-      return $stmt->execute();
+      return (int)$stmt->fetchColumn();
     } catch (PDOException $e) {
       $this->handleError($e);
-      return false;
+      return 0;
     }
   }
 

@@ -10,6 +10,7 @@ class QueryBuilder
   protected array $joins = [];
   protected array $orderBy = [];
   protected ?int $limit = null;
+  protected ?int $offset = null;
   protected ?string $countField = '*';  // Поле для подсчёта в COUNT-запросах
 
   // Установка имени таблицы
@@ -61,6 +62,12 @@ class QueryBuilder
     return $this;
   }
 
+  public function offset(int $offset): self
+  {
+    $this->offset = $offset;
+    return $this;
+  }
+
   // Генерация SQL для обычного SELECT-запроса
   public function getSelectSql(): string
   {
@@ -81,6 +88,10 @@ class QueryBuilder
 
     if (!is_null($this->limit)) {
       $sql .= " LIMIT " . $this->limit;
+    }
+
+    if (!is_null($this->offset)) {
+      $sql .= " OFFSET " . $this->offset;
     }
 
     return $sql;

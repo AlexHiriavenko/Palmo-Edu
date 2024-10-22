@@ -6,22 +6,29 @@ use Palmo\Database\Db;
 use Palmo\Models\SportEventModel;
 
 $db = new Db();
+$sportEventModel = new SportEventModel($db);
 
 // Заполняем базу данных, если она пуста
-fillBaseFirstTime(new SportEventModel($db), $db);
+fillBaseFirstTime($sportEventModel, $db);
 
-// Получаем выбранную категорию
+// Получаем выбранную категорию и номер страницы
 $category = $_GET['category'] ?? 'all';
-
-$sportEventModel = new SportEventModel($db);
+$page = (int)($_GET['page'] ?? 1);
+$limit = 8;
+$offset = ($page - 1) * $limit;
 
 // Если выбрана категория, фильтруем события
 if ($category !== 'all') {
-    $events = $sportEventModel->getFilteredEvents(['category' => $category]);
+    $events = $sportEventModel->getFilteredEvents(['category' => $category], $limit, $offset);
+    $totalEvents = $sportEventModel->countFilteredEvents(['category' => $category]);
 } else {
     // Если категория "all", получаем все события
-    $events = $sportEventModel->getAllEvents();
+    $events = $sportEventModel->getFilteredEvents([], $limit, $offset);
+    $totalEvents = $sportEventModel->countFilteredEvents([]);
 }
+
+// Считаем общее количество страниц
+$totalPages = ceil($totalEvents / $limit);
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +59,7 @@ if ($category !== 'all') {
                 </select>
             </form>
         </div>
+
         <div class="container mx-auto">
             <?php
             if (!empty($events)) {
@@ -68,8 +76,8 @@ if ($category !== 'all') {
 
                     // Отображаем карточку
                     echo "
-                <div class='bg-gray-800 bg-opacity-80 rounded-lg shadow-lg p-6'>
-                    <h2 class='text-xl text-gray-200 font-bold mb-2'>" . htmlspecialchars($eventData['name']) . "</h2>
+                <div class='bg-gray-800 bg-opacity-80 rounded-lg shadow-lg p-6' style='min-height: 276px;'>
+                    <h2 class='text-xl text-gray-200 font-bold mb-2 max-h-20 overflow-hidden text-ellipsis'>" . htmlspecialchars($eventData['name']) . "</h2>
                     <p class='text-sm text-gray-200'>Категория: " . htmlspecialchars($eventData['category']) . "</p>
                     <p class='text-sm text-gray-200'>Место: " . htmlspecialchars($eventData['location']) . "</p>
                     <p class='text-sm text-gray-200'>Дата: " . htmlspecialchars($eventData['dateTime']) . "</p>
@@ -84,6 +92,23 @@ if ($category !== 'all') {
                 echo "<p class='text-center'>Список событий пуст.</p>";
             }
             ?>
+
+            <!-- Пагинация -->
+            <div class="mt-6">
+                <?php if ($totalPages > 1): ?>
+                    <nav>
+                        <ul class="flex justify-center space-x-4">
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <li>
+                                    <a href="?page=<?= $i ?>&category=<?= $category ?>" class="px-3 py-2 bg-gray-700 rounded text-white <?= $page == $i ? 'bg-blue-500' : '' ?>">
+                                        <?= $i ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+                        </ul>
+                    </nav>
+                <?php endif; ?>
+            </div>
         </div>
     </main>
 </body>
