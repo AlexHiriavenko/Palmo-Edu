@@ -15,6 +15,17 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
     // Начинаем транзакцию
     $pdo->beginTransaction();
 
+    // Загружаем SQL-запросы из файла
+    $sqlFilePath = './mysql-init-scripts/01-create-tables.sql';
+    if (file_exists($sqlFilePath)) {
+      $createTablesSQL = file_get_contents($sqlFilePath);
+
+      // Выполняем SQL-запросы
+      $pdo->exec($createTablesSQL);
+    } else {
+      throw new Exception("SQL-файл не найден: $sqlFilePath");
+    }
+
     // Функция для проверки, пуста ли таблица
     function isTableEmpty(CrudBaseModel $crudModel, string $tableName): bool
     {
@@ -81,5 +92,7 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
   } catch (PDOException $e) {
     $pdo->rollBack();
     echo "Ошибка при добавлении данных: " . $e->getMessage() . "\n";
+  } catch (Exception $e) {
+    echo "Общая ошибка: " . $e->getMessage() . "\n";
   }
 }

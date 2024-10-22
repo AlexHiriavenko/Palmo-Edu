@@ -22,6 +22,25 @@ docker-compose exec db mysql -u root -p123 -e "exit" || \
 (docker-compose down && docker-compose up -d)
 
 ```
+5. зайти на localhost:88
+
+6. если подключения к db не произошло (Host 'xxx.x.x.x' is not allowed to connect to this MySQL server ) <br>
+в командной строке выполнить команды по очереди. <br>
+в случае ошибки при "ALTER USER 'root'@'%' IDENTIFIED BY '123';" выполнить ее еще раз повторно;
+
+```
+docker-compose exec db mysql -u root || docker-compose exec db mysql -u root -p123
+UPDATE mysql.user SET host = '%' WHERE user = 'root' AND host = 'localhost';
+ALTER USER 'root'@'%' IDENTIFIED BY '123';
+ALTER USER 'root'@'%' IDENTIFIED BY '123';
+CREATE DATABASE sports_events CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+exit;
+```
+<br> в браузере обновить страницу localhost:88 пару раз;
+
+6. после всех выше указанных шагов проект должен запуститься корректно
+
+
 
 ### Rebuild Light:
 
@@ -47,3 +66,4 @@ docker-compose exec db mysql -u root -p123 -e "exit" || \
 ### для обновления namespaces:
 
 docker-compose run app composer dump-autoload
+

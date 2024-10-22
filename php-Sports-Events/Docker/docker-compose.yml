@@ -13,9 +13,9 @@ services:
       - DB_CONNECTION=mysql
       - DB_HOST=db
       - DB_PORT=3306
-      - DB_DATABASE=${DB_NAME:-php_course}
-      - DB_USERNAME=${DB_USER:-php_course}
-      - DB_PASSWORD=${DB_PASS:-php_course}
+      - DB_DATABASE=${DB_NAME:-sports_events}
+      - DB_USERNAME=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASS:-123}
     depends_on:
       - db
     networks:
@@ -44,8 +44,8 @@ services:
       - ../backend/mysql-init-scripts:/docker-entrypoint-initdb.d
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASS} # Пароль для root
-      MYSQL_DATABASE: ${DB_NAME} # База данных по умолчанию
+      MYSQL_ROOT_PASSWORD: ${DB_PASS:-123} # Пароль для root
+      MYSQL_DATABASE: ${DB_NAME:-sports_events} # База данных по умолчанию
       # MYSQL_PASSWORD: ${DB_PASS}
       # MYSQL_USER: ${DB_USER}
     networks:
