@@ -12,9 +12,10 @@
                     <p class='text-sm text-gray-200'>Место: <?= htmlspecialchars($event['location'] ?? 'Неизвестное место') ?></p>
                     <p class='text-sm text-gray-200'>Дата: <?= htmlspecialchars($event['dateTime']) ?></p>
                     <p class='text-sm text-gray-200'>Цена: $<?= htmlspecialchars($event['price'] !== null ? $event['price'] : 0) ?></p>
-                    <button class='mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
+                    <a href="<?= isset($event['id']) ? 'event-details.php?id=' . htmlspecialchars($event['id']) : '404.php' ?>" 
+                      class='mt-6 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
                         Узнать больше
-                    </button>
+                    </a>
                 </div>
             <?php endforeach; ?>
         </div>

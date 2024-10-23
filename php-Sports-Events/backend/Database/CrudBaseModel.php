@@ -77,7 +77,7 @@ class CrudBaseModel
   }
 
   // Использование QueryBuilder для чтения записи по ID
-  public function readById(string $table, int $id, $fetchMode = PDO::FETCH_ASSOC): array
+  public function readById(string $table, int $id, $fetchMode = PDO::FETCH_ASSOC): array|null
   {
     try {
       $queryBuilder = new QueryBuilder();
@@ -91,7 +91,10 @@ class CrudBaseModel
       $stmt->execute([$id]);
 
       $result = $stmt->fetch($fetchMode);
-      return $result ?? [];
+
+      if (is_array($result)) return $result;
+      return null;
+
     } catch (PDOException $e) {
       $this->handleError($e);
       return [];
