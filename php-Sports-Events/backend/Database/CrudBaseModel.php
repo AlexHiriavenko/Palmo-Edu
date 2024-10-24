@@ -94,7 +94,6 @@ class CrudBaseModel
 
       if (is_array($result)) return $result;
       return null;
-
     } catch (PDOException $e) {
       $this->handleError($e);
       return [];
@@ -117,7 +116,7 @@ class CrudBaseModel
   }
 
   // Получение событий с фильтрацией и пагинацией
-  public function readFiltered(string $table, array $filters = [], int $limit = 8, int $offset = 0, $fetchMode = PDO::FETCH_ASSOC): array
+  public function readFiltered(string $table, array $filters = [], ?int $limit = null, ?int $offset = 0, $fetchMode = PDO::FETCH_ASSOC): array
   {
     try {
       $queryBuilder = new QueryBuilder();
@@ -127,7 +126,9 @@ class CrudBaseModel
         $queryBuilder->where($field, '=', $value);
       }
 
-      $queryBuilder->limit($limit)->offset($offset);
+      if ($limit !== null) {
+        $queryBuilder->limit($limit)->offset($offset);
+      }
 
       $sql = $queryBuilder->getSelectSql();
       $bindings = $queryBuilder->getBindings();
