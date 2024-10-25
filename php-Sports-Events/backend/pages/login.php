@@ -16,7 +16,7 @@ session_start();
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center h-screen">
-  <form method="post" action="/Controller/AuthController.php" class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
+  <form method="post" action="/controller/auth.php" class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Login</h2>
 
     <div class="mb-4">
@@ -51,7 +51,7 @@ session_start();
     </div>
 
     <div class="flex items-center justify-between">
-      <input type="submit" value="Login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer">
+      <input type="submit" name="action" value="login123" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer">
     </div>
 
     <!-- Ссылка на регистрацию -->
