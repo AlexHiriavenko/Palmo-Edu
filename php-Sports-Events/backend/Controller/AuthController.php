@@ -2,6 +2,7 @@
 
 namespace Palmo\Controller;
 
+use Palmo\Database\Db;
 use Palmo\Service\AuthService;
 
 class AuthController extends BaseController
@@ -11,7 +12,8 @@ class AuthController extends BaseController
 
     public function __construct()
     {
-        $this->service = new AuthService();
+        $this->db = new Db;
+        $this->service = new AuthService($this->db);
     }
 
     public function handleRequest(): void
@@ -21,11 +23,12 @@ class AuthController extends BaseController
 
         if (in_array($action, $this->actions)) {
             $this->service->$action();  // Вызов соответствующего метода AuthService
+            echo $_POST['action']; // 
         } else {
             // Обработка неизвестного действия
+            echo $_POST['action'];
             echo "Error: Unrecognized action";
-            http_response_code(400);  // Возвращаем HTTP-код ошибки, например, 400 Bad Request
-            echo http_response_code();
+            http_response_code(400);
             exit;
         }
     }

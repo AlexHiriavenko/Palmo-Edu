@@ -21,19 +21,16 @@ session_start();
 
     <div class="mb-4">
       <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Enter email</label>
-      <?php
-      if (isset($_SESSION['email'])) {
-        echo '<input type="email" id="email" name="email" value="' . $_SESSION['email'] . '" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">';
-        unset($_SESSION['email']);
-      } else {
-        echo '<input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">';
-      }
-      ?>
+      <input type="email" id="email" name="email"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        value="<?php echo $_SESSION['email'] ?? ''; ?>">
     </div>
+    <?php unset($_SESSION['email']); ?>
 
     <div class="mb-4">
       <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Enter password</label>
-      <input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+      <input type="password" id="password" name="password"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
 
     <?php
@@ -43,18 +40,14 @@ session_start();
     }
     ?>
 
-    <div class="mb-6">
-      <label for="rememberMe" class="inline-flex items-center">
-        <input type="checkbox" id="rememberMe" name="rememberMe" class="form-checkbox h-4 w-4 text-indigo-600">
-        <span class="ml-2 text-gray-700 text-sm">Remember me</span>
-      </label>
-    </div>
+    <!-- Скрытое поле для явного указания значения для $_POST['action'] -->
+    <input type="hidden" name="action" value="login">
 
     <div class="flex items-center justify-between">
-      <input type="submit" name="action" value="login123" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer">
+      <input type="submit" value="Log In"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer">
     </div>
 
-    <!-- Ссылка на регистрацию -->
     <p class="text-center text-gray-600 mt-6">
       У вас еще нет аккаунта?
       <a href="/signup.php" class="text-blue-500 hover:text-blue-700 font-bold">Sign up</a>
