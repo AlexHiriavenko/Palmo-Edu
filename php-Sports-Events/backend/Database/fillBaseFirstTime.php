@@ -13,7 +13,7 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
   $pdo = $db->getPdoInstance();
 
   // Проверка наличия всех нужных таблиц и их заполненности
-  $requiredTables = ['sportEvents', 'occupiedSeats', 'users', 'bookedEvents', 'favorites'];
+  $requiredTables = ['sportEvents', 'occupiedSeats', 'users', 'bookedEvents', 'favorites', 'user_tokens'];
   $existingTables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
 
   // Если все таблицы уже существуют и заполнены, завершаем выполнение

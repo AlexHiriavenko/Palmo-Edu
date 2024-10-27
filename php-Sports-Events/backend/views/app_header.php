@@ -1,5 +1,8 @@
 <?php
 $current_page = basename($_SERVER['REQUEST_URI'], ".php");
+$username = $_SESSION['name'] ?? '';
+$userRole = $_SESSION['role'] ?? null;
+$isAdmin = $isLoggedIn && isset($userRole) && $userRole === 'admin';
 ?>
 
 
@@ -19,7 +22,7 @@ $current_page = basename($_SERVER['REQUEST_URI'], ".php");
     <ul class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
       <li>
         <a
-          class="text-sm <?php echo ($current_page == 'index' || $current_page == '') ? 'text-blue-600 font-bold' : 'text-gray-400 hover:text-gray-500'; ?>"
+          class="text-sm <?php echo (str_contains($current_page, 'index') || $current_page == '') ? 'text-blue-600 font-bold' : 'text-gray-400 hover:text-gray-500'; ?>"
           href="/index.php">
           EVENTS
         </a>
@@ -31,7 +34,7 @@ $current_page = basename($_SERVER['REQUEST_URI'], ".php");
       </li>
       <li>
         <a
-          class="text-sm <?php echo ($current_page == 'favorites') ? 'text-blue-600 font-bold' : 'text-gray-400 hover:text-gray-500'; ?>"
+          class="text-sm <?php echo str_contains($current_page, 'favorites') ? 'text-blue-600 font-bold' : 'text-gray-400 hover:text-gray-500'; ?>"
           href="/favorites.php">
           FAVORITES
         </a>
@@ -43,21 +46,47 @@ $current_page = basename($_SERVER['REQUEST_URI'], ".php");
       </li>
       <li>
         <a
-          class="text-sm <?php echo ($current_page == 'booking') ? 'text-blue-600 font-bold' : 'text-gray-400 hover:text-gray-500'; ?>"
+          class="text-sm <?php echo str_contains($current_page, 'booking') ? 'text-blue-600 font-bold' : 'text-gray-400 hover:text-gray-500'; ?>"
           href="/booking.php">
           BOOKING
         </a>
       </li>
+      <?php if ($isAdmin): ?>
+        <li class="text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+        </li>
+        <li>
+          <a
+            class="text-sm <?php echo str_contains($current_page, 'admin') ? 'text-blue-600 font-bold' : 'text-gray-400 hover:text-gray-500'; ?>"
+            href="/pages/admin.php">
+            ADMIN
+          </a>
+        </li>
+      <?php endif; ?>
     </ul>
-    <a
-      class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold  rounded-xl transition duration-200"
-      href="/login.php">
-      Login
-    </a>
-    <a
-      class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
-      href="/signup.php">
-      Signup</a>
+    <div>
+      <?php if ($isLoggedIn): ?>
+        <span class="text-green-500 font-bold mr-2"><?= $username ?></span>
+        <a
+          href="/pages/logout.php"
+          class="hidden lg:inline-block lg:ml-auto py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200">
+          Logout
+        </a>
+      <?php else: ?>
+        <a
+          href="/login.php"
+          class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200">
+          Login
+        </a>
+        <a
+          href="/signup.php"
+          class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200">
+          Signup
+        </a>
+      <?php endif; ?>
+    </div>
   </nav>
   <div class="navbar-menu relative z-50 hidden">
     <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
@@ -83,12 +112,21 @@ $current_page = basename($_SERVER['REQUEST_URI'], ".php");
           <li class="mb-1">
             <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="/booking.php">BOOKING</a>
           </li>
+          <?php if ($isAdmin): ?>
+            <li class="mb-1">
+              <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="/booking.php">Admin</a>
+            </li>
+          <?php endif; ?>
         </ul>
       </div>
       <div>
         <div class="mt-4 pt-6">
-          <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-500 hover:bg-blue-600  rounded-xl" href="/login.php">Sign in</a>
-          <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-500 hover:bg-blue-600  rounded-xl" href="/signup.php">Sign Up</a>
+          <?php if ($isLoggedIn): ?>
+            <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-500 hover:bg-blue-600  rounded-xl" href="/signup.php">Log Out</a>
+          <?php else: ?>
+            <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-500 hover:bg-blue-600  rounded-xl" href="/login.php">Sign in</a>
+            <a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-500 hover:bg-blue-600  rounded-xl" href="/signup.php">Sign Up</a>
+          <?php endif; ?>
         </div>
       </div>
     </nav>

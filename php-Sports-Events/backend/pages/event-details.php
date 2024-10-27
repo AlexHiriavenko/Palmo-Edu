@@ -4,10 +4,15 @@ require '../vendor/autoload.php';
 use Palmo\Database\Db;
 use Palmo\Models\SportEventModel;
 use Palmo\Models\OccupiedSeatsModel;
+use Palmo\Service\AuthService;
 
 $db = new Db();
+$authService = new AuthService($db);
 $sportEventModel = new SportEventModel($db);
 $occupiedSeatsModel = new OccupiedSeatsModel($db);
+
+$authService->authenticateUser();
+$isLoggedIn = isset($_SESSION['userId']);
 
 // Получаем ID события из параметров URL
 $eventId = (int)($_GET['id']);

@@ -1,16 +1,22 @@
 <?php
+
 session_start();
 require __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/Database/fillBaseFirstTime.php';
 
 use Palmo\Database\Db;
 use Palmo\Models\SportEventModel;
+use Palmo\Service\AuthService;
 
 $db = new Db();
 $sportEventModel = new SportEventModel($db);
+$authService = new AuthService($db);
 
 // Заполняем базу данных, если она пуста
 fillBaseFirstTime($sportEventModel, $db);
+
+$authService->authenticateUser();
+$isLoggedIn = isset($_SESSION['userId']);
 
 // Получаем выбранную категорию и номер страницы
 $category = $_GET['category'] ?? 'all';

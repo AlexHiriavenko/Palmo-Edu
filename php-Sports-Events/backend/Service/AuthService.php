@@ -3,10 +3,12 @@
 namespace Palmo\Service;
 
 use Palmo\Service\Validator\Validator;
+use Palmo\Service\RememberMeService;
 use Palmo\Models\User\UserModel;
 use Palmo\Database\Db;
+use Palmo\Database\CrudBaseModel;
 
-require "../vendor/autoload.php";
+// require "../vendor/autoload.php";
 
 class AuthService
 {
@@ -41,6 +43,35 @@ class AuthService
     $_SESSION['name'] = $this->name;
   }
 
+  public function authenticateUser(): void
+  {
+    if (isset($_SESSION['userId'])) {
+      $userModel = new UserModel($this->db);
+      $user = $userModel->findById($_SESSION['userId']);
+      $_SESSION['name'] = $user->getName();
+    }
+
+    if (isset($_COOKIE['rememberMe']) && !isset($_SESSION['userId'])) {
+      // Создаем экземпляр CrudBaseModel и передаем его в RememberMeService
+      $crudModel = new CrudBaseModel($this->db);
+      $rememberMeService = new RememberMeService($crudModel);
+      $token = $_COOKIE['rememberMe'];
+
+      if ($rememberMeService->validateToken($token)) {
+        // Получаем userId из токена
+        $userId = $rememberMeService->getUserId($token);
+
+        if ($userId) {
+          $_SESSION['userId'] = $userId;
+          $userModel = new UserModel($this->db);
+          $user = $userModel->findById($userId);
+          $_SESSION['name'] = $user->getName();
+          $_SESSION['role'] = $user->getRole();
+        }
+      }
+    }
+  }
+
   public function login(): void
   {
     $this->initializeCredentials();
@@ -70,11 +101,21 @@ class AuthService
 
     session_unset();
     $_SESSION['userId'] = $user->getId();
+    $_SESSION['name'] = $user->getName();
+    $_SESSION['role'] = $user->getRole();
 
+    // Логика "remember me"
     if (isset($_POST['rememberMe'])) {
-      echo "remember";
-    };
+      $crudModel = new CrudBaseModel($this->db);
+      $rememberMeService = new RememberMeService($crudModel);
+
+      // Устанавливаем токен
+      $rememberMeService->setToken($user->getId());
+    }
+
+    // Перенаправление на главную страницу после успешного входа
     header("Location: /index.php");
+    exit();
   }
 
   public function signup(): void
@@ -117,13 +158,22 @@ class AuthService
       return;
     }
 
-    // Сообщение об успешной регистрации
-    echo "signup";
+    header("Location: /login.php");
+    exit();
   }
 
   public function logout(): void
   {
+    // Удаляем токен из базы данных и куки
+    if (isset($_SESSION['userId'])) {
+      $crudModel = new CrudBaseModel($this->db);
+      $rememberMeService = new RememberMeService($crudModel);
+      $rememberMeService->removeToken($_SESSION['userId']);
+    }
+
     session_destroy();
+
+    // Перенаправляем на главную страницу
     header("Location: /index.php");
     exit();
   }
