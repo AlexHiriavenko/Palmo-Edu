@@ -48,6 +48,13 @@ session_start();
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer">
     </div>
 
+    <div class="my-6">
+      <label for="rememberMe" class="inline-flex items-center">
+        <input type="checkbox" id="rememberMe" name="rememberMe" class="form-checkbox h-4 w-4 text-indigo-600">
+        <span class="ml-2 text-gray-700 text-sm">Remember me</span>
+      </label>
+    </div>
+
     <p class="text-center text-gray-600 mt-6">
       У вас еще нет аккаунта?
       <a href="/signup.php" class="text-blue-500 hover:text-blue-700 font-bold">Sign up</a>

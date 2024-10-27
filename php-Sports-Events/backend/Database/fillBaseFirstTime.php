@@ -2,6 +2,7 @@
 
 use Palmo\Database\CrudBaseModel;
 use Palmo\Database\DB;
+use Palmo\Models\User\UserModel;
 
 /**
  * Функция для заполнения базы данных при первом запуске.
@@ -9,37 +10,45 @@ use Palmo\Database\DB;
  */
 function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
 {
-  $pdo = $db->getPdoInstance();  // Получаем экземпляр PDO
+  $pdo = $db->getPdoInstance();
+
+  // Проверка наличия всех нужных таблиц и их заполненности
+  $requiredTables = ['sportEvents', 'occupiedSeats', 'users', 'bookedEvents', 'favorites'];
+  $existingTables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+
+  // Если все таблицы уже существуют и заполнены, завершаем выполнение
+  $allTablesExist = empty(array_diff($requiredTables, $existingTables));
+  if ($allTablesExist && !$crudModel->rowsCount('sportEvents') && !$crudModel->rowsCount('occupiedSeats') && !$crudModel->rowsCount('users')) {
+    return;
+  }
+
+  // Если таблиц не хватает или они пусты, продолжаем с созданием и заполнением
+  $sqlFilePath = './mysql-init-scripts/01-create-tables.sql';
+  $createTablesSQL = file_exists($sqlFilePath) ? file_get_contents($sqlFilePath) : '';
+
+  if ($createTablesSQL && !$allTablesExist) {
+    try {
+      $pdo->exec($createTablesSQL);
+    } catch (Exception $e) {
+      echo "Ошибка при создании таблиц: " . $e->getMessage() . "\n";
+      return;
+    }
+  }
 
   try {
-    // Начинаем транзакцию
     $pdo->beginTransaction();
 
-    // Загружаем SQL-запросы из файла
-    $sqlFilePath = './mysql-init-scripts/01-create-tables.sql';
-    if (file_exists($sqlFilePath)) {
-      $createTablesSQL = file_get_contents($sqlFilePath);
-
-      // Выполняем SQL-запросы
-      $pdo->exec($createTablesSQL);
-    } else {
-      throw new Exception("SQL-файл не найден: $sqlFilePath");
-    }
-
-    // Функция для проверки, пуста ли таблица
     function isTableEmpty(CrudBaseModel $crudModel, string $tableName): bool
     {
       return $crudModel->rowsCount($tableName) === 0;
     }
 
-    // Проверяем таблицы перед началом вставки данных
     if (isTableEmpty($crudModel, 'sportEvents') && isTableEmpty($crudModel, 'occupiedSeats')) {
 
       // Чтение JSON-файлов
       $jsonFiles = ['./json-data/basketball.json', './json-data/football.json', './json-data/volleyball.json'];
       $events = [];
 
-      // Объединение данных из всех файлов
       foreach ($jsonFiles as $jsonFile) {
         if (file_exists($jsonFile)) {
           $fileContents = file_get_contents($jsonFile);
@@ -54,25 +63,17 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
         }
       }
 
-      // Перебор всех событий и вставка данных
       foreach ($events as $event) {
-        if (isset($event['dateTime'])) {
-          $formattedDateTime = date('Y-m-d H:i:s', strtotime($event['dateTime']));
-        } else {
-          $formattedDateTime = date('Y-m-d H:i:s');
-          echo "Warning: Отсутствует поле 'dateTime' для события: " . json_encode($event) . "\n";
-        }
-
+        $formattedDateTime = isset($event['dateTime']) ? date('Y-m-d H:i:s', strtotime($event['dateTime'])) : date('Y-m-d H:i:s');
         $eventData = [
           'name' => $event['name'] ?? 'Неизвестное событие',
           'category' => $event['category'] ?? 'Неизвестная категория',
           'location' => $event['location'] ?? 'Неизвестное место',
           'dateTime' => $formattedDateTime,
-          'price' => $event['price'] !== null ? $event['price'] : 0
+          'price' => $event['price'] ?? 0
         ];
 
         $crudModel->create('sportEvents', $eventData);
-
         $eventId = $pdo->lastInsertId();
 
         if (!empty($event['occupiedSeats'])) {
@@ -85,10 +86,14 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
           }
         }
       }
-
-      // Фиксируем изменения
-      $pdo->commit();
     }
+
+    if (isTableEmpty($crudModel, 'users')) {
+      $userModel = new UserModel($db);
+      $userModel->createUser('admin', 'admin@admin.com', 'admin', 'admin');
+    }
+
+    $pdo->commit();
   } catch (PDOException $e) {
     $pdo->rollBack();
     echo "Ошибка при добавлении данных: " . $e->getMessage() . "\n";

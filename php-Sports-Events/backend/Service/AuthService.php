@@ -68,8 +68,13 @@ class AuthService
       return;
     }
 
-    echo "login";
-    $_SESSION['user'] = $user;
+    session_unset();
+    $_SESSION['userId'] = $user->getId();
+
+    if (isset($_POST['rememberMe'])) {
+      echo "remember";
+    };
+    header("Location: /index.php");
   }
 
   public function signup(): void
@@ -114,5 +119,12 @@ class AuthService
 
     // Сообщение об успешной регистрации
     echo "signup";
+  }
+
+  public function logout(): void
+  {
+    session_destroy();
+    header("Location: /index.php");
+    exit();
   }
 }
