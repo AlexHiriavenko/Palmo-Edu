@@ -30,8 +30,9 @@ docker-compose exec db mysql -u root -p123 -e "exit" || \
 
 ```
 docker-compose exec db mysql -u root || docker-compose exec db mysql -u root -p123
+FLUSH PRIVILEGES;
 UPDATE mysql.user SET host = '%' WHERE user = 'root' AND host = 'localhost';
-ALTER USER 'root'@'%' IDENTIFIED BY '123';
+FLUSH PRIVILEGES;
 ALTER USER 'root'@'%' IDENTIFIED BY '123';
 CREATE DATABASE sports_events CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 exit;
@@ -40,7 +41,9 @@ exit;
 
 6. после всех выше указанных шагов проект должен запуститься корректно
 
-
+# login as admin
+- email: admin@admin.com
+- pwd: admin
 
 ### Rebuild Light:
 
@@ -66,4 +69,3 @@ docker-compose exec db mysql -u root -p123 -e "exit" || \
 ### для обновления namespaces:
 
 docker-compose run app composer dump-autoload
-
