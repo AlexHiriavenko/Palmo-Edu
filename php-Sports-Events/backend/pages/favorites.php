@@ -1,68 +1,30 @@
 <?php
+
 session_start();
 require '../vendor/autoload.php';
 
 use Palmo\Database\Db;
-
-$db = new Db();
-$pdo = $db->getPdoInstance();
+use Palmo\Models\User\UserEventsModel;
 
 $isLoggedIn = isset($_SESSION['userId']);
-
 if (!$isLoggedIn) {
   header("Location: /login.php");
   exit();
 }
 
-$userId = $_SESSION['userId'] ?? null;
-
+$userId = $_SESSION['userId'];
 $category = $_GET['category'] ?? 'all';
-$page = $_GET['page'] ?? 1;
+$page = (int)($_GET['page'] ?? 1);
 $limit = 8;
 $offset = ($page - 1) * $limit;
 
-// Запрос для получения событий
-$sql = "SELECT se.* FROM sportEvents se
-        JOIN favorites f ON se.id = f.eventId
-        WHERE f.userId = :userId";
-
-if ($category !== 'all') {
-  $sql .= " AND se.category = :category";
-}
-
-$sql .= " LIMIT :limit OFFSET :offset";
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
-if ($category !== 'all') {
-  $stmt->bindValue(':category', $category, PDO::PARAM_STR);
-}
-$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-$stmt->execute();
-
-$events = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Подсчёт общего количества избранных событий
-$countSql = "SELECT COUNT(*) FROM sportEvents se
-             JOIN favorites f ON se.id = f.eventId
-             WHERE f.userId = :userId";
-
-if ($category !== 'all') {
-  $countSql .= " AND se.category = :category";
-}
-
-$countStmt = $pdo->prepare($countSql);
-$countStmt->bindValue(':userId', $userId, PDO::PARAM_INT);
-if ($category !== 'all') {
-  $countStmt->bindValue(':category', $category, PDO::PARAM_STR);
-}
-$countStmt->execute();
-
-$totalEvents = (int) $countStmt->fetchColumn();
+$db = new Db();
+$userEventsModel = new UserEventsModel($db);
+$events = $userEventsModel->getFavoriteEvents($userId, $category, $limit, $offset);
+$totalEvents = $userEventsModel->countFavoriteEvents($userId, $category);
 $totalPages = ceil($totalEvents / $limit);
 ?>
 
-<!-- Вывод в HTML -->
 <!DOCTYPE html>
 <html lang="en">
 
