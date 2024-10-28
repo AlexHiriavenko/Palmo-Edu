@@ -100,21 +100,6 @@ class CrudBaseModel
     }
   }
 
-  // Использование QueryBuilder для чтения всех записей
-  public function readAll(string $table, $fetchMode = PDO::FETCH_ASSOC): array
-  {
-    try {
-      $queryBuilder = new QueryBuilder();
-      $sql = $queryBuilder->table($table)->getSelectSql();  // Получаем SQL для SELECT-запроса
-
-      $result = $this->db->query($sql)->fetchAll($fetchMode);
-      return $result ?? [];
-    } catch (PDOException $e) {
-      $this->handleError($e);
-      return [];
-    }
-  }
-
   // Получение событий с фильтрацией и пагинацией
   public function readFiltered(string $table, array $filters = [], ?int $limit = null, ?int $offset = 0, $fetchMode = PDO::FETCH_ASSOC): array
   {

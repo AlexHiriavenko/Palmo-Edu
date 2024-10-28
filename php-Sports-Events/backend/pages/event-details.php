@@ -25,13 +25,13 @@ if (empty($event)) {
     exit;
 }
 
-$occupiedSeats = $occupiedSeatsModel->getOccupiedSeatsByEventId($eventId);
-$occupiedSeatsNumbers = array_column($occupiedSeats, 'seatNumber');
+// Получаем номера занятых мест для события и для текущего пользователя
+$occupiedSeatsNumbers = $occupiedSeatsModel->getEventOccupiedSeats($eventId);
+$userOccupiedSeatsNumbers = $isLoggedIn ? $occupiedSeatsModel->getEventOccupiedSeatsByUser($eventId, $_SESSION['userId']) : [];
 
 $totalSeats = 50;
 $rows = 5;
 $seatsPerRow = 10;
-
 ?>
 
 <!DOCTYPE html>
@@ -66,16 +66,18 @@ $seatsPerRow = 10;
                 <h2 class="text-2xl text-center font-bold text-shadow">Схема мест</h2>
                 <div class="grid grid-cols-10 gap-2 mt-4 max-w-[700px] mx-auto bg-black bg-opacity-35 p-4">
                     <?php for ($seatNumber = 1; $seatNumber <= $totalSeats; $seatNumber++): ?>
-                        <?php $isOccupied = in_array($seatNumber, $occupiedSeatsNumbers); ?>
+                        <?php 
+                        $isOccupied = in_array($seatNumber, $occupiedSeatsNumbers);
+                        $isUserOccupied = in_array($seatNumber, $userOccupiedSeatsNumbers);
+                        ?>
                         <div class="flex items-center justify-center w-12 h-12 rounded-md
-                            <?= $isOccupied ? 'bg-amber-600 text-white' : 'bg-gray-300 text-gray-800' ?>">
+                            <?= $isUserOccupied ? 'bg-green-600 text-white' : ($isOccupied ? 'bg-amber-600 text-white' : 'bg-gray-300 text-gray-800') ?>">
                             <?= $seatNumber ?>
                         </div>
                     <?php endfor; ?>
                 </div>
             </div>
 
-            <!-- Вернуться к списку событий -->
             <a href="index.php" class='text-2xl w-60 mt-8 mx-auto block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-center'>
                 Вернуться на Главную страницу
             </a>

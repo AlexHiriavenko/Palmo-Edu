@@ -47,7 +47,7 @@ class UserEventsModel extends CrudBaseModel
     $stmt = $this->db->prepare($sql);
     $stmt->execute($bindings);
 
-    // Возвращаем результаты с правильным eventId (se.id)
+    // Возвращаем результаты с eventId (se.id)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
@@ -71,5 +71,46 @@ class UserEventsModel extends CrudBaseModel
     $stmt->execute($bindings);
 
     return (int) $stmt->fetchColumn();
+  }
+
+  public function getBookedEvents(int $userId, ?string $category = null, int $limit = 8, int $offset = 0): array
+  {
+    $queryBuilder = new QueryBuilder();
+    $queryBuilder->table('sportEvents se')
+        ->select(['se.*'])  // Выбираем все поля из sportEvents
+        ->join('bookedEvents b', 'se.id', '=', 'b.eventId')
+        ->where('b.userId', '=', $userId);
+
+    if ($category && $category !== 'all') {
+        $queryBuilder->where('se.category', '=', $category);
+    }
+
+    $queryBuilder->limit($limit)->offset($offset);
+    // Получаем SQL и параметры для выполнения запроса
+    $sql = $queryBuilder->getSelectSql();
+    $bindings = $queryBuilder->getBindings();
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute($bindings);
+
+    // Возвращаем результаты с eventId (se.id)
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+public function countBookedEvents(int $userId, ?string $category = null): int
+  {
+    $queryBuilder = new QueryBuilder();
+    $queryBuilder->table('sportEvents se')
+        ->join('bookedEvents b', 'se.id', '=', 'b.eventId')
+        ->where('b.userId', '=', $userId)
+        ->count();
+
+    if ($category && $category !== 'all') {
+        $queryBuilder->where('se.category', '=', $category);
+    }
+
+    $stmt = $this->db->prepare($queryBuilder->getCountSql());
+    $stmt->execute($queryBuilder->getBindings());
+    return (int)$stmt->fetchColumn();
   }
 }
