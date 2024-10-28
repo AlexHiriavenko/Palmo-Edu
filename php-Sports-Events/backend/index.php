@@ -16,6 +16,7 @@ $authService = new AuthService($db);
 fillBaseFirstTime($sportEventModel, $db);
 
 $authService->authenticateUser();
+$userId = $_SESSION['userId'] ?? null;
 $isLoggedIn = isset($_SESSION['userId']);
 
 // Получаем выбранную категорию и номер страницы
@@ -36,6 +37,7 @@ if ($category !== 'all') {
 
 // Считаем общее количество страниц
 $totalPages = ceil($totalEvents / $limit);
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +48,7 @@ $totalPages = ceil($totalEvents / $limit);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./public/imgs/football.ico">
     <link rel="stylesheet" href="./public/styles/reset.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/public/styles/styles.css">
     <title>Sports Events</title>
 </head>

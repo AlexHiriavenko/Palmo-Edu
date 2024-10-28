@@ -25,4 +25,10 @@ class SportEventModel extends CrudBaseModel
   {
     return $this->countFiltered($this->table, $filters);
   }
+
+  public function getEventsByIds(array $eventIds, int $limit = 8, int $offset = 0): array
+  {
+    $filters = ['id' => $eventIds];
+    return $this->readFiltered($this->table, $filters, $limit, $offset);
+  }
 }

@@ -43,22 +43,22 @@ class AuthService
     $_SESSION['name'] = $this->name;
   }
 
+  // выполняем аутентификацию юезра
   public function authenticateUser(): void
   {
     if (isset($_SESSION['userId'])) {
       $userModel = new UserModel($this->db);
       $user = $userModel->findById($_SESSION['userId']);
       $_SESSION['name'] = $user->getName();
+      $_SESSION['role'] = $user->getRole();
     }
 
     if (isset($_COOKIE['rememberMe']) && !isset($_SESSION['userId'])) {
-      // Создаем экземпляр CrudBaseModel и передаем его в RememberMeService
       $crudModel = new CrudBaseModel($this->db);
       $rememberMeService = new RememberMeService($crudModel);
       $token = $_COOKIE['rememberMe'];
 
       if ($rememberMeService->validateToken($token)) {
-        // Получаем userId из токена
         $userId = $rememberMeService->getUserId($token);
 
         if ($userId) {
@@ -113,7 +113,6 @@ class AuthService
       $rememberMeService->setToken($user->getId());
     }
 
-    // Перенаправление на главную страницу после успешного входа
     header("Location: /index.php");
     exit();
   }
@@ -173,7 +172,6 @@ class AuthService
 
     session_destroy();
 
-    // Перенаправляем на главную страницу
     header("Location: /index.php");
     exit();
   }
