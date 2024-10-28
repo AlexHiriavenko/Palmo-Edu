@@ -1,45 +1,66 @@
 <?php
 session_start();
 require '../vendor/autoload.php';
-require_once '../Database/fillBaseFirstTime.php';
 
 use Palmo\Database\Db;
-use Palmo\Models\SportEventModel;
-use Palmo\Service\AuthService;
-use Palmo\Models\User\UserEventsModel;
 
 $db = new Db();
-$sportEventModel = new SportEventModel($db);
-$authService = new AuthService($db);
+$pdo = $db->getPdoInstance();
 
-// Заполняем базу данных, если она пуста
-fillBaseFirstTime($sportEventModel, $db);
-
-$authService->authenticateUser();
-$userId = $_SESSION['userId'] ?? null;
 $isLoggedIn = isset($_SESSION['userId']);
-
-if (!$isLoggedIn) {
-  header("Location: /login.php");
-  exit();
+$userId = $_SESSION['userId'] ?? null;
+if (!$userId) {
+  echo "Необходима авторизация";
+  exit;
 }
 
-// Получаем избранные события пользователя
-$userEventsModel = new UserEventsModel($db);
-$favoriteEventIds = $userEventsModel->getFavoriteEventIds($userId);
+$category = $_GET['category'] ?? 'all';
+$page = $_GET['page'] ?? 1;
 $limit = 8;
-$offset = 0;
-// Получаем сами события на основе IDs избранных
-$events = !empty($favoriteEventIds)
-  ? $sportEventModel->getEventsByIds($favoriteEventIds, $limit, $offset)
-  : [];
+$offset = ($page - 1) * $limit;
+
+// Запрос для получения событий
+$sql = "SELECT se.* FROM sportEvents se
+        JOIN favorites f ON se.id = f.eventId
+        WHERE f.userId = :userId";
+
+if ($category !== 'all') {
+  $sql .= " AND se.category = :category";
+}
+
+$sql .= " LIMIT :limit OFFSET :offset";
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+if ($category !== 'all') {
+  $stmt->bindValue(':category', $category, PDO::PARAM_STR);
+}
+$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
+
+$events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Подсчёт общего количества избранных событий
-$totalEvents = count($favoriteEventIds);
-$totalPages = ceil($totalEvents / $limit);
+$countSql = "SELECT COUNT(*) FROM sportEvents se
+             JOIN favorites f ON se.id = f.eventId
+             WHERE f.userId = :userId";
 
+if ($category !== 'all') {
+  $countSql .= " AND se.category = :category";
+}
+
+$countStmt = $pdo->prepare($countSql);
+$countStmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+if ($category !== 'all') {
+  $countStmt->bindValue(':category', $category, PDO::PARAM_STR);
+}
+$countStmt->execute();
+
+$totalEvents = (int) $countStmt->fetchColumn();
+$totalPages = ceil($totalEvents / $limit);
 ?>
 
+<!-- Вывод в HTML -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,14 +69,14 @@ $totalPages = ceil($totalEvents / $limit);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="./public/imgs/football.ico">
   <link rel="stylesheet" href="./public/styles/reset.css">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/public/styles/styles.css">
-  <title>Favorites Events</title>
+  <title>Favorite Events</title>
 </head>
 
-<body>
+<body class="bg-gray-900 text-white">
   <?php include '../views/app_header.php'; ?>
-  <main class="app-main views home p-4">
+  <main class="app-main views favorites p-4">
     <?php include '../views/events-filter.php'; ?>
     <?php include '../views/events-cards.php'; ?>
     <?php include '../views/events-pagination.php'; ?>

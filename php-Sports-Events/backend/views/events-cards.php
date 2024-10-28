@@ -40,34 +40,4 @@ $favoriteEventIds = is_numeric($userId) ? $userEventsModel->getFavoriteEventIds(
         <p class='text-center'>Список событий пуст.</p>
     <?php endif; ?>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.favorite-toggle').forEach(button => {
-            button.addEventListener('click', function() {
-                const eventId = this.getAttribute('data-event-id');
-
-                fetch('/controller/toggle_favorite.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            eventId: eventId
-                        })
-                    })
-                    .then(response => response.text()) // Используем .text() для отладки
-                    .then(text => {
-                        console.log("Response Text:", text); // Выводим ответ на консоль
-                        const data = JSON.parse(text); // Парсим JSON после вывода
-                        if (data.success) {
-                            this.classList.toggle('text-orange-500');
-                            this.classList.toggle('text-white');
-                        } else {
-                            alert('Не удалось обновить избранное. Пожалуйста, попробуйте снова.');
-                        }
-                    })
-                    .catch(error => console.error('Ошибка:', error));
-            });
-        });
-    });
-</script>
+<script src="/js/toggleFavorite.js"></script>

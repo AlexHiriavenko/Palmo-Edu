@@ -13,7 +13,6 @@ use Palmo\Models\User\UserEventsModel;
 
 header('Content-Type: application/json');
 
-// Проверяем, авторизован ли пользователь
 if (!isset($_SESSION['userId'])) {
   echo json_encode(['success' => false, 'message' => 'Требуется авторизация']);
   exit;
