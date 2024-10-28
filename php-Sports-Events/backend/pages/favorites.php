@@ -8,11 +8,13 @@ $db = new Db();
 $pdo = $db->getPdoInstance();
 
 $isLoggedIn = isset($_SESSION['userId']);
-$userId = $_SESSION['userId'] ?? null;
-if (!$userId) {
-  echo "Необходима авторизация";
-  exit;
+
+if (!$isLoggedIn) {
+  header("Location: /login.php");
+  exit();
 }
+
+$userId = $_SESSION['userId'] ?? null;
 
 $category = $_GET['category'] ?? 'all';
 $page = $_GET['page'] ?? 1;
