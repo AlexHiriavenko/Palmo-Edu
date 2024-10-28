@@ -40,7 +40,7 @@ $totalPages = ceil($totalEvents / $limit);
 
 <body class="bg-gray-900 text-white">
   <?php include '../views/app_header.php'; ?>
-  <main class="app-main views bookings p-4">
+  <main class="app-main views booking p-4">
     <?php include '../views/events-filter.php'; ?>
     <?php include '../views/events-cards.php'; ?>
     <?php include '../views/events-pagination.php'; ?>
