@@ -25,13 +25,17 @@ if (empty($event)) {
     exit;
 }
 
-// Получаем номера занятых мест для события и для текущего пользователя
-$occupiedSeatsNumbers = $occupiedSeatsModel->getEventOccupiedSeats($eventId);
-$userOccupiedSeatsNumbers = $isLoggedIn ? $occupiedSeatsModel->getEventOccupiedSeatsByUser($eventId, $_SESSION['userId']) : [];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isLoggedIn) {
+     $selectedSeats = $_POST['selectedSeats'] ?? [];
+     print_r($selectedSeats);
+}
 
-$totalSeats = 50;
-$rows = 5;
-$seatsPerRow = 10;
+// Получаем номера занятых мест для события и для текущего пользователя
+$userOccupiedSeatsNumbers = $isLoggedIn ? $occupiedSeatsModel->getEventOccupiedSeatsByUser($eventId, $_SESSION['userId']) : [];
+$occupiedSeatsNumbers = $occupiedSeatsModel->getEventOccupiedSeats($eventId);
+$occupiedSeatsNumbers = array_diff($occupiedSeatsNumbers, $userOccupiedSeatsNumbers);
+
+const TOTAL_SEATS = 50;
 ?>
 
 <!DOCTYPE html>
@@ -64,18 +68,41 @@ $seatsPerRow = 10;
 
             <div class="mt-6">
                 <h2 class="text-2xl text-center font-bold text-shadow">Схема мест</h2>
-                <div class="grid grid-cols-10 gap-2 mt-4 max-w-[700px] mx-auto bg-black bg-opacity-35 p-4">
-                    <?php for ($seatNumber = 1; $seatNumber <= $totalSeats; $seatNumber++): ?>
-                        <?php 
-                        $isOccupied = in_array($seatNumber, $occupiedSeatsNumbers);
-                        $isUserOccupied = in_array($seatNumber, $userOccupiedSeatsNumbers);
-                        ?>
-                        <div class="flex items-center justify-center w-12 h-12 rounded-md
-                            <?= $isUserOccupied ? 'bg-green-600 text-white' : ($isOccupied ? 'bg-amber-600 text-white' : 'bg-gray-300 text-gray-800') ?>">
-                            <?= $seatNumber ?>
+                <form 
+                    method="post" 
+                    action="event-details.php?id=<?= $eventId ?>"
+                    class="<?= !$isLoggedIn ? 'pointer-events-none' : '' ?>"
+                    >
+                    <div class="grid grid-cols-10 gap-3 mt-4 max-w-[600px] mx-auto bg-black bg-opacity-35 p-4">
+                        <?php for ($seatNumber = 1; $seatNumber <= TOTAL_SEATS; $seatNumber++): ?>
+                            <?php
+                                $isUserOccupied = in_array($seatNumber, $userOccupiedSeatsNumbers);
+                                $isOccupied = in_array($seatNumber, $occupiedSeatsNumbers);
+                            ?>
+                        <div class="flex items-center justify-center">
+                            <label class="flex items-center relative <?= !$isOccupied ? 'cursor-pointer' : '' ?>">
+                                <input
+                                    name="selectedSeats[]"
+                                    id="<?= $seatNumber ?>"
+                                    value="<?= $seatNumber ?>"
+                                    <?= $isUserOccupied ? 'checked' : '' ?>
+                                    <?= $isOccupied ? 'disabled' : '' ?>
+                                    type="checkbox" 
+                                    class="bg-white peer h-9 w-9 transition-all appearance-none rounded shadow hover:shadow-md border checked:bg-green-500 checked:border-green-500 
+                                    <?= $isOccupied ? 'bg-amber-600 border-amber-600' : 'bg-gray-300 cursor-pointer' ?> "
+                                >
+                                <span class="absolute <?= $isOccupied ? 'text-white' : 'text-black' ?>
+                                peer-checked:text-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <?= $seatNumber ?>
+                                </span>
+                            </label>
                         </div>
-                    <?php endfor; ?>
-                </div>
+                        <?php endfor; ?>
+                    </div>
+                    <? if ($isLoggedIn): ?>
+                        <button type="submit" id="submitBooking">Подтвердить бронирование</button>
+                    <? endif; ?>
+                </form>
             </div>
 
             <a href="index.php" class='text-2xl w-60 mt-8 mx-auto block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-center'>
