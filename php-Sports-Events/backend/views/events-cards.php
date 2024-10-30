@@ -1,10 +1,16 @@
 <?php
 
+use Palmo\Models\BookingRepository;
 use Palmo\Models\User\UserEventsModel;
 
 $userEventsModel = new UserEventsModel($db);
+$bookingRepository = new BookingRepository($db);
 
 $favoriteEventIds = is_numeric($userId) ? $userEventsModel->getFavoriteEventIds($userId) : [];
+
+$current_page = basename($_SERVER['REQUEST_URI'], ".php");
+$isBookingPage = $current_page === 'booking';
+
 ?>
 
 <div class="container mx-auto">
@@ -20,6 +26,13 @@ $favoriteEventIds = is_numeric($userId) ? $userEventsModel->getFavoriteEventIds(
                     <p class='text-sm text-gray-200'>Место: <?= htmlspecialchars($event['location'] ?? 'Неизвестное место') ?></p>
                     <p class='text-sm text-gray-200'>Дата: <?= htmlspecialchars($event['dateTime']) ?></p>
                     <p class='text-sm text-gray-200'>Цена: $<?= htmlspecialchars($event['price'] !== null ? $event['price'] : 0) ?></p>
+                    <?php if ($isBookingPage && $isLoggedIn): ?>
+                        <?php
+                        $userSeats = $bookingRepository->getEventOccupiedSeatsByUser($event['id'], $userId) ?? [];
+                        $userSeats = implode(', ', $userSeats); ?>
+                        <p class='text-sm text-gray-200'>Забронированные мета: <?= htmlspecialchars($userSeats) ?></p>
+                    <?php endif; ?>
+
                     <a href="<?= isset($event['id']) ? 'event-details.php?id=' . htmlspecialchars($event['id']) : '404.php' ?>"
                         class='mt-6 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
                         Узнать больше
