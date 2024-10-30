@@ -110,6 +110,7 @@ const TOTAL_SEATS = 50;
             </a>
         </div>
     </main>
+    <script src="/js/max4SeatsBooking.js"></script>
 </body>
 
 </html>
