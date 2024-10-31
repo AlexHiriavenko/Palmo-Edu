@@ -2,11 +2,11 @@
 
 namespace Palmo\Repository;
 
-use Palmo\Database\CrudBaseModel;
+use Palmo\Repository\BaseRepository;
 use Palmo\Database\QueryBuilder;
 use PDO;
 
-class BookingRepository extends CrudBaseModel
+class BookingRepository extends BaseRepository
 {
     protected string $table = 'occupiedSeats';
 

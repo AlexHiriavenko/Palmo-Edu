@@ -2,12 +2,12 @@
 
 namespace Palmo\Repository;
 
-use Palmo\Database\CrudBaseModel;
+use Palmo\Repository\BaseRepository;
 use Palmo\Database\Db;
 use Palmo\Model\User;
 use PDOException;
 
-class UserRepository extends CrudBaseModel
+class UserRepository extends BaseRepository
 {
   protected string $table = 'users';
 

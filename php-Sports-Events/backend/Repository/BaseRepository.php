@@ -1,11 +1,14 @@
 <?php
 
-namespace Palmo\Database;
+namespace Palmo\Repository;
+
 
 use PDO;
 use PDOException;
+use Palmo\Database\Db;
+use Palmo\Database\QueryBuilder;
 
-class CrudBaseModel
+class BaseRepository
 {
   protected PDO $db;
 

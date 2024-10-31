@@ -4,7 +4,6 @@ session_start();
 require '../vendor/autoload.php';
 
 use Palmo\Database\Db;
-// use Palmo\Repository\UserEventsModel;
 use Palmo\Repository\BookingRepository;
 
 $isLoggedIn = isset($_SESSION['userId']);
@@ -20,7 +19,6 @@ $limit = 8;
 $offset = ($page - 1) * $limit;
 
 $db = new Db();
-// $userEventsModel = new UserEventsModel($db);
 $bookingRepository = new BookingRepository($db);
 $events = $bookingRepository->getBookedEvents($userId, $category, $limit, $offset);
 $totalEvents = $bookingRepository->countBookedEvents($userId, $category);

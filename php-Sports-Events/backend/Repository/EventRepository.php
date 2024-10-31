@@ -2,12 +2,12 @@
 
 namespace Palmo\Repository;
 
-use Palmo\Database\CrudBaseModel;
+use Palmo\Repository\BaseRepository;
 use Palmo\Database\QueryBuilder;
 use Palmo\Model\Event;
 use PDO;
 
-class EventRepository extends CrudBaseModel
+class EventRepository extends BaseRepository
 {
   protected string $table = 'sportEvents';
 

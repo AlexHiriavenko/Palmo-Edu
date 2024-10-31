@@ -2,11 +2,11 @@
 
 namespace Palmo\Repository;
 
-use Palmo\Database\CrudBaseModel;
+use Palmo\Repository\BaseRepository;
 use Palmo\Database\QueryBuilder;
 use PDO;
 
-class FavoritesRepository extends CrudBaseModel
+class FavoritesRepository extends BaseRepository
 {
   public function getFavoriteEventIds(int $userId): array
   {

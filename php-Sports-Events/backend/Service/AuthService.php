@@ -2,11 +2,11 @@
 
 namespace Palmo\Service;
 
+use Palmo\Database\Db;
+use Palmo\Repository\BaseRepository;
+use Palmo\Repository\UserRepository;
 use Palmo\Service\Validator\Validator;
 use Palmo\Service\RememberMeService;
-use Palmo\Repository\UserRepository;
-use Palmo\Database\Db;
-use Palmo\Database\CrudBaseModel;
 
 // require "../vendor/autoload.php";
 
@@ -54,8 +54,8 @@ class AuthService
     }
 
     if (isset($_COOKIE['rememberMe']) && !isset($_SESSION['userId'])) {
-      $crudModel = new CrudBaseModel($this->db);
-      $rememberMeService = new RememberMeService($crudModel);
+      $baseRepository = new BaseRepository($this->db);
+      $rememberMeService = new RememberMeService($baseRepository);
       $token = $_COOKIE['rememberMe'];
 
       if ($rememberMeService->validateToken($token)) {
@@ -106,8 +106,8 @@ class AuthService
 
     // Логика "remember me"
     if (isset($_POST['rememberMe'])) {
-      $crudModel = new CrudBaseModel($this->db);
-      $rememberMeService = new RememberMeService($crudModel);
+      $baseRepository = new BaseRepository($this->db);
+      $rememberMeService = new RememberMeService($baseRepository);
 
       // Устанавливаем токен
       $rememberMeService->setToken($user->getId());
@@ -165,8 +165,8 @@ class AuthService
   {
     // Удаляем токен из базы данных и куки
     if (isset($_SESSION['userId'])) {
-      $crudModel = new CrudBaseModel($this->db);
-      $rememberMeService = new RememberMeService($crudModel);
+      $baseRepository = new BaseRepository($this->db);
+      $rememberMeService = new RememberMeService($baseRepository);
       $rememberMeService->removeToken($_SESSION['userId']);
     }
 

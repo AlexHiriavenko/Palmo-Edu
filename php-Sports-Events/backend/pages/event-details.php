@@ -14,7 +14,7 @@ $bookingRepository = new BookingRepository($db);
 $authService->authenticateUser();
 $isLoggedIn = isset($_SESSION['userId']);
 $eventId = (int)($_GET['id']);
-$userId = $_SESSION['userId'];
+$userId = $_SESSION['userId'] ?? null;
 
 // Получаем данные события по его ID
 $event = $eventRepository->getEventByID($eventId);

@@ -1,14 +1,14 @@
 <?php
 
-use Palmo\Database\CrudBaseModel;
 use Palmo\Database\DB;
+use Palmo\Repository\BaseRepository;
 use Palmo\Repository\UserRepository;
 
 /**
  * Функция для заполнения базы данных при первом запуске.
  * Использует существующее подключение к базе данных ($db).
  */
-function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
+function fillBaseFirstTime(BaseRepository $baseRepository, Db $db)
 {
   $pdo = $db->getPdoInstance();
 
@@ -18,7 +18,7 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
 
   // Если все таблицы уже существуют и заполнены, завершаем выполнение
   $allTablesExist = empty(array_diff($requiredTables, $existingTables));
-  if ($allTablesExist && !$crudModel->rowsCount('sportEvents') && !$crudModel->rowsCount('occupiedSeats') && !$crudModel->rowsCount('users')) {
+  if ($allTablesExist && !$baseRepository->rowsCount('sportEvents') && !$baseRepository->rowsCount('occupiedSeats') && !$baseRepository->rowsCount('users')) {
     return;
   }
 
@@ -38,12 +38,12 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
   try {
     $pdo->beginTransaction();
 
-    function isTableEmpty(CrudBaseModel $crudModel, string $tableName): bool
+    function isTableEmpty(BaseRepository $baseRepository, string $tableName): bool
     {
-      return $crudModel->rowsCount($tableName) === 0;
+      return $baseRepository->rowsCount($tableName) === 0;
     }
 
-    if (isTableEmpty($crudModel, 'sportEvents') && isTableEmpty($crudModel, 'occupiedSeats')) {
+    if (isTableEmpty($baseRepository, 'sportEvents') && isTableEmpty($baseRepository, 'occupiedSeats')) {
 
       // Чтение JSON-файлов
       $jsonFiles = ['./json-data/basketball.json', './json-data/football.json', './json-data/volleyball.json'];
@@ -73,7 +73,7 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
           'price' => $event['price'] ?? 0
         ];
 
-        $crudModel->create('sportEvents', $eventData);
+        $baseRepository->create('sportEvents', $eventData);
         $eventId = $pdo->lastInsertId();
 
         if (!empty($event['occupiedSeats'])) {
@@ -82,13 +82,13 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
               'eventId' => $eventId,
               'seatNumber' => $seatNumber
             ];
-            $crudModel->create('occupiedSeats', $occupiedSeatData);
+            $baseRepository->create('occupiedSeats', $occupiedSeatData);
           }
         }
       }
     }
 
-    if (isTableEmpty($crudModel, 'users')) {
+    if (isTableEmpty($baseRepository, 'users')) {
       $userRepository = new UserRepository($db);
       $userRepository->createUser('admin', 'admin@admin.com', 'admin', 'admin');
     }

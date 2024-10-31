@@ -3,15 +3,15 @@
 namespace Palmo\Service;
 
 use Palmo\Interface\RememberMeInterface;
-use Palmo\Database\CrudBaseModel;
+use Palmo\Repository\BaseRepository;
 
 class RememberMeService implements RememberMeInterface
 {
-  private CrudBaseModel $crudModel;
+  private BaseRepository $baseRepository;
 
-  public function __construct(CrudBaseModel $crudModel)
+  public function __construct(BaseRepository $baseRepository)
   {
-    $this->crudModel = $crudModel;
+    $this->baseRepository = $baseRepository;
   }
 
   public function generateToken(): string
@@ -21,14 +21,14 @@ class RememberMeService implements RememberMeInterface
 
   public function findToken(int $userId): ?array
   {
-    $token = $this->crudModel->readFiltered('user_tokens', ['user_id' => $userId], 1);
+    $token = $this->baseRepository->readFiltered('user_tokens', ['user_id' => $userId], 1);
     return !empty($token) ? $token : null;
   }
 
   public function getUserId(string $token): ?int
   {
     // Ищем запись с соответствующим токеном
-    $result = $this->crudModel->readFiltered('user_tokens', ['token' => $token], 1);
+    $result = $this->baseRepository->readFiltered('user_tokens', ['token' => $token], 1);
 
     // Если токен найден, возвращаем user_id
     if (!empty($result)) {
@@ -54,9 +54,9 @@ class RememberMeService implements RememberMeInterface
 
     if (!empty($existingToken)) {
       $tokenId = $existingToken[0]['id'];
-      $this->crudModel->update('user_tokens', $tokenId, $data);
+      $this->baseRepository->update('user_tokens', $tokenId, $data);
     } else {
-      $this->crudModel->create('user_tokens', $data);
+      $this->baseRepository->create('user_tokens', $data);
     }
 
     // Устанавливаем cookie
@@ -70,7 +70,7 @@ class RememberMeService implements RememberMeInterface
 
   public function validateToken(string $token): bool
   {
-    $result = $this->crudModel->readFiltered('user_tokens', ['token' => $token], 1);
+    $result = $this->baseRepository->readFiltered('user_tokens', ['token' => $token], 1);
 
     if (!empty($result)) {
       $userId = $result[0]['user_id'];
@@ -97,7 +97,7 @@ class RememberMeService implements RememberMeInterface
     $token = $this->findToken($userId);
     if (!empty($token)) {
       $tokenId = $token[0]['id'];
-      $this->crudModel->delete('user_tokens', $tokenId);
+      $this->baseRepository->delete('user_tokens', $tokenId);
     }
 
     if (isset($_COOKIE['rememberMe'])) {
@@ -112,7 +112,7 @@ class RememberMeService implements RememberMeInterface
     if ($tokenId) {
       $expiresAt = time() + (60 * 60 * 24 * 7);  // Продление на 7 дней
       $data = ['expires_at' => date('Y-m-d H:i:s', $expiresAt)];
-      $this->crudModel->update('user_tokens', $tokenId, $data);
+      $this->baseRepository->update('user_tokens', $tokenId, $data);
     }
   }
 }
