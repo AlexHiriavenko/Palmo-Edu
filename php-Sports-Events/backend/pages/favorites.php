@@ -13,7 +13,7 @@ if (!$isLoggedIn) {
 }
 
 $userId = $_SESSION['userId'];
-$category = $_GET['category'] ?? 'all';
+$category = $_GET['category'] ?? '';
 $page = (int)($_GET['page'] ?? 1);
 $limit = 8;
 $offset = ($page - 1) * $limit;

@@ -49,8 +49,10 @@ class AuthService
     if (isset($_SESSION['userId'])) {
       $userRepository = new UserRepository($this->db);
       $user = $userRepository->findById($_SESSION['userId']);
+      if ($user) {
       $_SESSION['name'] = $user->getName();
       $_SESSION['role'] = $user->getRole();
+      }
     }
 
     if (isset($_COOKIE['rememberMe']) && !isset($_SESSION['userId'])) {
@@ -65,8 +67,10 @@ class AuthService
           $_SESSION['userId'] = $userId;
           $userRepository = new UserRepository($this->db);
           $user = $userRepository->findById($userId);
-          $_SESSION['name'] = $user->getName();
-          $_SESSION['role'] = $user->getRole();
+          if ($user) {
+            $_SESSION['name'] = $user->getName();
+            $_SESSION['role'] = $user->getRole();
+          }
         }
       }
     }

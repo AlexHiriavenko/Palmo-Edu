@@ -59,7 +59,7 @@ class FavoritesRepository extends BaseRepository
       ->where('f.userId', '=', $userId)
       ->count();
 
-    if ($category && $category !== 'all') {
+    if ($category) {
       $queryBuilder->where('se.category', '=', $category);
     }
 

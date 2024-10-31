@@ -87,7 +87,7 @@ class BookingRepository extends BaseRepository
             ->join('bookedEvents b', 'se.id', '=', 'b.eventId')
             ->where('b.userId', '=', $userId);
 
-        if ($category && $category !== 'all') {
+        if ($category) {
             $queryBuilder->where('se.category', '=', $category);
         }
 

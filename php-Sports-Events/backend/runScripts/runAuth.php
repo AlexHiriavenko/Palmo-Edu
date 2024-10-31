@@ -1,8 +1,9 @@
 <?php
 
-use Palmo\controller\AuthController;
-
 require "../vendor/autoload.php";
+
+use Palmo\Controller\AuthController;
+
 session_start();
 
 $authController = new AuthController();
