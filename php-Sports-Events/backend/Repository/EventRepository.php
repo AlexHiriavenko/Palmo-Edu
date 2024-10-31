@@ -1,23 +1,42 @@
 <?php
 
-namespace Palmo\Models;
+namespace Palmo\Repository;
 
 use Palmo\Database\CrudBaseModel;
 use Palmo\Database\QueryBuilder;
+use Palmo\Model\Event;
 use PDO;
 
-class SportEventModel extends CrudBaseModel
+class EventRepository extends CrudBaseModel
 {
   protected string $table = 'sportEvents';
 
+  public function getEventByID($eventId): ?Event
+  {
+    $eventData = $this->readById($this->table, $eventId);
+
+    if ($eventData) {
+      return new Event(
+        $eventData['id'],
+        $eventData['name'],
+        $eventData['category'],
+        $eventData['location'],
+        new \DateTime($eventData['dateTime']),
+        (float)$eventData['price']
+      );
+    }
+
+    return null;
+  }
+
   // Получение событий с фильтрацией и пагинацией
-  public function getFilteredEvents(?string $category = null, int $limit = 8, int $offset = 0): array
+  public function getPaginationEventsByCategory(?string $category = null, int $limit = 8, int $offset = 0): array
   {
     $queryBuilder = new QueryBuilder();
     $queryBuilder->table($this->table)->select(['*']);
 
     // Добавляем фильтр по категории, если он задан
-    if ($category && $category !== 'all') {
+    if ($category) {
       $queryBuilder->where('category', '=', $category);
     }
 
@@ -28,7 +47,7 @@ class SportEventModel extends CrudBaseModel
     $bindings = $queryBuilder->getBindings();
     $stmt = $this->db->prepare($sql);
     $stmt->execute($bindings);
-    
+
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
@@ -50,5 +69,9 @@ class SportEventModel extends CrudBaseModel
 
     return (int)$stmt->fetchColumn();
   }
-}
 
+  public function getEventOccupiedSeats(int $eventId): array
+  {
+    return array_column($this->readFiltered('occupiedSeats', ['eventId' => $eventId]), 'seatNumber');
+  }
+}

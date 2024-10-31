@@ -8,7 +8,7 @@ use Palmo\Service\AuthService;
 class AuthController extends BaseController
 {
     private AuthService $service;
-    private array $actions = ['login', 'signup', 'logout'];  // Допустимые действия
+    private array $actions = ['login', 'signup', 'logout'];
 
     public function __construct()
     {
@@ -18,16 +18,12 @@ class AuthController extends BaseController
 
     public function handleRequest(): void
     {
-        // Проверяем значение `action` в $_POST
         $action = $_POST['action'] ?? '';
 
         if (in_array($action, $this->actions)) {
             $this->service->$action();  // Вызов соответствующего метода AuthService
-            echo $_POST['action']; // 
         } else {
-            // Обработка неизвестного действия
-            echo $_POST['action'];
-            echo "Error: Unrecognized action";
+            echo "Error: Unrecognized action {$_POST['action']}";
             http_response_code(400);
             exit;
         }

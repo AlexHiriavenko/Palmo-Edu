@@ -1,12 +1,12 @@
 <?php
 
-use Palmo\Models\BookingRepository;
-use Palmo\Models\User\UserEventsModel;
+use Palmo\Repository\BookingRepository;
+use Palmo\Repository\FavoritesRepository;
 
-$userEventsModel = new UserEventsModel($db);
+$favoritesRepository = new FavoritesRepository($db);
 $bookingRepository = new BookingRepository($db);
 
-$favoriteEventIds = is_numeric($userId) ? $userEventsModel->getFavoriteEventIds($userId) : [];
+$favoriteEventIds = is_numeric($userId) ? $favoritesRepository->getFavoriteEventIds($userId) : [];
 
 $current_page = basename($_SERVER['REQUEST_URI'], ".php");
 $isBookingPage = $current_page === 'booking';
@@ -28,7 +28,7 @@ $isBookingPage = $current_page === 'booking';
                     <p class='text-sm text-gray-200'>Цена: $<?= htmlspecialchars($event['price'] !== null ? $event['price'] : 0) ?></p>
                     <?php if ($isBookingPage && $isLoggedIn): ?>
                         <?php
-                        $userSeats = $bookingRepository->getEventOccupiedSeatsByUser($event['id'], $userId) ?? [];
+                        $userSeats = $bookingRepository->getUserSeats($event['id'], $userId) ?? [];
                         $userSeats = implode(', ', $userSeats); ?>
                         <p class='text-sm text-gray-200'>Забронированные мета: <?= htmlspecialchars($userSeats) ?></p>
                     <?php endif; ?>

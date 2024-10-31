@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 require '../vendor/autoload.php';
 
 use Palmo\Database\Db;
-use Palmo\Models\User\UserEventsModel;
+use Palmo\Repository\FavoritesRepository;
 
 header('Content-Type: application/json');
 
@@ -19,7 +19,7 @@ if (!isset($_SESSION['userId'])) {
 }
 
 $db = new Db();
-$userEventsModel = new UserEventsModel($db);
+$favoritesRepository = new FavoritesRepository($db);
 $userId = $_SESSION['userId'];
 
 // Получаем данные из JSON-запроса
@@ -28,7 +28,7 @@ $eventId = $data['eventId'] ?? null;
 
 if ($eventId && is_numeric($eventId)) {
   // Переключаем состояние избранного
-  $success = $userEventsModel->toggleFavorite($userId, (int)$eventId);
+  $success = $favoritesRepository->toggleFavorite($userId, (int)$eventId);
   echo json_encode(['success' => $success]);
 } else {
   echo json_encode(['success' => false, 'message' => 'Неверный идентификатор события']);

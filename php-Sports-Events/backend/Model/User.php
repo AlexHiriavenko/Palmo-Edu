@@ -1,6 +1,6 @@
 <?php
 
-namespace Palmo\Models\User;
+namespace Palmo\Model;
 
 class User
 {

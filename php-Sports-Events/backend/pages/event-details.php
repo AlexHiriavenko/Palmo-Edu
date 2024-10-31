@@ -2,13 +2,13 @@
 require '../vendor/autoload.php';
 
 use Palmo\Database\Db;
-use Palmo\Models\SportEventModel;
-use Palmo\Models\BookingRepository;
+use Palmo\Repository\EventRepository;
+use Palmo\Repository\BookingRepository;
 use Palmo\Service\AuthService;
 
 $db = new Db();
 $authService = new AuthService($db);
-$sportEventModel = new SportEventModel($db);
+$eventRepository = new EventRepository($db);
 $bookingRepository = new BookingRepository($db);
 
 $authService->authenticateUser();
@@ -17,7 +17,7 @@ $eventId = (int)($_GET['id']);
 $userId = $_SESSION['userId'];
 
 // Получаем данные события по его ID
-$event = $sportEventModel->readById('sportEvents', $eventId);
+$event = $eventRepository->getEventByID($eventId);
 
 if (empty($event)) {
     header('Location: /404.php');
@@ -27,8 +27,8 @@ if (empty($event)) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isLoggedIn) {
 
     $action = $_POST['action'] ?? '';
-    $userOccupiedSeatsNumbers = $bookingRepository->getEventOccupiedSeatsByUser($eventId, $userId) ?? [];
-    $bookingRepository->batchRemoveOccupiedSeats($eventId, $userId, $userOccupiedSeatsNumbers);
+    $userOccupiedSeats = $bookingRepository->getUserSeats($eventId, $userId) ?? [];
+    $bookingRepository->removeUserSeats($eventId, $userId, $userOccupiedSeats);
 
     if ($action === 'cancel') {
         $bookingRepository->removeFromBookedEvents($userId, $eventId);
@@ -36,15 +36,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isLoggedIn) {
 
     if ($action === 'book') {
         $selectedSeats = $_POST['selectedSeats'] ?? [];
-        $bookingRepository->batchAddOccupiedSeats($eventId, $userId, $selectedSeats);
+        $bookingRepository->addUserSeats($eventId, $userId, $selectedSeats);
         $bookingRepository->addToBookedEvents($userId, $eventId);
     }
 }
 
 // Получаем номера занятых мест для события и для текущего пользователя
-$userOccupiedSeatsNumbers = $isLoggedIn ? $bookingRepository->getEventOccupiedSeatsByUser($eventId, $userId) : [];
-$occupiedSeatsNumbers = $bookingRepository->getEventOccupiedSeats($eventId);
-$occupiedSeatsNumbers = array_diff($occupiedSeatsNumbers, $userOccupiedSeatsNumbers);
+$userOccupiedSeats = $isLoggedIn ? $bookingRepository->getUserSeats($eventId, $userId) : [];
+$eventOccupiedSeats = $eventRepository->getEventOccupiedSeats($eventId);
+$occupiedSeats = array_diff($eventOccupiedSeats, $userOccupiedSeats);
 
 const TOTAL_SEATS = 50;
 ?>
@@ -69,12 +69,12 @@ const TOTAL_SEATS = 50;
         <div class="container mx-auto">
             <div class='bg-gray-800 bg-opacity-80 rounded-lg shadow-lg p-6 max-w-[600px] mx-auto'>
                 <h2 class='text-2xl text-gray-200 font-bold mb-2 text-center'>
-                    <?= htmlspecialchars($event['name'] ?? 'Неизвестное событие') ?>
+                    <?= $event->getName() ?? 'Неизвестное событие' ?>
                 </h2>
-                <p class='text-lg text-gray-200'>Категория: <?= htmlspecialchars($event['category'] ?? 'Неизвестная категория') ?></p>
-                <p class='text-lg text-gray-200'>Место: <?= htmlspecialchars($event['location'] ?? 'Неизвестное место') ?></p>
-                <p class='text-lg text-gray-200'>Дата: <?= htmlspecialchars($event['dateTime']) ?></p>
-                <p class='text-lg text-gray-200'>Цена: $<?= htmlspecialchars($event['price'] !== null ? $event['price'] : 0) ?></p>
+                <p class='text-lg text-gray-200'>Категория: <?= $event->getCategory() ?? 'Неизвестная категория' ?></p>
+                <p class='text-lg text-gray-200'>Место: <?= $event->getLocation() ?? 'Неизвестное место' ?></p>
+                <p class='text-lg text-gray-200'>Дата: <?= $event->getDateTime()->format('Y-m-d H:i') ?></p>
+                <p class='text-lg text-gray-200'>Цена: $<?= $event->getPrice() ?? 0 ?></p>
             </div>
 
             <div class="mt-6">
@@ -86,8 +86,8 @@ const TOTAL_SEATS = 50;
                     <div class="grid grid-cols-10 gap-3 mt-4 max-w-[600px] mx-auto bg-black bg-opacity-35 p-4">
                         <?php for ($seatNumber = 1; $seatNumber <= TOTAL_SEATS; $seatNumber++): ?>
                             <?php
-                            $isUserOccupied = in_array($seatNumber, $userOccupiedSeatsNumbers);
-                            $isOccupied = in_array($seatNumber, $occupiedSeatsNumbers);
+                            $isUserOccupied = in_array($seatNumber, $userOccupiedSeats);
+                            $isOccupied = in_array($seatNumber, $occupiedSeats);
                             ?>
                             <div class="flex items-center justify-center">
                                 <label class="flex items-center relative <?= !$isOccupied ? 'cursor-pointer' : '' ?>">

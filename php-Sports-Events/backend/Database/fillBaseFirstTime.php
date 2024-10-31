@@ -2,7 +2,7 @@
 
 use Palmo\Database\CrudBaseModel;
 use Palmo\Database\DB;
-use Palmo\Models\User\UserModel;
+use Palmo\Repository\UserRepository;
 
 /**
  * Функция для заполнения базы данных при первом запуске.
@@ -89,8 +89,8 @@ function fillBaseFirstTime(CrudBaseModel $crudModel, Db $db)
     }
 
     if (isTableEmpty($crudModel, 'users')) {
-      $userModel = new UserModel($db);
-      $userModel->createUser('admin', 'admin@admin.com', 'admin', 'admin');
+      $userRepository = new UserRepository($db);
+      $userRepository->createUser('admin', 'admin@admin.com', 'admin', 'admin');
     }
 
     $pdo->commit();

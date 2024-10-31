@@ -4,7 +4,7 @@ session_start();
 require '../vendor/autoload.php';
 
 use Palmo\Database\Db;
-use Palmo\Models\User\UserEventsModel;
+use Palmo\Repository\FavoritesRepository;
 
 $isLoggedIn = isset($_SESSION['userId']);
 if (!$isLoggedIn) {
@@ -19,9 +19,9 @@ $limit = 8;
 $offset = ($page - 1) * $limit;
 
 $db = new Db();
-$userEventsModel = new UserEventsModel($db);
-$events = $userEventsModel->getFavoriteEvents($userId, $category, $limit, $offset);
-$totalEvents = $userEventsModel->countFavoriteEvents($userId, $category);
+$favoritesRepository = new FavoritesRepository($db);
+$events = $favoritesRepository->getFavoriteEvents($userId, $category, $limit, $offset);
+$totalEvents = $favoritesRepository->countFavoriteEvents($userId, $category);
 $totalPages = ceil($totalEvents / $limit);
 ?>
 

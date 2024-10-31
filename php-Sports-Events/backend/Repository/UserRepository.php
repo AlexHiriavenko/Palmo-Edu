@@ -1,13 +1,13 @@
 <?php
 
-namespace Palmo\Models\User;
+namespace Palmo\Repository;
 
 use Palmo\Database\CrudBaseModel;
 use Palmo\Database\Db;
-use Palmo\Models\User\User;
+use Palmo\Model\User;
 use PDOException;
 
-class UserModel extends CrudBaseModel
+class UserRepository extends CrudBaseModel
 {
   protected string $table = 'users';
 
@@ -35,7 +35,6 @@ class UserModel extends CrudBaseModel
 
   public function findByEmail(string $email): User|null
   {
-    // Используем readFiltered с фильтром по email
     $user = $this->readFiltered($this->table, ['email' => $email], limit: 1)[0] ?? null;
 
     if (empty($user)) {

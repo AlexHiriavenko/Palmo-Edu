@@ -5,35 +5,36 @@ require __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/Database/fillBaseFirstTime.php';
 
 use Palmo\Database\Db;
-use Palmo\Models\SportEventModel;
+use Palmo\Repository\EventRepository;
 use Palmo\Service\AuthService;
 
 $db = new Db();
-$sportEventModel = new SportEventModel($db);
+$eventRepository = new EventRepository($db);
 $authService = new AuthService($db);
 
 // Заполняем базу данных, если она пуста
-fillBaseFirstTime($sportEventModel, $db);
+fillBaseFirstTime($eventRepository, $db);
 
 $authService->authenticateUser();
 $userId = $_SESSION['userId'] ?? null;
 $isLoggedIn = isset($_SESSION['userId']);
 
 // Получаем выбранную категорию и номер страницы
-$category = $_GET['category'] ?? 'all';
+$category = $_GET['category'] ?? '';
 $page = (int)($_GET['page'] ?? 1);
-$limit = 8;
-$offset = ($page - 1) * $limit;
+const LIMIT = 8;
+$offset = ($page - 1) * LIMIT;
 
 // Получаем события и общее количество страниц
-$events = $sportEventModel->getFilteredEvents($category, $limit, $offset);
-$totalEvents = $sportEventModel->countFilteredEvents($category);
-$totalPages = ceil($totalEvents / $limit);
+$events = $eventRepository->getPaginationEventsByCategory($category, LIMIT, $offset);
+$totalEvents = $eventRepository->countFilteredEvents($category);
+$totalPages = ceil($totalEvents / LIMIT);
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,4 +54,5 @@ $totalPages = ceil($totalEvents / $limit);
     <?php include './views/events-pagination.php'; ?>
   </main>
 </body>
+
 </html>

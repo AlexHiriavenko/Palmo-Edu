@@ -4,7 +4,7 @@ namespace Palmo\Service;
 
 use Palmo\Service\Validator\Validator;
 use Palmo\Service\RememberMeService;
-use Palmo\Models\User\UserModel;
+use Palmo\Repository\UserRepository;
 use Palmo\Database\Db;
 use Palmo\Database\CrudBaseModel;
 
@@ -34,8 +34,8 @@ class AuthService
 
   private function initializeCredentials(): void
   {
-    $this->email = $_POST['email'] ?? '';
-    $this->password = $_POST['password'] ?? '';
+    $this->email = $_POST['email'];
+    $this->password = $_POST['password'];
     $this->name = $_POST['name'] ?? '';
 
     $_SESSION['email'] = $this->email;
@@ -47,8 +47,8 @@ class AuthService
   public function authenticateUser(): void
   {
     if (isset($_SESSION['userId'])) {
-      $userModel = new UserModel($this->db);
-      $user = $userModel->findById($_SESSION['userId']);
+      $userRepository = new UserRepository($this->db);
+      $user = $userRepository->findById($_SESSION['userId']);
       $_SESSION['name'] = $user->getName();
       $_SESSION['role'] = $user->getRole();
     }
@@ -63,8 +63,8 @@ class AuthService
 
         if ($userId) {
           $_SESSION['userId'] = $userId;
-          $userModel = new UserModel($this->db);
-          $user = $userModel->findById($userId);
+          $userRepository = new UserRepository($this->db);
+          $user = $userRepository->findById($userId);
           $_SESSION['name'] = $user->getName();
           $_SESSION['role'] = $user->getRole();
         }
@@ -84,8 +84,8 @@ class AuthService
     }
 
     // Поиск юзера в бд
-    $userModel = new UserModel($this->db);
-    $user = $userModel->findByEmail($this->email);
+    $userRepository = new UserRepository($this->db);
+    $user = $userRepository->findByEmail($this->email);
 
     if ($user == null) {
       $this->redirectWithError("User with email $this->email not found", "/login.php");
@@ -143,14 +143,14 @@ class AuthService
     }
 
     // Проверка существования пользователя с таким email
-    $userModel = new UserModel($this->db);
-    if ($userModel->findByEmail($this->email) !== null) {
+    $userRepository = new UserRepository($this->db);
+    if ($userRepository->findByEmail($this->email) !== null) {
       $this->redirectWithError("User with this email already exists", "/signup.php");
       return;
     }
 
     // Создание нового пользователя
-    $isCreated = $userModel->createUser($this->name, $this->email, $this->password);
+    $isCreated = $userRepository->createUser($this->name, $this->email, $this->password);
 
     if (!$isCreated) {
       $this->redirectWithError("Failed to create user. Please try later.", "/signup.php");
