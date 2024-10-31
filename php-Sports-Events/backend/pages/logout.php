@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <form id="logoutForm" action="/controller/auth.php" method="POST">
+  <form id="logoutForm" action="/runScripts/runAuth.php" method="POST">
     <input type="hidden" name="action" value="logout">
   </form>
   <script>

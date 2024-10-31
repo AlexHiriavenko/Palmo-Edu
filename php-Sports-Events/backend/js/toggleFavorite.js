@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const eventId = this.getAttribute("data-event-id");
       const card = this.closest(".relative"); // Получаем карточку для удаления
 
-      fetch("/controller/toggle_favorite.php", {
+      fetch("/runScripts/runToggleFavorite.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

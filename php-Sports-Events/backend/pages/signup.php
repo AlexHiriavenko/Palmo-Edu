@@ -24,7 +24,7 @@ if ($isLoggedIn) {
 <body>
   <?php include '../views/app_header.php'; ?>
   <main class="app-main views flex items-center justify-center h-screen">
-    <form method="post" action="/controller/auth.php" class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
+    <form method="post" action="/runScripts/runAuth.php" class="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
       <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Sign Up</h2>
 
       <!-- Поле для имени -->
