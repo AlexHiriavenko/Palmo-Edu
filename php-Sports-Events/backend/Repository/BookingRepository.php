@@ -2,9 +2,10 @@
 
 namespace Palmo\Repository;
 
-use Palmo\Repository\BaseRepository;
-use Palmo\Database\QueryBuilder;
 use PDO;
+use Palmo\Database\QueryBuilder;
+use Palmo\Repository\BaseRepository;
+use Palmo\Model\Event;
 
 class BookingRepository extends BaseRepository
 {
@@ -92,6 +93,7 @@ class BookingRepository extends BaseRepository
         }
 
         $queryBuilder->limit($limit)->offset($offset);
+
         // Получаем SQL и параметры для выполнения запроса
         $sql = $queryBuilder->getSelectSql();
         $bindings = $queryBuilder->getBindings();
@@ -99,8 +101,19 @@ class BookingRepository extends BaseRepository
         $stmt = $this->db->prepare($sql);
         $stmt->execute($bindings);
 
-        // Возвращаем результаты с eventId (se.id)
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Обрабатываем результаты в массив объектов Event
+        $eventsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return array_map(
+            fn($eventData) => new Event(
+                $eventData['id'],
+                $eventData['name'],
+                $eventData['category'],
+                $eventData['location'],
+                new \DateTime($eventData['dateTime']),
+                (float)$eventData['price']
+            ),
+            $eventsData
+        );
     }
 
     public function countBookedEvents(int $userId, ?string $category = null): int

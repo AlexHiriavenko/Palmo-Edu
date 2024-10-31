@@ -2,9 +2,11 @@
 
 namespace Palmo\Repository;
 
-use Palmo\Repository\BaseRepository;
-use Palmo\Database\QueryBuilder;
 use PDO;
+use Palmo\Database\QueryBuilder;
+use Palmo\Repository\BaseRepository;
+use Palmo\Model\Event;
+
 
 class FavoritesRepository extends BaseRepository
 {
@@ -46,8 +48,19 @@ class FavoritesRepository extends BaseRepository
     $stmt = $this->db->prepare($sql);
     $stmt->execute($bindings);
 
-    // Возвращаем результаты с eventId (se.id)
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Обрабатываем результаты в массив объектов Event
+    $eventsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return array_map(
+      fn($eventData) => new Event(
+        $eventData['id'],
+        $eventData['name'],
+        $eventData['category'],
+        $eventData['location'],
+        new \DateTime($eventData['dateTime']),
+        (float)$eventData['price']
+      ),
+      $eventsData
+    );
   }
 
 

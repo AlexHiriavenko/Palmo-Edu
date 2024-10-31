@@ -11,8 +11,12 @@ $authService = new AuthService($db);
 $eventRepository = new EventRepository($db);
 $bookingRepository = new BookingRepository($db);
 
-$authService->authenticateUser();
-$isLoggedIn = isset($_SESSION['userId']);
+$user = $authService->authenticateUser();
+
+$userId = $user ? $user->getId() : null;
+$isLoggedIn = $user && $userId;
+
+
 $eventId = (int)($_GET['id']);
 $userId = $_SESSION['userId'] ?? null;
 

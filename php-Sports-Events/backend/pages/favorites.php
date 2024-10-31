@@ -5,24 +5,30 @@ require '../vendor/autoload.php';
 
 use Palmo\Database\Db;
 use Palmo\Repository\FavoritesRepository;
-
-$isLoggedIn = isset($_SESSION['userId']);
-if (!$isLoggedIn) {
-  header("Location: /login.php");
-  exit();
-}
-
-$userId = $_SESSION['userId'];
-$category = $_GET['category'] ?? '';
-$page = (int)($_GET['page'] ?? 1);
-$limit = 8;
-$offset = ($page - 1) * $limit;
+use Palmo\Service\AuthService;
 
 $db = new Db();
+$authService = new AuthService($db);
 $favoritesRepository = new FavoritesRepository($db);
-$events = $favoritesRepository->getFavoriteEvents($userId, $category, $limit, $offset);
+
+$user = $authService->authenticateUser();
+
+$userId = $user ? $user->getId() : null;
+$isLoggedIn = $user && $userId;
+
+if (!$isLoggedIn) {
+  header("Location: /login.php");
+  exit;
+}
+
+$category = $_GET['category'] ?? '';
+$page = (int)($_GET['page'] ?? 1);
+const LIMIT = 8;
+$offset = ($page - 1) * LIMIT;
+
+$events = $favoritesRepository->getFavoriteEvents($userId, $category, LIMIT, $offset);
 $totalEvents = $favoritesRepository->countFavoriteEvents($userId, $category);
-$totalPages = ceil($totalEvents / $limit);
+$totalPages = ceil($totalEvents / LIMIT);
 ?>
 
 <!DOCTYPE html>

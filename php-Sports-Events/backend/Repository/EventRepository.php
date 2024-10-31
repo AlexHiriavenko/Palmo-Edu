@@ -48,7 +48,19 @@ class EventRepository extends BaseRepository
     $stmt = $this->db->prepare($sql);
     $stmt->execute($bindings);
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $eventDataArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return array_map(
+      fn($eventData) => new Event(
+        $eventData['id'],
+        $eventData['name'],
+        $eventData['category'],
+        $eventData['location'],
+        new \DateTime($eventData['dateTime']),
+        (float)$eventData['price']
+      ),
+      $eventDataArray
+    );
   }
 
   // Подсчёт количества событий с фильтрацией

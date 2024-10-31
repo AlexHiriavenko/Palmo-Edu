@@ -1,11 +1,22 @@
 <?php
 session_start();
-$isLoggedIn = isset($_SESSION['userId']);
+
+require '../vendor/autoload.php';
+
+use Palmo\Database\Db;
+use Palmo\Service\AuthService;
+
+$db = new Db();
+$authService = new AuthService($db);
+
+$user = $authService->authenticateUser();
+$isLoggedIn = $user && $user->getId();
 
 if ($isLoggedIn) {
   header("Location: /index.php");
-  exit();
+  exit;
 }
+
 ?>
 
 <!DOCTYPE html>

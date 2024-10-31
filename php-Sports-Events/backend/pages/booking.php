@@ -5,24 +5,30 @@ require '../vendor/autoload.php';
 
 use Palmo\Database\Db;
 use Palmo\Repository\BookingRepository;
-
-$isLoggedIn = isset($_SESSION['userId']);
-if (!$isLoggedIn) {
-  header("Location: /login.php");
-  exit();
-}
-
-$userId = $_SESSION['userId'];
-$category = $_GET['category'] ?? '';
-$page = (int)($_GET['page'] ?? 1);
-$limit = 8;
-$offset = ($page - 1) * $limit;
+use Palmo\Service\AuthService;
 
 $db = new Db();
+$authService = new AuthService($db);
 $bookingRepository = new BookingRepository($db);
-$events = $bookingRepository->getBookedEvents($userId, $category, $limit, $offset);
-$totalEvents = $bookingRepository->countBookedEvents($userId, $category);
-$totalPages = ceil($totalEvents / $limit);
+
+$user = $authService->authenticateUser();
+
+$userId = $user ? $user->getId() : null;
+$isLoggedIn = $user && $userId;
+
+if (!$isLoggedIn) {
+  header("Location: /login.php");
+  exit;
+}
+
+$category = $_GET['category'] ?? '';
+$page = (int)($_GET['page'] ?? 1);
+const LIMIT = 8;
+$offset = ($page - 1) * LIMIT;
+
+$events = $bookingRepository->getBookedEvents($userId, $category, LIMIT, $offset) ?? [];
+$totalEvents = $bookingRepository->countBookedEvents($userId, $category) ?? 0;
+$totalPages = ceil($totalEvents / LIMIT);
 ?>
 
 <!DOCTYPE html>

@@ -7,6 +7,7 @@ use Palmo\Repository\BaseRepository;
 use Palmo\Repository\UserRepository;
 use Palmo\Service\Validator\Validator;
 use Palmo\Service\RememberMeService;
+use Palmo\Model\User;
 
 // require "../vendor/autoload.php";
 
@@ -44,14 +45,13 @@ class AuthService
   }
 
   // выполняем аутентификацию юезра
-  public function authenticateUser(): void
+  public function authenticateUser(): User|null
   {
     if (isset($_SESSION['userId'])) {
       $userRepository = new UserRepository($this->db);
       $user = $userRepository->findById($_SESSION['userId']);
       if ($user) {
-      $_SESSION['name'] = $user->getName();
-      $_SESSION['role'] = $user->getRole();
+        return $user;
       }
     }
 
@@ -68,12 +68,13 @@ class AuthService
           $userRepository = new UserRepository($this->db);
           $user = $userRepository->findById($userId);
           if ($user) {
-            $_SESSION['name'] = $user->getName();
-            $_SESSION['role'] = $user->getRole();
+            return $user;
           }
         }
       }
     }
+
+    return null;
   }
 
   public function login(): void
@@ -105,8 +106,6 @@ class AuthService
 
     session_unset();
     $_SESSION['userId'] = $user->getId();
-    $_SESSION['name'] = $user->getName();
-    $_SESSION['role'] = $user->getRole();
 
     // Логика "remember me"
     if (isset($_POST['rememberMe'])) {
@@ -161,6 +160,7 @@ class AuthService
       return;
     }
 
+    session_unset();
     header("Location: /login.php");
     exit();
   }

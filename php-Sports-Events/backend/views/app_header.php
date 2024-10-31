@@ -1,8 +1,8 @@
 <?php
 $current_page = basename($_SERVER['REQUEST_URI'], ".php");
-$username = $_SESSION['name'] ?? '';
-$userRole = $_SESSION['role'] ?? null;
-$isAdmin = $isLoggedIn && isset($userRole) && $userRole === 'admin';
+$username = $user ? $user->getName() : '';
+$userRole = $user ? $user->getRole() : null;
+$isAdmin = isset($userRole) && $userRole === 'admin';
 ?>
 
 

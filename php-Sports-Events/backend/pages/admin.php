@@ -9,13 +9,15 @@ use Palmo\Service\AuthService;
 $db = new Db();
 $authService = new AuthService($db);
 
-$authService->authenticateUser();
-$isLoggedIn = isset($_SESSION['userId']);
-$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+$user = $authService->authenticateUser();
+
+$userId = $user ? $user->getId() : null;
+$isLoggedIn = $user && $userId;
+$isAdmin = $isLoggedIn && $user->getRole() === 'admin';
 
 if (!$isLoggedIn || !$isAdmin) {
   header("Location: /404.php");
-  exit();
+  exit;
 }
 ?>
 
@@ -34,7 +36,9 @@ if (!$isLoggedIn || !$isAdmin) {
 
 <body>
   <?php include '../views/app_header.php'; ?>
-  <main class="app-main views"></main>
+  <main class="app-main views">
+    <h1 class="text-3xl text-center mt-16 text-white">Admin Page</h1>
+  </main>
 </body>
 
 </html>

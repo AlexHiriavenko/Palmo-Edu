@@ -15,9 +15,10 @@ $authService = new AuthService($db);
 // Заполняем базу данных, если она пуста
 fillBaseFirstTime($eventRepository, $db);
 
-$authService->authenticateUser();
-$userId = $_SESSION['userId'] ?? null;
-$isLoggedIn = isset($_SESSION['userId']);
+$user = $authService->authenticateUser();
+
+$userId = $user ? $user->getId() : null;
+$isLoggedIn = $user && $userId;
 
 // Получаем выбранную категорию и номер страницы
 $category = $_GET['category'] ?? '';
