@@ -3,3 +3,4 @@
 /Docker/.env
 /backend/draft.php
 draft.php
+**/draft.php
