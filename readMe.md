@@ -13,6 +13,7 @@
 - [Sports-Events-App](https://github.com/AlexHiriavenko/Palmo-Edu/tree/sports-events-app/Vue/Sports-Events-App)
 - [MySQL](https://github.com/AlexHiriavenko/Palmo-Edu/tree/main/MySQL)
 - [PHP](https://github.com/AlexHiriavenko/Palmo-Edu/tree/main/PHP)
+- [PHP_Sports-Events-App](https://github.com/AlexHiriavenko/Palmo-Edu/tree/main/php-Sports-Events)
 
 ## Notes:
 
