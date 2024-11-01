@@ -1,4 +1,4 @@
-# PHP-Beginning
+# PHP Sports Events App
 
 ## Для первого запуска проекта выполните (см ниже) Project setup .
 
