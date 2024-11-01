@@ -8,7 +8,7 @@ class Config
 
     public function __construct()
     {
-        $this->config = parse_ini_file(__DIR__ . '/../config/config.ini');
+        $this->config = parse_ini_file('../config/config.ini');
     }
 
     public function get(string $name): array
