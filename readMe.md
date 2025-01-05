@@ -10,10 +10,11 @@
 - [Vue-HW3](https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw3/Vue/VueHW-3)
 - [Vue-HW4](https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw4/Vue/VueHW-4)
 - [Vue-HW7](https://github.com/AlexHiriavenko/Palmo-Edu/tree/vue-hw7/Vue/VueHW-7)
-- [Sports-Events-App](https://github.com/AlexHiriavenko/Palmo-Edu/tree/sports-events-app/Vue/Sports-Events-App)
+- [Vue3-Sports-Events-App](https://github.com/AlexHiriavenko/Palmo-Edu/tree/sports-events-app/Vue/Sports-Events-App)
 - [MySQL](https://github.com/AlexHiriavenko/Palmo-Edu/tree/main/MySQL)
 - [PHP](https://github.com/AlexHiriavenko/Palmo-Edu/tree/main/PHP)
 - [PHP_Sports-Events-App](https://github.com/AlexHiriavenko/Palmo-Edu/tree/main/php-Sports-Events)
+- [Laravel-Restaurant](https://github.com/AlexHiriavenko/Restaurant-Laravel)
 
 ## Notes:
 
